@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "402338269746",
+    "project_id": "didong-foodapp",
+    "storage_bucket": "didong-foodapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:402338269746:android:aa80b91d57e6c2e8b54a2b",
+        "android_client_info": {
+          "package_name": "com.example.didong_foodapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgArrllr-deQhe-RZaDpO5NhB2N8eoBNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
