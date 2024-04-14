@@ -65,6 +65,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(RegistrationActivity.this, "Account created.",
                                             Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(RegistrationActivity.this,MainActivity2.class));
                                     
                                 } else {
                                     // If sign in fails, display a message to the user.
@@ -84,6 +85,6 @@ public class RegistrationActivity extends AppCompatActivity {
         startActivity(new Intent(RegistrationActivity.this,LoginActivity.class));
     }
     public void login(View view) {
-        startActivity(new Intent(RegistrationActivity.this,MainActivity.class));
+        startActivity(new Intent(RegistrationActivity.this, MainActivity2.class));
     }
 }
