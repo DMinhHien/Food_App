@@ -25,9 +25,9 @@ public class ViewPagerMain extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return food_fragment;
-            case 1:
                 return location_fragment;
+            case 1:
+                return food_fragment;
         }
         return null;
     }

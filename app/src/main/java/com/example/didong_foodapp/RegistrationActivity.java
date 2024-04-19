@@ -18,9 +18,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseAuth;
+
 
 public class RegistrationActivity extends AppCompatActivity {
     TextInputEditText InputMail,InputPassword;
@@ -65,7 +65,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(RegistrationActivity.this, "Account created.",
                                             Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(RegistrationActivity.this,MainActivity2.class));
+                                    startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
                                     
                                 } else {
                                     // If sign in fails, display a message to the user.
@@ -85,6 +85,6 @@ public class RegistrationActivity extends AppCompatActivity {
         startActivity(new Intent(RegistrationActivity.this,LoginActivity.class));
     }
     public void login(View view) {
-        startActivity(new Intent(RegistrationActivity.this, MainActivity2.class));
+        startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
     }
 }

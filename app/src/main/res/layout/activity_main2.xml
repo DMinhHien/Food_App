@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/silver"
-    tools:context=".MainActivity2"
+    tools:context=".MainActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
@@ -78,13 +78,14 @@
     app:layout_constraintEnd_toEndOf="parent">
 
 </androidx.viewpager2.widget.ViewPager2>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@drawable/btn_bg_design"
-        android:text="LOG OUT"
-        android:textStyle="bold"
-        android:onClick="logout"
-        app:layout_constraintBottom_toBottomOf="parent" />
+
+<!--    <Button-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom"-->
+<!--        android:background="@drawable/btn_bg_design"-->
+<!--        android:text="LOG OUT"-->
+<!--        android:textStyle="bold"-->
+<!--        android:onClick="logout"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

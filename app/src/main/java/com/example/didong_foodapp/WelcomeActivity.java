@@ -9,9 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import com.google.firebase.auth.AuthResult;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -22,7 +21,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
 
         if(FirebaseAuth.getInstance().getCurrentUser() != null){
-            startActivity(new Intent(WelcomeActivity.this,MainActivity2.class));
+            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
         }
     }
     @Override
