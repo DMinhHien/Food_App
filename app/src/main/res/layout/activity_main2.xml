@@ -13,20 +13,11 @@
     <android.widget.Toolbar
         android:id="@+id/group_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="77dp"
+        android:layout_height="50dp"
         android:background="@color/orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="left"
-            android:layout_marginLeft="20dp"
-            app:srcCompat="@drawable/fried_potatoes"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="28dp" />
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <RadioGroup
             android:id="@+id/group_food_place"
@@ -44,7 +35,7 @@
                 android:button="@color/trans"
                 android:checked="true"
                 android:padding="10dp"
-                android:text="Places"
+                android:drawableRight="@drawable/baseline_fastfood_24"
                 android:textColor="@drawable/radio_changetext" />
 
             <RadioButton
@@ -54,38 +45,22 @@
                 android:background="@drawable/radio_food"
                 android:button="@color/trans"
                 android:padding="10dp"
-                android:text="Foods"
+                android:drawableLeft="@drawable/user_black"
                 android:textColor="@drawable/radio_changetext" />
 
         </RadioGroup>
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="right"
-            android:layout_marginRight="20dp"
-            app:srcCompat="@android:drawable/ic_menu_add"
-            tools:layout_editor_absoluteX="40dp"
-            tools:layout_editor_absoluteY="28dp" />
     </android.widget.Toolbar>
 
 <androidx.viewpager2.widget.ViewPager2
     android:id="@+id/viewpager_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:layout_constraintTop_toBottomOf="@+id/group_toolbar"
+    app:layout_constraintBottom_toTopOf="@+id/group_toolbar"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent">
 
 </androidx.viewpager2.widget.ViewPager2>
 
-<!--    <Button-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="bottom"-->
-<!--        android:background="@drawable/btn_bg_design"-->
-<!--        android:text="LOG OUT"-->
-<!--        android:textStyle="bold"-->
-<!--        android:onClick="logout"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent" />-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

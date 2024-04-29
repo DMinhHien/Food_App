@@ -18,6 +18,20 @@ public class RestaurantModel {
     int order;
     String closeTime,openTime,nameR,introVid,maR;
     DatabaseReference nodeRoot;
+    List<String> imageR;
+    List<String> tienich;
+
+
+
+    List<CommentModel> comModel;
+    public List<CommentModel> getComModel() {
+        return comModel;
+    }
+
+    public void setComModel(List<CommentModel> comModel) {
+        this.comModel = comModel;
+    }
+    long likes;
 
     public long getLikes() {
         return likes;
@@ -27,11 +41,21 @@ public class RestaurantModel {
         this.likes = likes;
     }
 
-    long likes;
+
     public RestaurantModel(){
         nodeRoot= FirebaseDatabase.getInstance().getReference();
     }
-    List<String> tienich;
+
+
+    public List<String> getImageR() {
+        return imageR;
+    }
+
+    public void setImageR(List<String> imageR) {
+        this.imageR = imageR;
+    }
+
+
     public int isOrder() {
         return order;
     }
@@ -94,8 +118,32 @@ public class RestaurantModel {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 DataSnapshot datSnapshotR=snapshot.child("restaurants");
+                //Lay danh sach quan an
                 for (DataSnapshot dataValue:datSnapshotR.getChildren() ){
                     RestaurantModel restaurantModel= dataValue.getValue(RestaurantModel.class);
+                    restaurantModel.setMaR((dataValue.getKey()));
+                    DataSnapshot dataSnapShotImage= snapshot.child("imageR").child(dataValue.getKey());
+                    //Lay danh sach hinhn anh
+                    List <String> imageList=new ArrayList<>();
+                    for (DataSnapshot valueImage : dataSnapShotImage.getChildren()){
+                        imageList.add(valueImage.getValue(String.class));
+                    }
+                    restaurantModel.setImageR(imageList);
+                    //Lay danh sach binh luan
+                    DataSnapshot snapshotComment=snapshot.child("commentR").child(restaurantModel.getMaR());
+                    List<CommentModel> CommentList= new ArrayList<>();
+                    for (DataSnapshot CommentValue: snapshotComment.getChildren() ){
+                        CommentModel commentModel= CommentValue.getValue(CommentModel.class);
+                        commentModel.setMaBL(CommentValue.getKey());
+                        List<String> imageCommentList=new ArrayList<>();
+                        DataSnapshot snapshotNodeComment= snapshot.child("imageComment").child(commentModel.getMaBL());
+                        for (DataSnapshot valueImageComment:snapshotNodeComment.getChildren())
+                            imageCommentList.add(valueImageComment.getValue(String.class));
+                        commentModel.setImageList(imageCommentList);
+                        CommentList.add(commentModel);
+                    }
+
+                    restaurantModel.setComModel(CommentList);
                     locationInterface.getListRestaurantModel(restaurantModel);
                 }
             }
