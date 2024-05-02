@@ -1,5 +1,8 @@
 package com.example.didong_foodapp.ui.Models;
 
+import android.location.Location;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -14,15 +17,46 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RestaurantModel {
+public class RestaurantModel implements Parcelable {
     int order;
     String closeTime,openTime,nameR,introVid,maR;
     DatabaseReference nodeRoot;
     List<String> imageR;
     List<String> tienich;
 
+    protected RestaurantModel(Parcel in) {
+        order = in.readInt();
+        closeTime = in.readString();
+        openTime = in.readString();
+        nameR = in.readString();
+        introVid = in.readString();
+        maR = in.readString();
+        imageR = in.createStringArrayList();
+        tienich = in.createStringArrayList();
+        likes = in.readLong();
+    }
 
+    public static final Creator<RestaurantModel> CREATOR = new Creator<RestaurantModel>() {
+        @Override
+        public RestaurantModel createFromParcel(Parcel in) {
+            return new RestaurantModel(in);
+        }
 
+        @Override
+        public RestaurantModel[] newArray(int size) {
+            return new RestaurantModel[size];
+        }
+    };
+
+    public List<ChiNhanhModel> getChiNhanhModelList() {
+        return chiNhanhModelList;
+    }
+
+    public void setChiNhanhModelList(List<ChiNhanhModel> chiNhanhModelList) {
+        this.chiNhanhModelList = chiNhanhModelList;
+    }
+
+    List<ChiNhanhModel> chiNhanhModelList;
     List<CommentModel> comModel;
     public List<CommentModel> getComModel() {
         return comModel;
@@ -112,7 +146,7 @@ public class RestaurantModel {
         this.tienich = tienich;
     }
 
-    public void getDanhSachQuanAn(final LocationInterface locationInterface){
+    public void getDanhSachQuanAn(final LocationInterface locationInterface,Location currentLocation){
         ValueEventListener valueEventListener= new ValueEventListener() {
 
             @Override
@@ -144,6 +178,20 @@ public class RestaurantModel {
                     }
 
                     restaurantModel.setComModel(CommentList);
+                    //Lay danh sach chi nhanh
+                    DataSnapshot snapshotChiNhanh=snapshot.child("chinhanhR").child(restaurantModel.getMaR());
+                    List<ChiNhanhModel> chinhanhModels=new ArrayList<>();
+                    for (DataSnapshot valueChinhNhanh :snapshotChiNhanh.getChildren()){
+                        ChiNhanhModel chinhanhModel=valueChinhNhanh.getValue( ChiNhanhModel.class);
+                        Location restuarantLocation = new Location("");
+                        restuarantLocation.setLatitude(chinhanhModel.getLatitude());
+                        restuarantLocation.setLongitude(chinhanhModel.getLongitude());
+                        double distance =currentLocation.distanceTo( restuarantLocation)/1000;
+                        chinhanhModel.setDistance(distance);
+                        chinhanhModels.add(chinhanhModel);
+
+                    }
+                    restaurantModel.setChiNhanhModelList( chinhanhModels);
                     locationInterface.getListRestaurantModel(restaurantModel);
                 }
             }
@@ -156,4 +204,21 @@ public class RestaurantModel {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(order);
+        dest.writeString(closeTime);
+        dest.writeString(openTime);
+        dest.writeString(nameR);
+        dest.writeString(introVid);
+        dest.writeString(maR);
+        dest.writeStringList(imageR);
+        dest.writeStringList(tienich);
+        dest.writeLong(likes);
+    }
 }

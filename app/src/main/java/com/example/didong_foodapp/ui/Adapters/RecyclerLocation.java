@@ -1,5 +1,7 @@
 package com.example.didong_foodapp.ui.Adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -13,7 +15,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.didong_foodapp.ChiTietResActivity;
 import com.example.didong_foodapp.R;
+import com.example.didong_foodapp.ui.Models.ChiNhanhModel;
 import com.example.didong_foodapp.ui.Models.CommentModel;
 import com.example.didong_foodapp.ui.Models.RestaurantModel;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,15 +26,20 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
-public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.ViewHolder> {
+public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.ViewHolder>  {
     List<RestaurantModel> resModelList;
     int resources;
-    public RecyclerLocation( List<RestaurantModel> resModelList, int resources){
+    Context context;
+    public RecyclerLocation(Context context, List<RestaurantModel> resModelList, int resources){
         this.resModelList= resModelList;
         this.resources=resources;
+        this.context=context;
     }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtNameRLocation,txtTitle1,txtTitle2,txtContent1,txtContent2,txtScore1,txtScore2,txtTotalComment,txtTotalImage;
+        TextView txtNameRLocation,txtTitle1,txtTitle2,txtContent1,txtContent2,
+                txtScore1,txtScore2,txtTotalComment,txtTotalImage,txtAverage,
+                txtDistance,txtAddress;
         Button btnOrder;
         ImageView imageLocationR;
         LinearLayout commentContainer,commentContainer2;
@@ -49,6 +58,9 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
             commentContainer2=itemView.findViewById(R.id.commentContainer2);
             txtTotalComment=itemView.findViewById(R.id.black_comment);
             txtTotalImage=itemView.findViewById(R.id.camera_black);
+            txtAverage=itemView.findViewById(R.id.averageScore);
+            txtDistance=itemView.findViewById(R.id.txtDistance);
+            txtAddress=itemView.findViewById(R.id.txtAddress);
         }
     }
     @NonNull
@@ -92,9 +104,13 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
                 holder.commentContainer2.setVisibility(View.GONE);
             holder.txtTotalComment.setText(resModel.getComModel().size()+"");
             int totalComment=0;
+            int sumScore=0;
             for (CommentModel commentModel1:resModel.getComModel()){
                 totalComment+=commentModel1.getImageList().size();
+                sumScore+=commentModel1.getScore();
             }
+            double average=sumScore/resModel.getComModel().size();
+            holder.txtAverage.setText(String.format("%.1f",average));
             if (totalComment>0)
                 holder.txtTotalImage.setText(totalComment+"");
 
@@ -103,6 +119,24 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
             holder.commentContainer.setVisibility(View.GONE);
             holder.commentContainer2.setVisibility(View.GONE);
         }
+        //Load address and distance
+        if (resModel.getChiNhanhModelList().size()>0){
+            ChiNhanhModel chiNhanhGan= resModel.getChiNhanhModelList().get(0);
+            for (ChiNhanhModel chiNhanhModel: resModel.getChiNhanhModelList()){
+                if (chiNhanhGan.getDistance()>chiNhanhModel.getDistance())
+                    chiNhanhGan=chiNhanhModel;
+            }
+            holder.txtAddress.setText(chiNhanhGan.getDiachi());
+            holder.txtDistance.setText(String.format("%.1f",chiNhanhGan.getDistance())+" km");
+        }
+        holder.txtNameRLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startActivity=new Intent(context, ChiTietResActivity.class);
+                startActivity.putExtra("quanan",resModel);
+                context.startActivity(startActivity);
+            }
+        });
     }
 
     @Override

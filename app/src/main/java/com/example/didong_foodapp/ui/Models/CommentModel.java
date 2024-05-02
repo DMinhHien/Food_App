@@ -3,7 +3,8 @@ package com.example.didong_foodapp.ui.Models;
 import java.util.List;
 
 public class CommentModel {
-    long score,likes;
+    long likes;
+    double score;
     UserModel uModel;
     String content;
 
@@ -37,11 +38,11 @@ public class CommentModel {
 
     String user;
 
-    public long getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(long score) {
+    public void setScore(double score) {
         this.score = score;
     }
 

@@ -151,6 +151,12 @@
 
                 </LinearLayout>
 
+                <ProgressBar
+                    android:id="@+id/progressLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerLocation"
                     android:layout_width="match_parent"
