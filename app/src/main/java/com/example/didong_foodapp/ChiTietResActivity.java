@@ -1,5 +1,7 @@
 package com.example.didong_foodapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +15,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.didong_foodapp.ui.Models.RestaurantModel;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -94,6 +99,16 @@ public class ChiTietResActivity extends AppCompatActivity {
         txtTotalComment.setText(resModel.getComModel().size()+"");
         txtTotalImage.setText(resModel.getImageR().size()+"");
         txtTime.setText(openTime+ " - "+closeTime );
+        StorageReference storageImage= FirebaseStorage.getInstance().getReference().child(resModel.getImageR().get(0));
+        long megabyte=1024*1024;
+        storageImage.getBytes(megabyte).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                ImageR.setImageBitmap(bitmap);
+            }
+        });
+
 
     }
 
