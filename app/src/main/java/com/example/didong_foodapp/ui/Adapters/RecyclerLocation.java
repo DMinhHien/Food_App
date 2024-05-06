@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.ChiTietResActivity;
@@ -30,6 +31,7 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
     List<RestaurantModel> resModelList;
     int resources;
     Context context;
+
     public RecyclerLocation(Context context, List<RestaurantModel> resModelList, int resources){
         this.resModelList= resModelList;
         this.resources=resources;
@@ -43,6 +45,7 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
         Button btnOrder;
         ImageView imageLocationR;
         LinearLayout commentContainer,commentContainer2;
+        CardView cardView;
         public ViewHolder(View itemView){
             super(itemView);
             txtNameRLocation=(TextView) itemView.findViewById(R.id.txtNameRLocation);
@@ -61,6 +64,7 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
             txtAverage=itemView.findViewById(R.id.averageScore);
             txtDistance=itemView.findViewById(R.id.txtDistance);
             txtAddress=itemView.findViewById(R.id.txtAddress);
+            cardView=itemView.findViewById(R.id.CardView);
         }
     }
     @NonNull
@@ -129,7 +133,7 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
             holder.txtAddress.setText(chiNhanhGan.getDiachi());
             holder.txtDistance.setText(String.format("%.1f",chiNhanhGan.getDistance())+" km");
         }
-        holder.txtNameRLocation.setOnClickListener(new View.OnClickListener() {
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent startActivity=new Intent(context, ChiTietResActivity.class);

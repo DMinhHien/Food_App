@@ -34,6 +34,10 @@ public class RestaurantModel implements Parcelable {
         imageR = in.createStringArrayList();
         tienich = in.createStringArrayList();
         likes = in.readLong();
+        chiNhanhModelList=new ArrayList<ChiNhanhModel>();
+        in.readTypedList( chiNhanhModelList,ChiNhanhModel.CREATOR);
+        comModel= new ArrayList<CommentModel>();
+        in.readTypedList(comModel,CommentModel.CREATOR);
     }
 
     public static final Creator<RestaurantModel> CREATOR = new Creator<RestaurantModel>() {
@@ -220,5 +224,7 @@ public class RestaurantModel implements Parcelable {
         dest.writeStringList(imageR);
         dest.writeStringList(tienich);
         dest.writeLong(likes);
+        dest.writeTypedList(chiNhanhModelList);
+        dest.writeTypedList(comModel);
     }
 }

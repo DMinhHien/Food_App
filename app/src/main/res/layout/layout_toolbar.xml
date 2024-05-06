@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar_layout"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/orange"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:id="@+id/titleToolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Gogi House"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+</androidx.appcompat.widget.Toolbar>
