@@ -13,7 +13,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.didong_foodapp.ui.Adapters.Comment;
 import com.example.didong_foodapp.ui.Models.RestaurantModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -30,6 +34,8 @@ public class ChiTietResActivity extends AppCompatActivity {
     ImageView ImageR;
     RestaurantModel resModel;
     Toolbar toolbar;
+    Comment adapterComment;
+    RecyclerView recyclerComment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +54,7 @@ public class ChiTietResActivity extends AppCompatActivity {
         toolbar=findViewById(R.id.toolbar_layout);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        recyclerComment=findViewById(R.id.recycler_comment);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -108,6 +115,14 @@ public class ChiTietResActivity extends AppCompatActivity {
                 ImageR.setImageBitmap(bitmap);
             }
         });
+        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
+        recyclerComment.setLayoutManager(layoutManager);
+        adapterComment = new Comment(this,R.layout.custom_layout_comment,resModel.getComModel());
+        recyclerComment.setAdapter( adapterComment);
+        adapterComment.notifyDataSetChanged();
+        NestedScrollView nestedChiTiet=findViewById(R.id.NestedChiTiet);
+        nestedChiTiet.smoothScrollTo(0,0);
+
 
 
     }
