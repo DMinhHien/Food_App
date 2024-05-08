@@ -17,5 +17,9 @@
     <string name="password">password</string>
     <string name="sign_in2">sign in</string>
     <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="phienban" >Phien Ban </string>
+    <string name ="dangtai" >Dang tai ... </string>
+    <string name ="tencongty">Foody </string>
 </resources>
