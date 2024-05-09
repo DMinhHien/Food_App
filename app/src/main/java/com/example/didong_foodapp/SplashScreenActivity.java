@@ -43,8 +43,26 @@ public class SplashScreenActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION},
                     REQUEST_PERMISSION_LOCATION);
+
             return;
+
         }
+        else{
+            try {
+                PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(),0);
+                txtPhienBan.setText(getString(R.string.phienban)+ " "+ packageInfo.versionName);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(SplashScreenActivity.this, WelcomeActivity.class));
+                    }
+                },2000);
+            } catch (PackageManager.NameNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         LocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
@@ -60,7 +78,10 @@ public class SplashScreenActivity extends AppCompatActivity {
                             editor.putString("latitude", sLatitude);
                             editor.putString("longitude", sLongitude);
                             editor.commit();
+
+
                             Log.d("LocationFood", "sLatitude: " + sLatitude + ", sLongitude: " + sLongitude);
+
                         } else {
                             // Không tìm thấy vị trí nào được trả về
                             Log.e("LocationFood", "Không tìm thấy vị trí");
@@ -74,7 +95,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                         Log.e("LocationFood", "Lỗi khi yêu cầu vị trí: " + e.getMessage());
                     }
                 });
+
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,18 +105,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.layout_flashscreen);
         txtPhienBan = (TextView) findViewById(R.id.txtVersion);
 
-        try {
-            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(),0);
-            txtPhienBan.setText(getString(R.string.phienban)+ " "+ packageInfo.versionName);
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    startActivity(new Intent(SplashScreenActivity.this, WelcomeActivity.class));
-                }
-            },2000);
-        } catch (PackageManager.NameNotFoundException e) {
-            throw new RuntimeException(e);
+
+
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_PERMISSION_LOCATION) {
+                startActivity(new Intent(SplashScreenActivity.this, WelcomeActivity.class));
         }
     }
 }
