@@ -204,7 +204,8 @@
                         android:textSize="18dp"
                         android:textStyle="bold" />
                 </LinearLayout>
-
+                <include
+                    layout="@layout/layout_function_detail"/>
                 <include
                     layout="@layout/comment_detail" />
             </LinearLayout>

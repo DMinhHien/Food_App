@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
@@ -19,16 +20,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.ui.Adapters.Comment;
 import com.example.didong_foodapp.ui.Models.RestaurantModel;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.android.gms.maps.OnMapReadyCallback;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class ChiTietResActivity extends AppCompatActivity {
+public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyCallback{
     TextView txtName,txtAddress,txtTime,txtStatus,txtTotalImage,
             txtTotalComment,txtTotalSave,txtTotalCheckIn,txtTitleToolbar;
     ImageView ImageR;
@@ -36,6 +45,8 @@ public class ChiTietResActivity extends AppCompatActivity {
     Toolbar toolbar;
     Comment adapterComment;
     RecyclerView recyclerComment;
+    GoogleMap googleMap;
+    SupportMapFragment mapFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +63,13 @@ public class ChiTietResActivity extends AppCompatActivity {
         ImageR=findViewById(R.id.imageChiTiet);
         txtTitleToolbar=findViewById(R.id.titleToolbar);
         toolbar=findViewById(R.id.toolbar_layout);
+        mapFragment= (SupportMapFragment) getSupportFragmentManager() .findFragmentById(R.id.mapFragmentDetail);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         recyclerComment=findViewById(R.id.recycler_comment);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        mapFragment.getMapAsync(this);
 
     }
     @Override
@@ -127,4 +140,17 @@ public class ChiTietResActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        this.googleMap=googleMap;
+        double latitude=resModel.getChiNhanhModelList().get(0).getLatitude();
+        double longitude=resModel.getChiNhanhModelList().get(0).getLongitude();
+        LatLng latlng=new LatLng(latitude,longitude);
+        MarkerOptions markerOptions =new MarkerOptions();
+        markerOptions.position(latlng);
+        markerOptions.title(resModel.getNameR());
+        googleMap.addMarker(markerOptions);
+        CameraUpdate cameraUpdate= CameraUpdateFactory.newLatLngZoom(latlng,14);
+        googleMap.moveCamera(cameraUpdate);
+    }
 }
