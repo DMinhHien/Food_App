@@ -1,8 +1,10 @@
 package com.example.didong_foodapp.ui.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.R;
+import com.example.didong_foodapp.ShowDetailCommentActivity;
+import com.example.didong_foodapp.ui.Models.CommentModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -25,13 +29,17 @@ public class ImageComment extends RecyclerView.Adapter<ImageComment.ViewHolder>{
     Context context;
     int resources;
     List<Bitmap> listimage;
+    CommentModel comModel;
+    boolean isDetail;
 
 
 
-    public ImageComment(Context context, int resources, List<Bitmap> listimage) {
+    public ImageComment(Context context, int resources, List<Bitmap> listimage,CommentModel comModel,  boolean isDetail) {
         this.context = context;
         this.resources = resources;
         this.listimage = listimage;
+        this.comModel=comModel;
+        this.isDetail=isDetail;
 
     }
 
@@ -60,18 +68,32 @@ public class ImageComment extends RecyclerView.Adapter<ImageComment.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ImageComment.ViewHolder holder, int position) {
       holder.imageComment.setImageBitmap(listimage.get(position));
-      if(position==3){
-          int remain=listimage.size()-4;
-          if(remain>0){
-              holder.framelayout.setVisibility(View.VISIBLE);
-              holder.txtImageNumber.setText("+"+remain);
+      if(!isDetail) {
+          if (position == 3) {
+              int remain = listimage.size() - 4;
+              if (remain > 0) {
+                  holder.framelayout.setVisibility(View.VISIBLE);
+                  holder.txtImageNumber.setText("+" + remain);
+                  holder.imageComment.setOnClickListener(new View.OnClickListener() {
+                      @Override
+                      public void onClick(View v) {
+                          Log.d("Clicked", "Success");
+                          Intent ChiTietComment = new Intent(context, ShowDetailCommentActivity.class);
+                          ChiTietComment.putExtra("commentmodel", comModel);
+                          context.startActivity(ChiTietComment);
+                      }
+                  });
+              }
           }
       }
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        if(!isDetail)
+            return 4;
+        else
+            return listimage.size();
     }
 
 

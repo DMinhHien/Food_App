@@ -78,8 +78,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                             editor.putString("latitude", sLatitude);
                             editor.putString("longitude", sLongitude);
                             editor.commit();
-
-
                             Log.d("LocationFood", "sLatitude: " + sLatitude + ", sLongitude: " + sLongitude);
 
                         } else {
