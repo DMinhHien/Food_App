@@ -3,7 +3,6 @@ package com.example.didong_foodapp.ui.Models;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -23,6 +22,16 @@ public class RestaurantModel implements Parcelable {
     DatabaseReference nodeRoot;
     List<String> imageR;
     List<String> tienich;
+    List<MenuModel> menuModels;
+    public List<MenuModel> getMenus() {
+        return menuModels;
+    }
+
+    public void setMenus(List<MenuModel> menuModels) {
+        this.menuModels = menuModels;
+    }
+
+
 
     protected RestaurantModel(Parcel in) {
         order = in.readInt();
