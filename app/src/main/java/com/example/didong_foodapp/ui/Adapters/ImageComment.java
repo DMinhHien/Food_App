@@ -81,6 +81,7 @@ public class ImageComment extends RecyclerView.Adapter<ImageComment.ViewHolder>{
                           Intent ChiTietComment = new Intent(context, ShowDetailCommentActivity.class);
                           ChiTietComment.putExtra("commentmodel", comModel);
                           context.startActivity(ChiTietComment);
+
                       }
                   });
               }

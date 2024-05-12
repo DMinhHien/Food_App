@@ -1,8 +1,12 @@
 package com.example.didong_foodapp;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +36,7 @@ public class ChiTietResActivity extends AppCompatActivity {
     TextView txtName,txtAddress,txtTime,txtStatus,txtTotalImage,
             txtTotalComment,txtTotalSave,txtTotalCheckIn,txtTitleToolbar;
     ImageView ImageR;
+    Button btnBinhLuan;
     RestaurantModel resModel;
     Toolbar toolbar;
     Comment adapterComment;
@@ -57,6 +62,19 @@ public class ChiTietResActivity extends AppCompatActivity {
         recyclerComment=findViewById(R.id.recycler_comment);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        btnBinhLuan = (Button) findViewById(R.id.btnBinhLuan);
+        btnBinhLuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent iBinhLuan =new Intent (ChiTietResActivity.this, BinhLuanActivity.class);
+                iBinhLuan.putExtra("tenquan",resModel.getNameR());
+                iBinhLuan.putExtra("diachi",resModel.getChiNhanhModelList().get(0).getDiachi());
+                ChiTietResActivity.this.startActivity(iBinhLuan);
+                Log.d("Kiemtra","ok");
+            }
+        });
+
 
     }
     @Override
@@ -123,8 +141,7 @@ public class ChiTietResActivity extends AppCompatActivity {
         NestedScrollView nestedChiTiet=findViewById(R.id.NestedChiTiet);
         nestedChiTiet.smoothScrollTo(0,0);
 
-
-
     }
+
 
 }
