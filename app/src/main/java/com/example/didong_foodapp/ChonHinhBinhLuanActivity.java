@@ -6,12 +6,14 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -19,18 +21,20 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.ui.Adapters.AdapterChonHinhBinhLuan;
+import com.example.didong_foodapp.ui.Models.ChonHinhBinhLuanModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChonHinhBinhLuanActivity extends AppCompatActivity {
 
-    List<String> listDuongDan;
+    List<ChonHinhBinhLuanModel> listDuongDan;
     RecyclerView recyclerChonHinhBinhLuan;
     AdapterChonHinhBinhLuan adapterChonHinhBinhLuan;
     private static final int REQUEST_PERMISSION_CODE = 1;
     private Context context;
 
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +44,11 @@ public class ChonHinhBinhLuanActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         adapterChonHinhBinhLuan = new AdapterChonHinhBinhLuan(this, R.layout.custom_layout_chonhinhbinhluan, listDuongDan);
         recyclerChonHinhBinhLuan.setLayoutManager(layoutManager);
-        int checkReadExStorage = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        recyclerChonHinhBinhLuan.setAdapter(adapterChonHinhBinhLuan);
+        int checkReadExStorage = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES);
         if(checkReadExStorage != PackageManager.PERMISSION_GRANTED)
         {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, REQUEST_PERMISSION_CODE);
         }
         else
         {
@@ -58,16 +63,12 @@ public class ChonHinhBinhLuanActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode ==1)
-            getTatCaHinhAnhTrongTheNho();
-       /*
         {
             if(grantResults.length > 0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
             {
                 getTatCaHinhAnhTrongTheNho();
             }
         }
-*/
-
     }
 
 
@@ -80,8 +81,9 @@ public class ChonHinhBinhLuanActivity extends AppCompatActivity {
 
         while(!cursor.isAfterLast())
         {
-            String duongdan = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA)+1);
-            listDuongDan.add(duongdan);
+            @SuppressLint("Range") String duongdan = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            ChonHinhBinhLuanModel chonHinhModel= new ChonHinhBinhLuanModel(duongdan,false);
+            listDuongDan.add(chonHinhModel);
             adapterChonHinhBinhLuan.notifyDataSetChanged();
             Log.d("kiemtra1",duongdan);
             cursor.moveToNext();

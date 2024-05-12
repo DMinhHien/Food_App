@@ -8,7 +8,7 @@
             android:id="@+id/imgChonHinhBinhLuan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="@drawable/coffe"/>
         <CheckBox
             android:id="@+id/checkboxChonHinh"
