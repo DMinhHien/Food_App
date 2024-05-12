@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.ui.Adapters.Comment;
+import com.example.didong_foodapp.ui.Controller.MenuController;
 import com.example.didong_foodapp.ui.Models.RestaurantModel;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -45,8 +46,10 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
     Toolbar toolbar;
     Comment adapterComment;
     RecyclerView recyclerComment;
+    RecyclerView recyclerMenu;
     GoogleMap googleMap;
     SupportMapFragment mapFragment;
+    MenuController menuController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,9 +70,12 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         recyclerComment=findViewById(R.id.recycler_comment);
+        recyclerMenu=findViewById(R.id.recyclerMenu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mapFragment.getMapAsync(this);
+        menuController= new MenuController();
+
 
     }
     @Override
@@ -136,6 +142,7 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         NestedScrollView nestedChiTiet=findViewById(R.id.NestedChiTiet);
         nestedChiTiet.smoothScrollTo(0,0);
 
+        menuController.GetRestaurentMenuList(this,resModel.getMaR(),recyclerMenu);
 
 
     }
