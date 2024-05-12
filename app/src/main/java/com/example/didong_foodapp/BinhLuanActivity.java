@@ -42,7 +42,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
         if (id == R.id.btnChonHinh)
         {
             Intent iChonHinhBinhLuan = new Intent(this,ChonHinhBinhLuanActivity.class);
-            startActivityForResult(iChonHinhBinhLuan,REQUEST_CHONHINHBINHLUAN);
+            startActivity(iChonHinhBinhLuan);
             return;
         }
     }

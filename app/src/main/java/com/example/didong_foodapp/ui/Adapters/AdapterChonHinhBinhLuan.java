@@ -1,6 +1,9 @@
 package com.example.didong_foodapp.ui.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +15,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.R;
+import com.example.didong_foodapp.ui.Models.ChonHinhBinhLuanModel;
 
 import java.util.List;
 
 public class AdapterChonHinhBinhLuan extends RecyclerView.Adapter<AdapterChonHinhBinhLuan.ViewHolderChonHinh> {
     Context context;
     int resource;
-    List<String> listDuongDan;
-    public AdapterChonHinhBinhLuan(Context context, int resource, List<String> listDuongDan)
+    List<ChonHinhBinhLuanModel> listDuongDan;
+    public AdapterChonHinhBinhLuan(Context context, int resource, List<ChonHinhBinhLuanModel> listDuongDan)
     {
         this.context=context;
         this.resource=resource;
@@ -35,10 +39,19 @@ public class AdapterChonHinhBinhLuan extends RecyclerView.Adapter<AdapterChonHin
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterChonHinhBinhLuan.ViewHolderChonHinh holder, int position) {
-        String duongdan = listDuongDan.get(position);
-        Uri uri =Uri.parse(duongdan);
-        holder.imageView.setImageURI(uri);
+    public void onBindViewHolder(@NonNull AdapterChonHinhBinhLuan.ViewHolderChonHinh holder, @SuppressLint("RecyclerView") int position) {
+        ChonHinhBinhLuanModel duongdan = listDuongDan.get(position);
+        Uri uri =Uri.parse(duongdan.getLink());
+        Bitmap bit = BitmapFactory.decodeFile(String.valueOf(uri));
+        holder.imageView.setImageBitmap(bit);
+        holder.checkBox.setChecked(duongdan.isCheck());
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckBox checkbox=(CheckBox) v;
+                listDuongDan.get(position).setCheck(checkbox.isChecked());
+            }
+        });
     }
 
     @Override
