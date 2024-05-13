@@ -3,6 +3,7 @@ package com.example.didong_foodapp;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -31,6 +32,7 @@ import java.util.List;
 public class ChonHinhBinhLuanActivity extends AppCompatActivity implements View.OnClickListener {
 
     List<ChonHinhBinhLuanModel> listDuongDan;
+    List<String> listHinhDuocChon;
     List<ChonHinhBinhLuanModel> listPickedImage;
     RecyclerView recyclerChonHinhBinhLuan;
     AdapterChonHinhBinhLuan adapterChonHinhBinhLuan;
@@ -45,6 +47,7 @@ public class ChonHinhBinhLuanActivity extends AppCompatActivity implements View.
         setContentView(R.layout.layout_chonhinh_binhluan);
         listDuongDan = new ArrayList<>();
         listPickedImage= new ArrayList<>();
+        listHinhDuocChon = new ArrayList<>();
         recyclerChonHinhBinhLuan = (RecyclerView) findViewById(R.id.recyclerChonHinhBinhLuan);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         adapterChonHinhBinhLuan = new AdapterChonHinhBinhLuan(this, R.layout.custom_layout_chonhinhbinhluan, listDuongDan);
@@ -100,8 +103,18 @@ public class ChonHinhBinhLuanActivity extends AppCompatActivity implements View.
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch(id){
-
+        if(id == R.id.txtDone)
+        {
+            for(ChonHinhBinhLuanModel value : listDuongDan)
+            {
+                if(value.isCheck())
+                    listHinhDuocChon.add(value.getLink());
+            }
+            Intent data= getIntent();
+            data.putStringArrayListExtra("listHinhDuocChon",(ArrayList<String>) listHinhDuocChon);
+            setResult(RESULT_OK,data);
+            finish();
+            return;
         }
 
     }

@@ -93,20 +93,32 @@
 
     <EditText
         android:id="@+id/editText2"
-        android:layout_width="402dp"
-        android:layout_height="459dp"
+        android:layout_width="match_parent"
+        android:layout_height="321dp"
+        android:layout_weight="1"
         android:gravity="top"
         android:hint="Viết trên 100 từ, đúng chính tả, ngôn từ văn hóa để có điểm thưởng "
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/View"
-        android:layout_weight="1"/>
+        app:layout_constraintTop_toBottomOf="@+id/View" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerChonHinhBinhLuan"
+        android:layout_width="match_parent"
+        android:layout_height="141dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintVertical_bias="1.0" />
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="418dp"
-        android:layout_height="73dp"
 
+        android:layout_height="73dp"
         android:layout_marginTop="44dp"
         android:background="@color/silver"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -114,8 +126,7 @@
         app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText2"
-        app:layout_constraintVertical_bias="1.0"
-        >
+        app:layout_constraintVertical_bias="1.0">
 
         <ImageButton
 
@@ -123,20 +134,22 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@drawable/photocamera"
-            android:background="@color/silver"/>
+            android:background="@color/silver"
+            app:srcCompat="@drawable/photocamera" />
+
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/hashtag"
             android:layout_weight="1"
-            android:background="@color/silver"/>
+            android:background="@color/silver"
+            app:srcCompat="@drawable/hashtag" />
+
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/rating"
             android:layout_weight="1"
-            android:background="@color/silver"/>
+            android:background="@color/silver"
+            app:srcCompat="@drawable/rating" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

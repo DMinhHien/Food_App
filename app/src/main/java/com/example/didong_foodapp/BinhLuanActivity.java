@@ -9,12 +9,21 @@ import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.didong_foodapp.ui.Adapters.AdapterHienThiHinhBinhLuanDC;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BinhLuanActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView txtTenQuanAn, txtDiaChiQuanAn;
     Toolbar toolbar;
     ImageButton btnChonHinh;
+    RecyclerView recyclerViewChonHinhBinhLuan;
+    AdapterHienThiHinhBinhLuanDC adapterHienThiHinhBinhLuanDC;
     final int REQUEST_CHONHINHBINHLUAN = 11;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,7 +37,9 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
         txtDiaChiQuanAn=findViewById(R.id.txtDiaChi);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         btnChonHinh = (ImageButton) findViewById(R.id.btnChonHinh);
-
+        recyclerViewChonHinhBinhLuan = findViewById(R.id.recyclerChonHinhBinhLuan);
+        RecyclerView.LayoutManager layoutManager =new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false);
+        recyclerViewChonHinhBinhLuan.setLayoutManager(layoutManager);
         txtDiaChiQuanAn.setText(diachi);
         txtTenQuanAn.setText(tenquan);
         btnChonHinh.setOnClickListener(this);
@@ -42,7 +53,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
         if (id == R.id.btnChonHinh)
         {
             Intent iChonHinhBinhLuan = new Intent(this,ChonHinhBinhLuanActivity.class);
-            startActivity(iChonHinhBinhLuan);
+            startActivityForResult(iChonHinhBinhLuan,REQUEST_CHONHINHBINHLUAN);
             return;
         }
     }
@@ -50,5 +61,16 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CHONHINHBINHLUAN)
+        {
+            if(resultCode == RESULT_OK)
+            {
+                List<String> listHinhDuocChon = new ArrayList<>();
+                listHinhDuocChon = data.getStringArrayListExtra("listHinhDuocChon");
+                adapterHienThiHinhBinhLuanDC = new AdapterHienThiHinhBinhLuanDC(this,R.layout.layout_hienthihinhduocchon,listHinhDuocChon);
+                recyclerViewChonHinhBinhLuan.setAdapter(adapterHienThiHinhBinhLuanDC);
+                adapterHienThiHinhBinhLuanDC.notifyDataSetChanged();
+            }
+        }
     }
 }
