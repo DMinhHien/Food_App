@@ -26,14 +26,13 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
     Context context;
     int layout;
     List<CommentModel> commentModelList;
-    List<Bitmap> listbitmap;
+
 
 
     public Comment(Context context, int layout, List<CommentModel> commentModelList) {
         this.context = context;
         this.layout = layout;
         this.commentModelList = commentModelList;
-        listbitmap= new ArrayList<>();
 
     }
 
@@ -63,6 +62,7 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull Comment.ViewHolder holder, int position) {
         final CommentModel comModel=commentModelList.get(position);
+        List<Bitmap> listbitmap= new ArrayList<>();
         holder.txtCommentTitle.setText(comModel.getTitle());
         holder.txtCommentContent.setText(comModel.getContent());
         holder.txtScore.setText(comModel.getScore()+"");

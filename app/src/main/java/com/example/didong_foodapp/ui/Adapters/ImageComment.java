@@ -91,8 +91,12 @@ public class ImageComment extends RecyclerView.Adapter<ImageComment.ViewHolder>{
 
     @Override
     public int getItemCount() {
-        if(!isDetail)
-            return 4;
+        if(!isDetail) {
+            if (listimage.size() < 4) {
+                return listimage.size();
+            }
+            else return 4;
+        }
         else
             return listimage.size();
     }

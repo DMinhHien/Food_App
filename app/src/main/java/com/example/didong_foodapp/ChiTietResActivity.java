@@ -89,6 +89,7 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
                 Intent iBinhLuan =new Intent (ChiTietResActivity.this, BinhLuanActivity.class);
                 iBinhLuan.putExtra("tenquan",resModel.getNameR());
                 iBinhLuan.putExtra("diachi",resModel.getChiNhanhModelList().get(0).getDiachi());
+                iBinhLuan.putExtra("maquan",resModel.getMaR());
                 ChiTietResActivity.this.startActivity(iBinhLuan);
                 Log.d("Kiemtra","ok");
             }
