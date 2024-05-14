@@ -15,15 +15,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.didong_foodapp.ui.Controller.LoginController;
+import com.example.didong_foodapp.ui.Models.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseAuth;
+
 
 public class RegistrationActivity extends AppCompatActivity {
-    TextInputEditText InputMail,InputPassword;
+    TextInputEditText InputMail,InputPassword,InputUsername;
     Button Reg;
     FirebaseAuth mAuth;
     ProgressBar bar;
@@ -39,6 +41,7 @@ public class RegistrationActivity extends AppCompatActivity {
         });
         InputMail=findViewById(R.id.Email);
         InputPassword=findViewById(R.id.Pass);
+        InputUsername=findViewById(R.id.user);
         bar=findViewById(R.id.progressBar);
         mAuth=FirebaseAuth.getInstance();
         Reg=findViewById(R.id.button_register);
@@ -65,6 +68,13 @@ public class RegistrationActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(RegistrationActivity.this, "Account created.",
                                             Toast.LENGTH_SHORT).show();
+                                    UserModel uModel=new UserModel();
+                                    uModel.setEmail(email);
+                                    uModel.setUsername(InputUsername.getText().toString());
+                                    String uid = task.getResult().getUser().getUid();
+                                    LoginController LController= new LoginController();
+                                    LController.AddInfoController(uModel,uid);
+                                    startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
                                     
                                 } else {
                                     // If sign in fails, display a message to the user.
@@ -84,6 +94,6 @@ public class RegistrationActivity extends AppCompatActivity {
         startActivity(new Intent(RegistrationActivity.this,LoginActivity.class));
     }
     public void login(View view) {
-        startActivity(new Intent(RegistrationActivity.this,MainActivity.class));
+        startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
     }
 }
