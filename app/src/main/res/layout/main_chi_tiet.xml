@@ -83,7 +83,8 @@
             android:layout_width="match_parent"
             android:layout_height="280dp"
             app:cardCornerRadius="10dp"
-            android:layout_margin = "3dp">
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginVertical="2dp">
 
             <ImageView
                 android:id="@+id/imageChiTiet"
@@ -97,14 +98,17 @@
             android:id="@+id/nameR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="3dp"
             android:text="Gogi House"
             android:textColor="#000000"
             android:textSize="25sp"
             android:textStyle="bold" />
+
         <TextView
             android:id="@+id/addressR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="3dp"
             android:text="36 Triệu Quang Phục Quận 3" />
         <View
             android:layout_width="match_parent"
@@ -219,13 +223,15 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="10dp">
+
                     <TextView
                         android:id="@+id/OpenTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="3dp"
                         android:text="7:00-20:00"
-                        android:textStyle="bold"
-                        android:layout_weight="1"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/Status"
