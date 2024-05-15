@@ -15,54 +15,188 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
                 android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:background="@drawable/gradient_button"
+                android:drawableTop="@drawable/baseline_check_24_white"
+                android:padding="3dp"
                 android:text="Lượt thích"
-                android:backgroundTint='@color/black'
-                android:drawableTop="@drawable/baseline_check_24_white"/>
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
                 android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:background="@drawable/gradient_button"
+                android:drawableTop="@drawable/baseline_camera_alt_24_white"
+                android:padding="3dp"
                 android:text="Tải ảnh"
-                android:backgroundTint='@color/black'
-                android:drawableTop="@drawable/baseline_camera_alt_24_white"/>
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
             <Button
                 android:id="@+id/btnBinhLuan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
                 android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:background="@drawable/gradient_button"
+                android:drawableTop="@drawable/baseline_comment_24_white"
+                android:padding="3dp"
                 android:text="Bình luận"
-                android:backgroundTint='@color/black'
-                android:drawableTop="@drawable/baseline_comment_24_white"/>
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
                 android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:background="@drawable/gradient_button"
+                android:drawableTop="@drawable/baseline_bookmark_24_white"
+                android:padding="3dp"
                 android:text="Lưu  lại"
-                android:backgroundTint='@color/black'
-                android:drawableTop="@drawable/baseline_bookmark_24_white"/>
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
                 android:layout_weight="1"
+                android:background="@drawable/gradient_button"
+                android:drawableTop="@drawable/baseline_ios_share_24_white"
+                android:padding="3dp"
+                android:text="Chia sẻ"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:text="Chia se"
-                android:backgroundTint='@color/black'
-                android:drawableTop="@drawable/baseline_ios_share_24_white"/>
+                android:textColor="@color/white" />
 
         </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            app:cardCornerRadius="10dp"
+            android:layout_margin = "3dp">
+
+            <ImageView
+                android:id="@+id/imageChiTiet"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:background="@drawable/burger2"
+                android:scaleType="fitXY" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/nameR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gogi House"
+            android:textColor="#000000"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/addressR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="36 Triệu Quang Phục Quận 3" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/silver"
+            android:layout_marginTop="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtTotalImage"
+                    android:textColor="#FF0000"
+                    android:text="123"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tải ảnh"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="123"
+                    android:textColor="#FF0000"
+                    android:id="@+id/txtTotalCheckIn"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Check in"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtTotalComment"
+                    android:text="123"
+                    android:textColor="#FF0000"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bình luận"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="123"
+                    android:textColor="#FF0000"
+                    android:id="@+id/txtTotalSave"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lưu lại"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </LinearLayout>
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -75,110 +209,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
-
-
-                <ImageView
-                    android:id="@+id/imageChiTiet"
-                    android:layout_width="match_parent"
-                    android:layout_height="280dp"
-                    android:scaleType="fitXY"
-                    android:background="@drawable/burger2"/>
-                <TextView
-                    android:id="@+id/nameR"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Gogi House"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/addressR"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="36 Triệu Quang Phục Quận 3" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/silver"
-                    android:layout_marginTop="10dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_weight="1">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/txtTotalImage"
-                            android:text="123"
-                            android:textStyle="bold"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tải ảnh"
-                            android:textStyle="bold"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_weight="1">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="123"
-                            android:id="@+id/txtTotalCheckIn"
-                            android:textStyle="bold"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Check in"
-                            android:textStyle="bold"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_weight="1">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/txtTotalComment"
-                            android:text="123"
-                            android:textStyle="bold"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Bình luận"
-                            android:textStyle="bold"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_weight="1">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="123"
-                            android:id="@+id/txtTotalSave"
-                            android:textStyle="bold"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Lưu lại"
-                            android:textStyle="bold"/>
-                    </LinearLayout>
-
-
-                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
