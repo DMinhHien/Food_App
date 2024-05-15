@@ -135,9 +135,10 @@ public class CommentModel implements Parcelable {
         dest.writeString(title);
         dest.writeParcelable(uModel, flags);
     }
-    public void ThemBinhLuan(String maR,CommentModel comModel,final List<String> listImage){
+    public String ThemBinhLuan(String maR,CommentModel comModel,final List<String> listImage){
         DatabaseReference nodeComment= FirebaseDatabase.getInstance().getReference().child("commentR");
         String key =nodeComment.child(maR).push().getKey();
+
         nodeComment.child(maR).child(key).setValue(comModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -163,5 +164,6 @@ public class CommentModel implements Parcelable {
                 FirebaseDatabase.getInstance().getReference().child("imageComment").child(key).push().setValue(uri.getLastPathSegment());
             }
         }
+        return key;
     }
 }

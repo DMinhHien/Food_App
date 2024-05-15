@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.ui.Adapters.Comment;
 import com.example.didong_foodapp.ui.Controller.MenuController;
+import com.example.didong_foodapp.ui.Models.CommentModel;
 import com.example.didong_foodapp.ui.Models.RestaurantModel;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,6 +33,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -39,8 +45,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyCallback{
     TextView txtName,txtAddress,txtTime,txtStatus,txtTotalImage,
@@ -51,6 +59,7 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
     Toolbar toolbar;
     Comment adapterComment;
     RecyclerView recyclerComment;
+
     RecyclerView recyclerMenu;
     GoogleMap googleMap;
     SupportMapFragment mapFragment;
@@ -80,38 +89,23 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mapFragment.getMapAsync(this);
         menuController= new MenuController();
-
         btnBinhLuan = (Button) findViewById(R.id.btnBinhLuan);
         btnBinhLuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent iBinhLuan =new Intent (ChiTietResActivity.this, BinhLuanActivity.class);
+                iBinhLuan.putExtra("quananBinhLuan",resModel);
                 iBinhLuan.putExtra("tenquan",resModel.getNameR());
                 iBinhLuan.putExtra("diachi",resModel.getChiNhanhModelList().get(0).getDiachi());
                 iBinhLuan.putExtra("maquan",resModel.getMaR());
                 ChiTietResActivity.this.startActivity(iBinhLuan);
                 Log.d("Kiemtra","ok");
-            }
-        });
-
-
-    }
-    @Override
-    public boolean onSupportNavigateUp(){
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                // Thực hiện các xử lý bạn muốn trước khi đóng Activity
-                // Ví dụ: lưu dữ liệu, hiển thị thông báo, vv.
-
-                // Gọi finish() để đóng Activity
                 finish();
             }
-        };
-        // Gắn hành động cho dispatcher
-        getOnBackPressedDispatcher().addCallback(this, callback);
-        return true;
+
+        });
+
 
     }
     @Override
@@ -155,12 +149,11 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         });
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
         recyclerComment.setLayoutManager(layoutManager);
-        adapterComment = new Comment(this,R.layout.custom_layout_comment,resModel.getComModel());
-        recyclerComment.setAdapter( adapterComment);
+        adapterComment = new Comment(this,R.layout.custom_layout_comment,resModel.getComModel(),resModel.getMaR());
+        recyclerComment.setAdapter(adapterComment);
         adapterComment.notifyDataSetChanged();
         NestedScrollView nestedChiTiet=findViewById(R.id.NestedChiTiet);
         nestedChiTiet.smoothScrollTo(0,0);
-
         menuController.GetRestaurentMenuList(this,resModel.getMaR(),recyclerMenu);
 
     }

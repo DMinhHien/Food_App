@@ -1,6 +1,9 @@
 package com.example.didong_foodapp.ui.Adapters;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -16,23 +19,60 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.didong_foodapp.R;
 import com.example.didong_foodapp.ui.Models.CommentModel;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
     Context context;
     int layout;
     List<CommentModel> commentModelList;
+    SharedPreferences sharedPreferences;
 
 
 
-    public Comment(Context context, int layout, List<CommentModel> commentModelList) {
+    public Comment(Context context, int layout, List<CommentModel> commentModelListA,String maR) {
+        sharedPreferences = context.getSharedPreferences("newComment", MODE_PRIVATE);
+        String NewComment=sharedPreferences.getString("newComment","0");
+        if(NewComment.equals("isNewComment")){
+            String newComment=sharedPreferences.getString("newMaComment","0");
+            DatabaseReference NewCommentData= FirebaseDatabase.getInstance().getReference();
+            NewCommentData.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Log.d("Kiemtra","oke");
+                    DataSnapshot snapshotComment=snapshot.child("commentR").child(maR).child(newComment);
+                    CommentModel commentModel= snapshotComment.getValue(CommentModel.class);
+                    commentModel.setMaBL(snapshotComment.getKey());
+                    List<String> imageCommentList=new ArrayList<>();
+                    DataSnapshot snapshotNodeComment= snapshot.child("imageComment").child(newComment);
+                    for (DataSnapshot valueImageComment:snapshotNodeComment.getChildren())
+                        imageCommentList.add(valueImageComment.getValue(String.class));
+                    commentModel.setImageList(imageCommentList);
+                    commentModelListA.add(commentModel);
+                    SharedPreferences.Editor editor =  sharedPreferences.edit();
+                    editor.putString("restaurantFromComment", "none");
+                    editor.apply();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        }
         this.context = context;
         this.layout = layout;
-        this.commentModelList = commentModelList;
+        this.commentModelList = commentModelListA;
 
     }
 

@@ -1,12 +1,14 @@
 package com.example.didong_foodapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.didong_foodapp.ui.Adapters.AdapterHienThiHinhBinhLuanDC;
 import com.example.didong_foodapp.ui.Controller.CommentController;
 import com.example.didong_foodapp.ui.Models.CommentModel;
+import com.example.didong_foodapp.ui.Models.RestaurantModel;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -32,11 +35,14 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
     String maquanan;
     CommentController commentController;
     List<String> listHinhDuocChon;
-
+    SharedPreferences sharedPreferences;
+    RestaurantModel resModel;
     final int REQUEST_CHONHINHBINHLUAN = 11;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        sharedPreferences = getSharedPreferences("newComment", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
+        resModel=getIntent().getParcelableExtra("quananBinhLuan");
         setContentView(R.layout.layout_binhluan);
         maquanan=getIntent().getStringExtra("maquan");
         String tenquan =getIntent().getStringExtra("tenquan");
@@ -46,7 +52,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
         txtPost=findViewById(R.id.txtDangBinhLuan);
         txtTenQuanAn= findViewById(R.id.txtTenQuan);
         txtDiaChiQuanAn=findViewById(R.id.txtDiaChi);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar =findViewById(R.id.toolbarPost);
         btnChonHinh = (ImageButton) findViewById(R.id.btnChonHinh);
         recyclerViewChonHinhBinhLuan = findViewById(R.id.recyclerChonHinhBinhLuan);
         commentController= new CommentController();
@@ -55,7 +61,9 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
         recyclerViewChonHinhBinhLuan.setLayoutManager(layoutManager);
         txtDiaChiQuanAn.setText(diachi);
         txtTenQuanAn.setText(tenquan);
-
+        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
         btnChonHinh.setOnClickListener(this);
         txtPost.setOnClickListener(this);
     }
@@ -80,7 +88,15 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
             comModel.setScore(0);
             comModel.setLikes(0);
             comModel.setUser(FirebaseAuth.getInstance().getCurrentUser().getUid());
-            commentController.ThemBinhLuan(maquanan,comModel, listHinhDuocChon);
+            String maBL= commentController.ThemBinhLuan(maquanan,comModel, listHinhDuocChon);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("newComment","isNewComment");
+            editor.putString("newMaComment",maBL);
+            editor.commit();
+            Intent startActivity=new Intent(BinhLuanActivity.this, ChiTietResActivity.class);
+            startActivity.putExtra("quanan",resModel);
+            BinhLuanActivity.this.startActivity(startActivity);
+            finish();
         }
     }
 

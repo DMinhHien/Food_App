@@ -2,6 +2,7 @@ package com.example.didong_foodapp.ui.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
     List<RestaurantModel> resModelList;
     int resources;
     Context context;
+    SharedPreferences sharedPreferences;
 
     public RecyclerLocation(Context context, List<RestaurantModel> resModelList, int resources){
         this.resModelList= resModelList;
@@ -141,6 +143,13 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
                 context.startActivity(startActivity);
             }
         });
+//        sharedPreferences= context.getSharedPreferences("restaurantFromComment", Context.MODE_PRIVATE);
+//        String previousResComment=sharedPreferences.getString("restaurantFromComment","0");
+//        if (previousResComment.equals(resModel.getMaR())){
+//            Intent startActivity=new Intent(context, ChiTietResActivity.class);
+//            startActivity.putExtra("quanan",resModel);
+//            context.startActivity(startActivity);
+//        }
     }
 
     @Override
