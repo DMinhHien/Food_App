@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
@@ -26,6 +27,7 @@ import com.example.didong_foodapp.ui.Adapters.Comment;
 import com.example.didong_foodapp.ui.Controller.MenuController;
 import com.example.didong_foodapp.ui.Models.CommentModel;
 import com.example.didong_foodapp.ui.Models.RestaurantModel;
+import com.example.didong_foodapp.ui.Models.UserModel;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,6 +35,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,8 +51,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyCallback{
     TextView txtName,txtAddress,txtTime,txtStatus,txtTotalImage,
@@ -59,11 +66,16 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
     Toolbar toolbar;
     Comment adapterComment;
     RecyclerView recyclerComment;
-
+    String email;
     RecyclerView recyclerMenu;
     GoogleMap googleMap;
     SupportMapFragment mapFragment;
     MenuController menuController;
+    Button buttonSave;
+    UserModel userModel;
+    String uid;
+    private DatabaseReference mDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +102,10 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         mapFragment.getMapAsync(this);
         menuController= new MenuController();
         btnBinhLuan = (Button) findViewById(R.id.btnBinhLuan);
+        buttonSave = (Button) findViewById(R.id.btSave);
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        userModel = new UserModel();
+        mDatabase = FirebaseDatabase.getInstance().getReference("LikeRestaurant");
         btnBinhLuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,7 +121,12 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
             }
 
         });
-
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDatabase.child(uid).child(resModel.getMaR()).setValue(resModel);
+            }
+        });
 
     }
     @Override
@@ -158,7 +179,6 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
 
     }
 
-
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.googleMap=googleMap;
@@ -172,4 +192,8 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         CameraUpdate cameraUpdate= CameraUpdateFactory.newLatLngZoom(latlng,14);
         googleMap.moveCamera(cameraUpdate);
     }
+
+
+
+
 }

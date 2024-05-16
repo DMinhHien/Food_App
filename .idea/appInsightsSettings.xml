@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.didong_foodapp" />
-                  <option name="mobileSdkAppId" value="1:402338269746:android:aa80b91d57e6c2e8b54a2b" />
-                  <option name="projectId" value="didong-foodapp" />
-                  <option name="projectNumber" value="402338269746" />
+                  <option name="mobileSdkAppId" value="1:267636866368:android:65f3f42b3ab02bc3274ea5" />
+                  <option name="projectId" value="didong-foodapp-1465e" />
+                  <option name="projectNumber" value="267636866368" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
