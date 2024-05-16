@@ -62,7 +62,7 @@
                 android:background="@drawable/gradient_button"
                 android:drawableTop="@drawable/baseline_bookmark_24_white"
                 android:padding="3dp"
-                android:text="Lưu  lại"
+                android:text="Lưu"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
 

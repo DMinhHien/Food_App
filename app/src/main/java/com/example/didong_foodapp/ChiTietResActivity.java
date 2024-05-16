@@ -1,8 +1,10 @@
 package com.example.didong_foodapp;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -106,6 +108,7 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         userModel = new UserModel();
         mDatabase = FirebaseDatabase.getInstance().getReference("LikeRestaurant");
+
         btnBinhLuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,6 +128,16 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
             @Override
             public void onClick(View v) {
                 mDatabase.child(uid).child(resModel.getMaR()).setValue(resModel);
+                if(buttonSave.getText()=="Đã lưu")
+                {
+                    buttonSave.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.baseline_bookmark_24_white,0,0);
+                    buttonSave.setText("Lưu");
+                }
+                else
+                {
+                    buttonSave.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.baseline_bookmark_24,0,0);
+                    buttonSave.setText("Đã lưu");
+                }
             }
         });
 

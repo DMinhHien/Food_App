@@ -126,7 +126,6 @@
         android:background="@drawable/gradient_button"
         android:text="REGISTER"
         android:onClick="login"
-        android:text="REGISTER"
         android:textAlignment="center"
         android:textColor="#FBFBFB"
         android:textSize="20sp"
