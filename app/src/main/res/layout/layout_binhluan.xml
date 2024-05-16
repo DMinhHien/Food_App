@@ -9,7 +9,7 @@
         android:id="@+id/toolbarPost"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#f50012"
+        android:background="#a4161a"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
