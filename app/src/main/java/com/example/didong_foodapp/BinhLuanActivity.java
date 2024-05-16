@@ -61,7 +61,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
         recyclerViewChonHinhBinhLuan.setLayoutManager(layoutManager);
         txtDiaChiQuanAn.setText(diachi);
         txtTenQuanAn.setText(tenquan);
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setDisplayShowHomeEnabled(true);
         btnChonHinh.setOnClickListener(this);
