@@ -26,7 +26,7 @@
         android:text="Sign In"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="33sp"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="#CCCCCC"
-        android:drawableLeft="@drawable/email"
+        android:drawableLeft="@drawable/user"
         android:drawablePadding="13dp"
         android:hint="Email"
         android:textColor="@color/white"
@@ -76,8 +76,10 @@
         android:indeterminateTint="@android:color/holo_blue_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_sign" />
+        app:layout_constraintTop_toBottomOf="@+id/button_sign"
+        app:layout_constraintVertical_bias="0.713" />
 
     <Button
         android:id="@+id/button_sign"
@@ -87,6 +89,7 @@
         android:background="@drawable/gradient_button"
         android:text="LOGIN"
         android:onClick="login"
+        android:text="LOGIN"
         android:textAlignment="center"
         android:textColor="#FBFBFB"
         android:textSize="20sp"
@@ -103,14 +106,14 @@
         android:layout_marginTop="28dp"
         android:text="Don't have an account?"
         android:textColor="@color/white"
-        android:textSize="16dp"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.341"
+        app:layout_constraintHorizontal_bias="0.292"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_sign"
-        app:layout_constraintVertical_bias="0.123" />
+        app:layout_constraintVertical_bias="0.121" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -121,7 +124,7 @@
         android:text="Register"
         android:textAlignment="center"
         android:textColor="@color/orange"
-        android:textSize="16dp"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
