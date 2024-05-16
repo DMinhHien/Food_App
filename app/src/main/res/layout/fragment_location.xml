@@ -12,48 +12,7 @@
         android:layout_height="match_parent"
         android:background="@color/silver"
         tools:context=".MainActivity">
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/group_tab"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:orientation="horizontal"
-            android:background="@color/white"
-            android:gravity="center">
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Latest"
-                android:layout_weight="1"
-                android:button="@color/trans"
-                android:drawableBottom="@drawable/baseline_keyboard_arrow_down_24"
-                android:textAlignment="center"
-                android:textColor="@drawable/radio_changetext"
-                android:background="@drawable/custom_changebackground"
-                android:checked="true"/>
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Category"
-                android:layout_weight="1"
-                android:button="@color/trans"
-                android:drawableBottom="@drawable/baseline_keyboard_arrow_down_24"
-                android:textAlignment="center"
-                android:textColor="@drawable/radio_changetext"
-                android:background="@drawable/custom_changebackground"/>
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="HCM"
-                android:layout_weight="1"
-                android:button="@color/trans"
-                android:drawableBottom="@drawable/baseline_keyboard_arrow_down_24"
-                android:textAlignment="center"
-                android:textColor="@drawable/radio_changetext"
-                android:background="@drawable/custom_changebackground"/>
-        </RadioGroup>
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,79 +33,27 @@
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        app:backgroundTint="@color/white"
-                        android:textColor="@color/black"
                         android:layout_margin="5dp"
-                        android:text="Nearby"
-                        android:textAllCaps="false" />
+                        android:layout_weight="1"
+                        android:text="Gần đây"
+                        android:textAllCaps="false"
+                        android:background="@drawable/gradient_button"
+                        android:textColor="@color/white"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
 
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@color/white"
-                        app:backgroundTint="@color/white"
-                        android:textColor="@color/black"
+                        android:background="@drawable/gradient_button"
+                        android:textColor="@color/white"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
                         android:layout_margin="5dp"
-                        android:text="Orders"
-                        android:textAllCaps="false"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        app:backgroundTint="@color/white"
-                        android:textColor="@color/black"
-                        android:layout_margin="5dp"
-                        android:text="E-card"
-                        android:textAllCaps="false"/>
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        app:backgroundTint="@color/white"
-                        android:textColor="@color/black"
-                        android:layout_margin="5dp"
-                        android:text="Coupon"
-                        android:textAllCaps="false"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        app:backgroundTint="@color/white"
-                        android:textColor="@color/black"
-                        android:layout_margin="5dp"
-                        android:text="Reviews"
-                        android:textAllCaps="false"/>
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:text="Reservations"
-                        android:textColor="@color/black"
-                        app:backgroundTint="@color/white"
+                        android:text="Đơn hàng"
                         android:textAllCaps="false"/>
 
                 </LinearLayout>
