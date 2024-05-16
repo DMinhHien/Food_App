@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="164dp"
         android:fontFamily="@font/lobster"
-        android:text="Sign in"
+        android:text="Sign In"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="33sp"
