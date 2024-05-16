@@ -9,16 +9,20 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.didong_foodapp.ui.fragments.FoodFragment;
 import com.example.didong_foodapp.ui.fragments.LocationFragment;
+import com.example.didong_foodapp.ui.fragments.SavedFragment;
 
 
 public class ViewPagerMain extends FragmentStateAdapter {
     FoodFragment food_fragment;
     LocationFragment location_fragment;
 
+    SavedFragment saved_fragment;
+
     public ViewPagerMain(FragmentManager fragmentManager, Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
         food_fragment = new FoodFragment();
         location_fragment = new LocationFragment();
+        saved_fragment = new SavedFragment();
     }
 
     @Override
@@ -28,12 +32,14 @@ public class ViewPagerMain extends FragmentStateAdapter {
                 return location_fragment;
             case 1:
                 return food_fragment;
+            case 2:
+                return saved_fragment;
         }
         return null;
     }
 
     @Override
     public int getItemCount() {
-        return 2; // Số lượng fragment trong viewpager
+        return 3; // Số lượng fragment trong viewpager
     }
 }

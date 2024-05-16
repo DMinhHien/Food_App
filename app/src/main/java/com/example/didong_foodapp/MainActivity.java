@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
     ViewPager2 viewPageMain;
-    RadioButton rdLocation,rdFood;
+    RadioButton rdLocation,rdFood,rdLuuLai;
     RadioGroup rdGroup;
 
     @Override
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         });
         rdLocation=(RadioButton) findViewById(R.id.group_place);
         rdFood= (RadioButton) findViewById(R.id.group_food);
+        rdLuuLai =(RadioButton) findViewById(R.id.rdluulai);
         rdGroup=(RadioGroup) findViewById(R.id.group_food_place);
         viewPageMain=(ViewPager2) findViewById(R.id.viewpager_main);
         ViewPagerMain viewpagermain = new ViewPagerMain(getSupportFragmentManager(), getLifecycle());
@@ -48,6 +49,10 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     case 1:
                          rdFood.setChecked(true);
                         break;
+                    case 2:
+                        rdLuuLai.setChecked(true);
+                        break;
+
                 }
             }
 
@@ -55,13 +60,18 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         viewPageMain.registerOnPageChangeCallback(pageChangeCallback);
         rdGroup.setOnCheckedChangeListener(this);
     }
+
+
+
     @Override
     public void onCheckedChanged(RadioGroup group,@IdRes int checkedId) {
         if (checkedId == R.id.group_place) {
             viewPageMain.setCurrentItem(0);
         } else if (checkedId == R.id.group_food) {
-            viewPageMain.setCurrentItem(1);
-        }
+            viewPageMain.setCurrentItem(1);}
+            else if(checkedId==R.id.rdluulai)
+                viewPageMain.setCurrentItem(2);
+
     }
     public void logout(View view) {
         startActivity(new Intent(MainActivity.this,WelcomeActivity.class));
