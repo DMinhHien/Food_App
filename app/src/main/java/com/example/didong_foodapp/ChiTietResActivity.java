@@ -127,16 +127,18 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDatabase.child(uid).child(resModel.getMaR()).setValue(resModel);
+
                 if(buttonSave.getText()=="Đã lưu")
                 {
                     buttonSave.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.baseline_bookmark_24_white,0,0);
                     buttonSave.setText("Lưu");
+                    mDatabase.child(uid).child(resModel.getMaR()).removeValue();
                 }
                 else
                 {
                     buttonSave.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.baseline_bookmark_24,0,0);
                     buttonSave.setText("Đã lưu");
+                    mDatabase.child(uid).child(resModel.getMaR()).setValue(resModel);
                 }
             }
         });
