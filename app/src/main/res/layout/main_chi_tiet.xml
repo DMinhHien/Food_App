@@ -54,6 +54,7 @@
                 android:textColor="@color/white" />
 
             <Button
+                android:id="@+id/btSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -61,7 +62,7 @@
                 android:background="@drawable/gradient_button"
                 android:drawableTop="@drawable/baseline_bookmark_24_white"
                 android:padding="3dp"
-                android:text="Lưu  lại"
+                android:text="Lưu"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
 
