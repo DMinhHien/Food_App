@@ -9,9 +9,25 @@
         android:id="@+id/toolbarPost"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/orange"
+        android:background="#f50012"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtHuy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="3dp"
+        android:padding="5dp"
+        android:text="Hủy"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,27 +36,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="3dp"
         android:layout_marginRight="5dp"
-        android:text="@string/dang"
+        android:padding="5dp"
+        android:text="Gửi"
+        android:textColor="@color/white"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.957"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="3dp"
+        android:padding="5dp"
+        android:text="Viết bình luận"
+        android:textStyle="bold"
         android:textColor="@color/white"
-        android:padding="5dp"/>
+        android:textSize="20sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:background="@color/silver"
+        android:layout_marginTop="45dp"
+        android:background="#f5f5f5"
         android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbarPost">
 
@@ -49,6 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gogi House"
+            android:textColor="#e91012"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -56,6 +89,7 @@
             android:id="@+id/txtDiaChi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#525252"
             android:text="323 Tran Hung Dao" />
     </LinearLayout>
 
@@ -64,6 +98,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Tiêu đề (không bắt buộc)"
+        android:textColorHint="#cac9ce"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +107,7 @@
     <View
         android:id="@+id/View"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="1dp"
         android:background="@color/silver"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,6 +120,7 @@
         android:layout_height="321dp"
         android:layout_weight="1"
         android:gravity="top"
+        android:textColorHint="#b5b5b5"
         android:hint="Viết trên 100 từ, đúng chính tả, ngôn từ văn hóa để có điểm thưởng "
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,11 +140,10 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="418dp"
-
-        android:layout_height="73dp"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
         android:layout_marginTop="44dp"
-        android:background="@color/silver"
+        android:background="#f5f5f5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.571"
@@ -119,10 +154,13 @@
         <ImageButton
 
             android:id="@+id/btnChonHinh"
+            style="@android:style/Widget.Material.ImageButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/silver"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/photocamera" />
 
         <ImageButton
@@ -130,6 +168,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/silver"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/hashtag" />
 
         <ImageButton
@@ -137,6 +176,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/silver"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/rating" />
     </LinearLayout>
 
