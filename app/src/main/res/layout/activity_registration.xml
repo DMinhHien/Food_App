@@ -15,13 +15,13 @@
         android:scaleType="centerCrop"
         android:src="@drawable/bg4"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="0dp" />
+        tools:layout_editor_absoluteY="16dp" />
 
     <TextView
         android:id="@+id/TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="108dp"
         android:fontFamily="@font/lobster"
         android:text="Register"
         android:textAlignment="center"
@@ -87,6 +87,25 @@
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintWidth_percent=".8" />
 
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/PassAgain"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#CCCCCC"
+        android:drawableLeft="@drawable/pass"
+        android:drawablePadding="13dp"
+        android:hint="Password Again"
+        android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Email"
+        app:layout_constraintVertical_bias="0.255"
+        app:layout_constraintWidth_percent=".8" />
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
@@ -97,7 +116,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_register"
-        app:layout_constraintVertical_bias="0.172" />
+        app:layout_constraintVertical_bias="0.272" />
 
     <Button
         android:id="@+id/button_register"
@@ -107,6 +126,7 @@
         android:background="@drawable/gradient_button"
         android:text="REGISTER"
         android:onClick="login"
+        android:text="REGISTER"
         android:textAlignment="center"
         android:textColor="#FBFBFB"
         android:textSize="20sp"
@@ -147,7 +167,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.13"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/button_register"
         app:layout_constraintVertical_bias="0.597" />
