@@ -183,7 +183,7 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         });
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
         recyclerComment.setLayoutManager(layoutManager);
-        adapterComment = new Comment(this,R.layout.custom_layout_comment,resModel.getComModel(),resModel.getMaR());
+        adapterComment = new Comment(this,R.layout.custom_layout_comment,resModel.getComModel(),resModel.getMaR(),resModel);
         recyclerComment.setAdapter(adapterComment);
         adapterComment.notifyDataSetChanged();
         NestedScrollView nestedChiTiet=findViewById(R.id.NestedChiTiet);
