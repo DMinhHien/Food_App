@@ -16,7 +16,6 @@ import com.example.didong_foodapp.ui.fragments.SavedFragment;
 public class ViewPagerMain extends FragmentStateAdapter {
     FoodFragment food_fragment;
     LocationFragment location_fragment;
-
     SavedFragment saved_fragment;
 
     public ViewPagerMain(FragmentManager fragmentManager, Lifecycle lifecycle) {
