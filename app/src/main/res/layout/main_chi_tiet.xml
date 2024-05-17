@@ -237,7 +237,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:paddingLeft="3dp"
+                        android:paddingLeft="5dp"
+                        android:textSize="15sp"
                         android:text="7:00-20:00"
                         android:textStyle="bold" />
 
@@ -246,7 +247,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="####"
-                        android:textSize="18dp"
+                        android:layout_marginEnd="5dp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
                 </LinearLayout>
                 <include
