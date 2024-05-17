@@ -83,6 +83,20 @@ public class AdapterSaveRestaurant extends RecyclerView.Adapter<AdapterSaveResta
                 }
             });
         }
+        if (resModel.getComModel().size()>0){
+            holder.txtTotalComment.setText(resModel.getComModel().size()+"");
+            int totalComment=0;
+            int sumScore=0;
+            for (CommentModel commentModel1:resModel.getComModel()){
+                totalComment+=commentModel1.getImageList().size();
+                sumScore+=commentModel1.getScore();
+            }
+            double average=sumScore/resModel.getComModel().size();
+            holder.txtAverage.setText(String.format("%.1f",average));
+            if (totalComment>0)
+                holder.txtTotalImage.setText(totalComment+"");
+
+        }
 
         //Load address and distance
 
