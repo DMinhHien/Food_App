@@ -23,7 +23,7 @@ import com.example.didong_foodapp.ui.Models.RestaurantModel;
 public class LocationFragment extends Fragment {
     LocationController locationController;
     SharedPreferences sharedPreferences;
-//    RestaurantModel RModel;
+    //    RestaurantModel RModel;
     RecyclerView recyclerLocation;
     ProgressBar pBar;
     @Nullable

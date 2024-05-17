@@ -16,7 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RestaurantModel implements Parcelable {
+public class SaveRestaurantModel implements Parcelable {
     int order;
     String closeTime,openTime,nameR,introVid,maR;
     DatabaseReference nodeRoot;
@@ -32,7 +32,7 @@ public class RestaurantModel implements Parcelable {
     }
 
 
-    protected RestaurantModel(Parcel in) {
+    protected SaveRestaurantModel(Parcel in) {
         order = in.readInt();
         closeTime = in.readString();
         openTime = in.readString();
@@ -48,7 +48,7 @@ public class RestaurantModel implements Parcelable {
         in.readTypedList(comModel,CommentModel.CREATOR);
     }
 
-    public static final Creator<RestaurantModel> CREATOR = new Creator<RestaurantModel>() {
+    public static final Parcelable.Creator<RestaurantModel> CREATOR = new Parcelable.Creator<RestaurantModel>() {
         @Override
         public RestaurantModel createFromParcel(Parcel in) {
             return new RestaurantModel(in);
@@ -88,7 +88,7 @@ public class RestaurantModel implements Parcelable {
     }
 
 
-    public RestaurantModel(){
+    public SaveRestaurantModel(){
         nodeRoot= FirebaseDatabase.getInstance().getReference();
     }
 
@@ -158,7 +158,7 @@ public class RestaurantModel implements Parcelable {
         this.tienich = tienich;
     }
 
-    public void getDanhSachQuanAn(final LocationInterface locationInterface,Location currentLocation){
+    public void getDanhSachQuanAn(final LocationInterface locationInterface, Location currentLocation){
         ValueEventListener valueEventListener= new ValueEventListener() {
 
             @Override
