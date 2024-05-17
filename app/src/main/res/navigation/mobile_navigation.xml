@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_favourite" />
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.example.didong_foodapp.CartFragment"
+        android:name="com.example.didong_foodapp.ui.fragments.CartFragment"
         android:label="Cart"
         tools:layout="@layout/fragment_cart" />
 </navigation>
