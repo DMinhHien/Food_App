@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.didong_foodapp.ui.fragments.CartFragment;
 import com.example.didong_foodapp.ui.fragments.FoodFragment;
 import com.example.didong_foodapp.ui.fragments.LocationFragment;
 import com.example.didong_foodapp.ui.fragments.SavedFragment;
@@ -34,6 +35,7 @@ public class ViewPagerMain extends FragmentStateAdapter {
                 return food_fragment;
             case 2:
                 return saved_fragment;
+
         }
         return null;
     }
