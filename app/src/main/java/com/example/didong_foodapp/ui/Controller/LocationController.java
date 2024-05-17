@@ -36,9 +36,28 @@ public class LocationController {
             public void getListRestaurantModel(RestaurantModel restaurantModel) {
                 RModelList.add(restaurantModel);
                 adapterRecyclerLocation.notifyDataSetChanged();
+
                 pBar.setVisibility(View.GONE);
             }
         };
         RModel.getDanhSachQuanAn(locationInterface,currentLocation);
+
+    }
+
+    public void getRestaurantLocationList1 (Context contextL,RecyclerView recyclerLocation, Location currentLocation){
+        final List<RestaurantModel> RModelList= new ArrayList<>();
+        RecyclerView.LayoutManager layoutmanager= new LinearLayoutManager(context);
+        recyclerLocation.setLayoutManager(layoutmanager);
+        adapterRecyclerLocation= new RecyclerLocation(contextL,RModelList, R.layout.custom_recyclerview_location);
+        recyclerLocation.setAdapter(adapterRecyclerLocation);
+        LocationInterface locationInterface=new LocationInterface() {
+            @Override
+            public void getListRestaurantModel(RestaurantModel restaurantModel) {
+                RModelList.add(restaurantModel);
+                adapterRecyclerLocation.notifyDataSetChanged();
+            }
+        };
+        RModel.getDanhSachQuanAn(locationInterface,currentLocation);
+
     }
 }

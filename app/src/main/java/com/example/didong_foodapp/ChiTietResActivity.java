@@ -1,9 +1,14 @@
 package com.example.didong_foodapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -47,9 +52,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
 
+import java.sql.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -75,10 +82,14 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
     UserModel userModel;
     String uid;
     private DatabaseReference mDatabase;
+    boolean check=true;
+    List<String> list = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.main_chi_tiet);
         resModel=getIntent().getParcelableExtra("quanan");
         txtName=findViewById(R.id.nameR);
@@ -97,8 +108,9 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         setSupportActionBar(toolbar);
         recyclerComment=findViewById(R.id.recycler_comment);
         recyclerMenu=findViewById(R.id.recyclerMenu);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
         mapFragment.getMapAsync(this);
         menuController= new MenuController();
         btnBinhLuan = (Button) findViewById(R.id.btnBinhLuan);
@@ -106,6 +118,8 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         userModel = new UserModel();
         mDatabase = FirebaseDatabase.getInstance().getReference("LikeRestaurant");
+        checkSave1(resModel);
+
         btnBinhLuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,22 +133,32 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
                 Log.d("Kiemtra","ok");
                 finish();
             }
-
         });
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDatabase.child(uid).child(resModel.getMaR()).setValue(resModel);
+
+                if(buttonSave.getText()=="Đã lưu")
+                {
+                    buttonSave.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.baseline_bookmark_24_white,0,0);
+                    buttonSave.setText("Lưu");
+                    mDatabase.child(uid).child(resModel.getMaR()).removeValue();
+                }
+                else
+                {
+                    buttonSave.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.baseline_bookmark_24,0,0);
+                    buttonSave.setText("Đã lưu");
+                    mDatabase.child(uid).child(resModel.getMaR()).setValue(resModel);
+                }
             }
         });
-
     }
     @Override
     public void onStart() {
 
-    super.onStart();
-        Calendar calendar=Calendar.getInstance();
+        super.onStart();
 
+        Calendar calendar=Calendar.getInstance();
         SimpleDateFormat dateFormat=new SimpleDateFormat("HH:mm");
         String currentTime=dateFormat.format(calendar.getTime());
         String openTime=resModel.getOpenTime();
@@ -152,6 +176,7 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         txtTitleToolbar.setText(resModel.getNameR());
         txtName.setText(resModel.getNameR());
         txtAddress.setText(resModel.getChiNhanhModelList().get(0).getDiachi());
@@ -170,7 +195,7 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         });
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
         recyclerComment.setLayoutManager(layoutManager);
-        adapterComment = new Comment(this,R.layout.custom_layout_comment,resModel.getComModel(),resModel.getMaR());
+        adapterComment = new Comment(this,R.layout.custom_layout_comment,resModel.getComModel(),resModel.getMaR(),resModel);
         recyclerComment.setAdapter(adapterComment);
         adapterComment.notifyDataSetChanged();
         NestedScrollView nestedChiTiet=findViewById(R.id.NestedChiTiet);
@@ -192,8 +217,38 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         CameraUpdate cameraUpdate= CameraUpdateFactory.newLatLngZoom(latlng,14);
         googleMap.moveCamera(cameraUpdate);
     }
+    public void checkSave1(RestaurantModel restaurantModel){
+       mDatabase.child(uid).addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot snapshot) {
+               for(DataSnapshot snap : snapshot.getChildren()){
+                   String resid = snap.getKey();
+                   list.add(resid);
+               }
+               if(check){
+                   for(int i = 0; i < list.size(); i++){
+                       if(restaurantModel.getMaR().equals(list.get(i))){
+                           buttonSave.setText("Đã lưu");
+                           buttonSave.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.baseline_bookmark_24,0,0);
+                           check=false;
+                           return;
+                       }
+                   }
+               }
+
+           }
+
+           @Override
+           public void onCancelled(@NonNull DatabaseError error) {
+
+           }
+       });
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
 
 
-
-
+    }
 }

@@ -22,19 +22,20 @@ import com.example.didong_foodapp.R;
 import com.example.didong_foodapp.ui.Models.ChiNhanhModel;
 import com.example.didong_foodapp.ui.Models.CommentModel;
 import com.example.didong_foodapp.ui.Models.RestaurantModel;
+import com.example.didong_foodapp.ui.Models.SaveRestaurantModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
-public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.ViewHolder>  {
-    List<RestaurantModel> resModelList;
+public class AdapterSaveRestaurant extends RecyclerView.Adapter<AdapterSaveRestaurant.ViewHolder>  {
+    List<SaveRestaurantModel> resModelList;
     int resources;
     Context context;
     SharedPreferences sharedPreferences;
 
-    public RecyclerLocation(Context context, List<RestaurantModel> resModelList, int resources){
+    public AdapterSaveRestaurant(Context context, List<SaveRestaurantModel> resModelList, int resources){
         this.resModelList= resModelList;
         this.resources=resources;
         this.context=context;
@@ -71,15 +72,15 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
     }
     @NonNull
     @Override
-    public RecyclerLocation.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterSaveRestaurant.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(resources,parent,false);
         ViewHolder viewholder=new ViewHolder(view);
         return viewholder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerLocation.ViewHolder holder, int position) {
-        RestaurantModel resModel=resModelList.get(position);
+    public void onBindViewHolder(@NonNull AdapterSaveRestaurant.ViewHolder holder, int position) {
+        SaveRestaurantModel resModel=resModelList.get(position);
         holder.txtNameRLocation.setText(resModel.getNameR());
         if (resModel.isOrder()==1){
             holder.btnOrder.setVisibility(View.VISIBLE);
@@ -143,17 +144,13 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
                 context.startActivity(startActivity);
             }
         });
-        sharedPreferences= context.getSharedPreferences("restaurantFromComment", Context.MODE_PRIVATE);
-       String previousResComment=sharedPreferences.getString("previousMaR","0");
-       String check=sharedPreferences.getString("newComment","0");
-       if (previousResComment.equals(resModel.getMaR())&&(check.equals("true"))){
-           Intent startActivity=new Intent(context, ChiTietResActivity.class);
-           startActivity.putExtra("quanan",resModel);
-           context.startActivity(startActivity);
-           SharedPreferences.Editor editor =  sharedPreferences.edit();
-           editor.putString("newComment", "none");
-           editor.apply();
-        }
+//        sharedPreferences= context.getSharedPreferences("restaurantFromComment", Context.MODE_PRIVATE);
+//        String previousResComment=sharedPreferences.getString("restaurantFromComment","0");
+//        if (previousResComment.equals(resModel.getMaR())){
+//            Intent startActivity=new Intent(context, ChiTietResActivity.class);
+//            startActivity.putExtra("quanan",resModel);
+//            context.startActivity(startActivity);
+//        }
     }
 
     @Override

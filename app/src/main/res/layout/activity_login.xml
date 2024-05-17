@@ -89,7 +89,6 @@
         android:background="@drawable/gradient_button"
         android:text="LOGIN"
         android:onClick="login"
-
         android:textAlignment="center"
         android:textColor="#FBFBFB"
         android:textSize="20sp"
