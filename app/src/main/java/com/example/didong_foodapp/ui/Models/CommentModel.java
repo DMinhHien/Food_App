@@ -170,9 +170,4 @@ public class CommentModel implements Parcelable {
         }
     }
 
-    public void SuaBinhLuan(String maR,CommentModel comModel,final List<String> listImage) {
-        DatabaseReference nodeComment = FirebaseDatabase.getInstance().getReference().child("commentR").child(maR).child(comModel.maBL);
-        nodeComment.child("content").setValue(comModel.getContent());
-        nodeComment.child("title").setValue(comModel.getTitle());
-    }
 }

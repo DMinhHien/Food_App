@@ -124,11 +124,16 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
                             iBinhLuan.putExtra("currentComment",comModel);
                             iBinhLuan.putExtra("isEdit","true");
                             context.startActivity(iBinhLuan);
-                            holder.commentContainer.removeAllViews();
+                            DatabaseReference nodeComment = FirebaseDatabase.getInstance().getReference().
+                                    child("commentR").child(resModel.getMaR()).child(comModel.getMaBL());
+                            nodeComment.removeValue();
                             return true;
                         } else if (item.getItemId() == R.id.menu_item_xoa) {
                             // Xử lý hành động cho menu item 2
+                            DatabaseReference nodeComment = FirebaseDatabase.getInstance().getReference().
+                                    child("commentR").child(resModel.getMaR()).child(comModel.getMaBL());
                             holder.commentContainer.removeAllViews();
+                            nodeComment.removeValue();
                             return true;
                         }
                         return false;
