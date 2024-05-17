@@ -3,10 +3,12 @@ package com.example.didong_foodapp.ui.Models;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.example.didong_foodapp.ui.Controller.Interface.LocationInterface;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -163,9 +165,10 @@ public class SaveRestaurantModel implements Parcelable {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                DataSnapshot datSnapshotR=snapshot.child("restaurants");
+                DataSnapshot datSnapshotR=snapshot.child("LikeRestaurant").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 //Lay danh sach quan an
                 for (DataSnapshot dataValue:datSnapshotR.getChildren() ){
+
                     RestaurantModel restaurantModel= dataValue.getValue(RestaurantModel.class);
                     restaurantModel.setMaR((dataValue.getKey()));
                     DataSnapshot dataSnapShotImage= snapshot.child("imageR").child(dataValue.getKey());
