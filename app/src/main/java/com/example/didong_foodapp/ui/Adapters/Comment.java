@@ -48,36 +48,6 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
 
 
     public Comment(Context context, int layout, List<CommentModel> commentModelListA,String maR,RestaurantModel resModel) {
-        sharedPreferences = context.getSharedPreferences("newComment", MODE_PRIVATE);
-        String NewComment=sharedPreferences.getString("newComment","0");
-        if(NewComment.equals("isNewComment")){
-            String newComment=sharedPreferences.getString("newMaComment","0");
-            DatabaseReference NewCommentData= FirebaseDatabase.getInstance().getReference();
-            NewCommentData.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Log.d("Kiemtra","oke");
-                    DataSnapshot snapshotComment=snapshot.child("commentR").child(maR).child(newComment);
-                    CommentModel commentModel= snapshotComment.getValue(CommentModel.class);
-                    commentModel.setMaBL(snapshotComment.getKey());
-                    List<String> imageCommentList=new ArrayList<>();
-                    DataSnapshot snapshotNodeComment= snapshot.child("imageComment").child(newComment);
-                    for (DataSnapshot valueImageComment:snapshotNodeComment.getChildren())
-                        imageCommentList.add(valueImageComment.getValue(String.class));
-                    commentModel.setImageList(imageCommentList);
-                    commentModelListA.add(commentModel);
-                    SharedPreferences.Editor editor =  sharedPreferences.edit();
-                    editor.putString("restaurantFromComment", "none");
-                    editor.apply();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-        }
         this.context = context;
         this.layout = layout;
         this.commentModelList = commentModelListA;
@@ -174,10 +144,6 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        int comments=commentModelList.size();
-        if (comments>5)
-            return 5;
-        else
             return commentModelList.size();
     }
 

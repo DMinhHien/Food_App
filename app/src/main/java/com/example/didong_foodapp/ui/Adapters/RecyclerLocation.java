@@ -143,13 +143,17 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
                 context.startActivity(startActivity);
             }
         });
-//        sharedPreferences= context.getSharedPreferences("restaurantFromComment", Context.MODE_PRIVATE);
-//        String previousResComment=sharedPreferences.getString("restaurantFromComment","0");
-//        if (previousResComment.equals(resModel.getMaR())){
-//            Intent startActivity=new Intent(context, ChiTietResActivity.class);
-//            startActivity.putExtra("quanan",resModel);
-//            context.startActivity(startActivity);
-//        }
+        sharedPreferences= context.getSharedPreferences("restaurantFromComment", Context.MODE_PRIVATE);
+       String previousResComment=sharedPreferences.getString("previousMaR","0");
+       String check=sharedPreferences.getString("newComment","0");
+       if (previousResComment.equals(resModel.getMaR())&&(check.equals("true"))){
+           Intent startActivity=new Intent(context, ChiTietResActivity.class);
+           startActivity.putExtra("quanan",resModel);
+           context.startActivity(startActivity);
+           SharedPreferences.Editor editor =  sharedPreferences.edit();
+           editor.putString("newComment", "none");
+           editor.apply();
+        }
     }
 
     @Override

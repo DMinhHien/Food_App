@@ -43,7 +43,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
     final int REQUEST_CHONHINHBINHLUAN = 11;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        sharedPreferences = getSharedPreferences("newComment", MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("restaurantFromComment", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         resModel=getIntent().getParcelableExtra("quananBinhLuan");
         setContentView(R.layout.layout_binhluan);
@@ -102,6 +102,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
             comModel.setTitle(title);
             comModel.setScore(0);
             comModel.setLikes(0);
+
             if (Objects.equals(isEdit, "true")){
                 CommentModel currentModel=getIntent().getParcelableExtra("currentComment");
                 for (CommentModel comModels:resModel.getComModel()){
@@ -109,20 +110,21 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
                         comModels.setTitle(title);
                         comModels.setContent(content);
                         comModels.setImageList( listHinhDuocChon);
+                        commentController.SuaBinhLuan(resModel.getMaR(), comModels, listHinhDuocChon);
                     }
                 }
 
             }
             else {
                 comModel.setUser(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                String maBL = commentController.ThemBinhLuan(maquanan, comModel, listHinhDuocChon);
+                commentController.ThemBinhLuan(maquanan, comModel, listHinhDuocChon);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("newComment", "isNewComment");
-                editor.putString("newMaComment", maBL);
+                editor.putString("newComment", "true");
+//                editor.putString("newMaComment", maBL);
+                editor.putString("previousMaR", resModel.getMaR());
                 editor.commit();
             }
-            Intent startActivity=new Intent(BinhLuanActivity.this, ChiTietResActivity.class);
-            startActivity.putExtra("quanan",resModel);
+            Intent startActivity=new Intent(BinhLuanActivity.this, MainActivity.class);
             BinhLuanActivity.this.startActivity(startActivity);
             finish();
         }

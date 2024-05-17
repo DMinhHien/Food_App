@@ -8,8 +8,12 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -135,7 +139,7 @@ public class CommentModel implements Parcelable {
         dest.writeString(title);
         dest.writeParcelable(uModel, flags);
     }
-    public String ThemBinhLuan(String maR,CommentModel comModel,final List<String> listImage){
+    public void ThemBinhLuan(String maR,CommentModel comModel,final List<String> listImage){
         DatabaseReference nodeComment= FirebaseDatabase.getInstance().getReference().child("commentR");
         String key =nodeComment.child(maR).push().getKey();
 
@@ -164,6 +168,11 @@ public class CommentModel implements Parcelable {
                 FirebaseDatabase.getInstance().getReference().child("imageComment").child(key).push().setValue(uri.getLastPathSegment());
             }
         }
-        return key;
+    }
+
+    public void SuaBinhLuan(String maR,CommentModel comModel,final List<String> listImage) {
+        DatabaseReference nodeComment = FirebaseDatabase.getInstance().getReference().child("commentR").child(maR).child(comModel.maBL);
+        nodeComment.child("content").setValue(comModel.getContent());
+        nodeComment.child("title").setValue(comModel.getTitle());
     }
 }

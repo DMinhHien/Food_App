@@ -1,6 +1,8 @@
 package com.example.didong_foodapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -78,6 +80,7 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
     String uid;
     private DatabaseReference mDatabase;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,8 +102,9 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         setSupportActionBar(toolbar);
         recyclerComment=findViewById(R.id.recycler_comment);
         recyclerMenu=findViewById(R.id.recyclerMenu);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
         mapFragment.getMapAsync(this);
         menuController= new MenuController();
         btnBinhLuan = (Button) findViewById(R.id.btnBinhLuan);
@@ -147,7 +151,6 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
 
     super.onStart();
         Calendar calendar=Calendar.getInstance();
-
         SimpleDateFormat dateFormat=new SimpleDateFormat("HH:mm");
         String currentTime=dateFormat.format(calendar.getTime());
         String openTime=resModel.getOpenTime();
