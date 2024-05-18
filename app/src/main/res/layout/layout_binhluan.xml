@@ -119,7 +119,8 @@
             android:layout_marginLeft="50dp"
             android:hint="Điểm(0-10)"
             android:textColorHint="#cac9ce"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:inputType="numberDecimal"/>
     </LinearLayout>
     <View
         android:id="@+id/View"
