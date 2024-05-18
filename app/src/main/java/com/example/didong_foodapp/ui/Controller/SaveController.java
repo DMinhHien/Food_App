@@ -2,7 +2,6 @@ package com.example.didong_foodapp.ui.Controller;
 
 import android.content.Context;
 import android.location.Location;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -14,35 +13,34 @@ import com.example.didong_foodapp.ui.Adapters.AdapterSaveRestaurant;
 import com.example.didong_foodapp.ui.Adapters.RecyclerLocation;
 import com.example.didong_foodapp.ui.Controller.Interface.LocationInterface;
 import com.example.didong_foodapp.ui.Models.RestaurantModel;
+import com.example.didong_foodapp.ui.Models.SaveRestaurantModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocationController {
+public class SaveController {
     Context context;
-    RestaurantModel RModel;
-    RecyclerLocation adapterRecyclerLocation;
-    public LocationController(Context context){
+    SaveRestaurantModel RModel;
+    AdapterSaveRestaurant adapterSaveRestaurant;
+
+    public SaveController(Context context){
         this.context=context;
-        RModel=new RestaurantModel();
+        RModel=new SaveRestaurantModel();
     }
-    public void getRestaurantLocationList (Context contextL,RecyclerView recyclerLocation, ProgressBar pBar, Location currentLocation){
-        final List<RestaurantModel> RModelList= new ArrayList<>();
-        RecyclerView.LayoutManager layoutmanager= new LinearLayoutManager(context);
+
+    public void getRestaurantLocationList (Context contextL, RecyclerView recyclerLocation, Location currentLocation) {
+        final List<RestaurantModel> RModelList = new ArrayList<>();
+        RecyclerView.LayoutManager layoutmanager = new LinearLayoutManager(context);
         recyclerLocation.setLayoutManager(layoutmanager);
-        adapterRecyclerLocation= new RecyclerLocation(contextL,RModelList, R.layout.custom_recyclerview_location);
-        recyclerLocation.setAdapter(adapterRecyclerLocation);
-        LocationInterface locationInterface=new LocationInterface() {
+        adapterSaveRestaurant = new AdapterSaveRestaurant(contextL, RModelList, R.layout.custom_recycleview_savelocation);
+        recyclerLocation.setAdapter(adapterSaveRestaurant);
+        LocationInterface locationInterface = new LocationInterface() {
             @Override
             public void getListRestaurantModel(RestaurantModel restaurantModel) {
                 RModelList.add(restaurantModel);
-                adapterRecyclerLocation.notifyDataSetChanged();
-
-                pBar.setVisibility(View.GONE);
+                adapterSaveRestaurant.notifyDataSetChanged();
             }
         };
-        RModel.getDanhSachQuanAn(locationInterface,currentLocation);
-
+        RModel.getDanhSachQuanAn(locationInterface, currentLocation);
     }
-
 }

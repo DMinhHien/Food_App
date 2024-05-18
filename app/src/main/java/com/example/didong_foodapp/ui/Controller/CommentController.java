@@ -9,7 +9,7 @@ public class CommentController {
     public CommentController(){
         comModel=new CommentModel();
     }
-    public String ThemBinhLuan(String maR,CommentModel comModel,final List<String> listImage){
-        return comModel.ThemBinhLuan(maR,comModel,listImage);
+    public void ThemBinhLuan(String maR,CommentModel comModel,final List<String> listImage){
+        comModel.ThemBinhLuan(maR,comModel,listImage);
     }
 }

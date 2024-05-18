@@ -3,10 +3,12 @@ package com.example.didong_foodapp.ui.Models;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.example.didong_foodapp.ui.Controller.Interface.LocationInterface;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -16,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RestaurantModel implements Parcelable {
+public class SaveRestaurantModel implements Parcelable {
     int order;
     String closeTime,openTime,nameR,introVid,maR;
     DatabaseReference nodeRoot;
@@ -32,7 +34,7 @@ public class RestaurantModel implements Parcelable {
     }
 
 
-    protected RestaurantModel(Parcel in) {
+    protected SaveRestaurantModel(Parcel in) {
         order = in.readInt();
         closeTime = in.readString();
         openTime = in.readString();
@@ -48,7 +50,7 @@ public class RestaurantModel implements Parcelable {
         in.readTypedList(comModel,CommentModel.CREATOR);
     }
 
-    public static final Creator<RestaurantModel> CREATOR = new Creator<RestaurantModel>() {
+    public static final Parcelable.Creator<RestaurantModel> CREATOR = new Parcelable.Creator<RestaurantModel>() {
         @Override
         public RestaurantModel createFromParcel(Parcel in) {
             return new RestaurantModel(in);
@@ -88,7 +90,7 @@ public class RestaurantModel implements Parcelable {
     }
 
 
-    public RestaurantModel(){
+    public SaveRestaurantModel(){
         nodeRoot= FirebaseDatabase.getInstance().getReference();
     }
 
@@ -158,14 +160,15 @@ public class RestaurantModel implements Parcelable {
         this.tienich = tienich;
     }
 
-    public void getDanhSachQuanAn(final LocationInterface locationInterface,Location currentLocation){
+    public void getDanhSachQuanAn(final LocationInterface locationInterface, Location currentLocation){
         ValueEventListener valueEventListener= new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                DataSnapshot datSnapshotR=snapshot.child("restaurants");
+                DataSnapshot datSnapshotR=snapshot.child("LikeRestaurant").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 //Lay danh sach quan an
                 for (DataSnapshot dataValue:datSnapshotR.getChildren() ){
+
                     RestaurantModel restaurantModel= dataValue.getValue(RestaurantModel.class);
                     restaurantModel.setMaR((dataValue.getKey()));
                     DataSnapshot dataSnapShotImage= snapshot.child("imageR").child(dataValue.getKey());

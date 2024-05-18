@@ -22,19 +22,20 @@ import com.example.didong_foodapp.R;
 import com.example.didong_foodapp.ui.Models.ChiNhanhModel;
 import com.example.didong_foodapp.ui.Models.CommentModel;
 import com.example.didong_foodapp.ui.Models.RestaurantModel;
+import com.example.didong_foodapp.ui.Models.SaveRestaurantModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
-public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.ViewHolder>  {
+public class AdapterSaveRestaurant extends RecyclerView.Adapter<AdapterSaveRestaurant.ViewHolder>  {
     List<RestaurantModel> resModelList;
     int resources;
     Context context;
     SharedPreferences sharedPreferences;
 
-    public RecyclerLocation(Context context, List<RestaurantModel> resModelList, int resources){
+    public AdapterSaveRestaurant(Context context, List<RestaurantModel> resModelList, int resources){
         this.resModelList= resModelList;
         this.resources=resources;
         this.context=context;
@@ -44,23 +45,12 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
         TextView txtNameRLocation,txtTitle1,txtTitle2,txtContent1,txtContent2,
                 txtScore1,txtScore2,txtTotalComment,txtTotalImage,txtAverage,
                 txtDistance,txtAddress;
-        Button btnOrder;
         ImageView imageLocationR;
-        LinearLayout commentContainer,commentContainer2;
         CardView cardView;
         public ViewHolder(View itemView){
             super(itemView);
             txtNameRLocation=(TextView) itemView.findViewById(R.id.txtNameRLocation);
-            btnOrder=itemView.findViewById(R.id.orderButton);
             imageLocationR=(ImageView) itemView.findViewById((R.id.imageLocation));
-            txtTitle1=itemView.findViewById(R.id.titleTxt1);
-            txtTitle2=itemView.findViewById(R.id.titleTxt2);
-            txtContent1=itemView.findViewById(R.id.contentTxt1);
-            txtContent2=itemView.findViewById(R.id.contentTxt2);
-            txtScore1=itemView.findViewById(R.id.scoreTxt1);
-            txtScore2=itemView.findViewById(R.id.scoreTxt2);
-            commentContainer=itemView.findViewById(R.id.commentContainer);
-            commentContainer2=itemView.findViewById(R.id.commentContainer2);
             txtTotalComment=itemView.findViewById(R.id.black_comment);
             txtTotalImage=itemView.findViewById(R.id.camera_black);
             txtAverage=itemView.findViewById(R.id.averageScore);
@@ -71,19 +61,17 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
     }
     @NonNull
     @Override
-    public RecyclerLocation.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterSaveRestaurant.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(resources,parent,false);
         ViewHolder viewholder=new ViewHolder(view);
         return viewholder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerLocation.ViewHolder holder, int position) {
-        RestaurantModel resModel=resModelList.get(position);
+    public void onBindViewHolder(@NonNull AdapterSaveRestaurant.ViewHolder holder, int position) {
+        RestaurantModel resModel = resModelList.get(position);
         holder.txtNameRLocation.setText(resModel.getNameR());
-        if (resModel.isOrder()==1){
-            holder.btnOrder.setVisibility(View.VISIBLE);
-        }
+
         if(!resModel.getImageR().isEmpty()){
             StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(resModel.getImageR().get(0));
             long megabyte=1024*1024;
@@ -96,18 +84,6 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
             });
         }
         if (resModel.getComModel().size()>0){
-            CommentModel comModel =resModel.getComModel().get(0);
-            holder.txtTitle1.setText( comModel.getTitle());
-            holder.txtContent1.setText( comModel.getContent());
-            holder.txtScore1.setText(comModel.getScore()+"");
-            if(resModel.getComModel().size()>1){
-                CommentModel comModel2 =resModel.getComModel().get(1);
-                holder.txtTitle2.setText(comModel2.getTitle());
-                holder.txtContent2.setText( comModel2.getContent());
-                holder.txtScore2.setText(comModel2.getScore()+"");
-            }
-            else
-                holder.commentContainer2.setVisibility(View.GONE);
             holder.txtTotalComment.setText(resModel.getComModel().size()+"");
             int totalComment=0;
             int sumScore=0;
@@ -121,10 +97,7 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
                 holder.txtTotalImage.setText(totalComment+"");
 
         }
-        else{
-            holder.commentContainer.setVisibility(View.GONE);
-            holder.commentContainer2.setVisibility(View.GONE);
-        }
+
         //Load address and distance
         if (resModel.getChiNhanhModelList().size()>0){
             ChiNhanhModel chiNhanhGan= resModel.getChiNhanhModelList().get(0);
@@ -135,6 +108,7 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
             holder.txtAddress.setText(chiNhanhGan.getDiachi());
             holder.txtDistance.setText(String.format("%.1f",chiNhanhGan.getDistance())+" km");
         }
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,17 +117,13 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
                 context.startActivity(startActivity);
             }
         });
-        sharedPreferences= context.getSharedPreferences("restaurantFromComment", Context.MODE_PRIVATE);
-       String previousResComment=sharedPreferences.getString("previousMaR","0");
-       String check=sharedPreferences.getString("newComment","0");
-       if (previousResComment.equals(resModel.getMaR())&&(check.equals("true"))){
-           Intent startActivity=new Intent(context, ChiTietResActivity.class);
-           startActivity.putExtra("quanan",resModel);
-           context.startActivity(startActivity);
-           SharedPreferences.Editor editor =  sharedPreferences.edit();
-           editor.putString("newComment", "none");
-           editor.apply();
-        }
+//        sharedPreferences= context.getSharedPreferences("restaurantFromComment", Context.MODE_PRIVATE);
+//        String previousResComment=sharedPreferences.getString("restaurantFromComment","0");
+//        if (previousResComment.equals(resModel.getMaR())){
+//            Intent startActivity=new Intent(context, ChiTietResActivity.class);
+//            startActivity.putExtra("quanan",resModel);
+//            context.startActivity(startActivity);
+//        }
     }
 
     @Override

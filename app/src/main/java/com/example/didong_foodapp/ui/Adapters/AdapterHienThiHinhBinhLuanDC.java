@@ -1,6 +1,8 @@
 package com.example.didong_foodapp.ui.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -18,11 +23,13 @@ public class AdapterHienThiHinhBinhLuanDC extends RecyclerView.Adapter<AdapterHi
     Context context;
     int resource;
     List<String> list;
-    public AdapterHienThiHinhBinhLuanDC(Context context,int resource, List<String> list)
+    boolean isEdit;
+    public AdapterHienThiHinhBinhLuanDC(Context context,int resource, List<String> list,boolean isEdit)
     {
         this.context=context;
         this.resource=resource;
         this.list=list;
+        this.isEdit=isEdit;
     }
     @NonNull
     @Override
@@ -35,8 +42,22 @@ public class AdapterHienThiHinhBinhLuanDC extends RecyclerView.Adapter<AdapterHi
 
     @Override
     public void onBindViewHolder(@NonNull AdapterHienThiHinhBinhLuanDC.ViewHolderHinhBinhLuan holder, int position) {
-        Uri uri = Uri.parse(list.get(position));
-        holder.imageView.setImageURI(uri);
+        if (!isEdit) {
+            Uri uri = Uri.parse(list.get(position));
+            Bitmap bit = BitmapFactory.decodeFile(String.valueOf(uri));
+            holder.imageView.setImageBitmap(bit);
+        }
+        else {
+            StorageReference storageImage = FirebaseStorage.getInstance().getReference().child(list.get(position));
+            long megabyte = 1024 * 1024;
+            storageImage.getBytes(megabyte).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                    holder.imageView.setImageBitmap(bitmap);
+                }
+            });
+        }
         holder.imgXoa.setTag(position);
         holder.imgXoa.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.Nullable;
@@ -23,13 +26,14 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BinhLuanActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView txtTenQuanAn, txtDiaChiQuanAn,txtPost;
     Toolbar toolbar;
     ImageButton btnChonHinh;
-    EditText edTitle,edComment;
+    EditText edTitle,edComment,edScore;
     RecyclerView recyclerViewChonHinhBinhLuan;
     AdapterHienThiHinhBinhLuanDC adapterHienThiHinhBinhLuanDC;
     String maquanan;
@@ -37,18 +41,22 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
     List<String> listHinhDuocChon;
     SharedPreferences sharedPreferences;
     RestaurantModel resModel;
+    CommentModel editingComment;
+    String isEdit;
     final int REQUEST_CHONHINHBINHLUAN = 11;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        sharedPreferences = getSharedPreferences("newComment", MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("restaurantFromComment", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         resModel=getIntent().getParcelableExtra("quananBinhLuan");
         setContentView(R.layout.layout_binhluan);
         maquanan=getIntent().getStringExtra("maquan");
         String tenquan =getIntent().getStringExtra("tenquan");
         String diachi = getIntent().getStringExtra("diachi");
+        isEdit= getIntent().getStringExtra("isEdit");
         edTitle=findViewById(R.id.editTextTitle);
         edComment=findViewById(R.id.editTextComment);
+        edScore=findViewById(R.id.editTextScore);
         txtPost=findViewById(R.id.txtDangBinhLuan);
         txtTenQuanAn= findViewById(R.id.txtTenQuan);
         txtDiaChiQuanAn=findViewById(R.id.txtDiaChi);
@@ -57,17 +65,39 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
         recyclerViewChonHinhBinhLuan = findViewById(R.id.recyclerChonHinhBinhLuan);
         commentController= new CommentController();
         listHinhDuocChon= new ArrayList<>();
+        if (Objects.equals(isEdit, "true")){
+            editingComment=getIntent().getParcelableExtra("currentComment");
+            txtPost.setText("Sửa");
+            edTitle.setText(editingComment.getTitle());
+            edComment.setText(editingComment.getContent());
+            listHinhDuocChon=editingComment.getImageList();
+            adapterHienThiHinhBinhLuanDC = new AdapterHienThiHinhBinhLuanDC(this,R.layout.layout_hienthihinhduocchon,listHinhDuocChon,true);
+            recyclerViewChonHinhBinhLuan.setAdapter(adapterHienThiHinhBinhLuanDC);
+            adapterHienThiHinhBinhLuanDC.notifyDataSetChanged();
+        }
         RecyclerView.LayoutManager layoutManager =new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false);
         recyclerViewChonHinhBinhLuan.setLayoutManager(layoutManager);
         txtDiaChiQuanAn.setText(diachi);
         txtTenQuanAn.setText(tenquan);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         btnChonHinh.setOnClickListener(this);
         txtPost.setOnClickListener(this);
     }
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent startActivity=new Intent(BinhLuanActivity.this, ChiTietResActivity.class);
+                startActivity.putExtra("quanan",resModel);
+                startActivity(startActivity);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -78,23 +108,24 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
             startActivityForResult(iChonHinhBinhLuan,REQUEST_CHONHINHBINHLUAN);
             return;
         }
-        else if (id==R.id.txtDangBinhLuan){
+        else if (id==R.id.txtDangBinhLuan) {
             CommentModel comModel;
-            comModel= new CommentModel();
-            String title=edTitle.getText().toString();
-            String content=edComment.getText().toString();
+            comModel = new CommentModel();
+            String title = edTitle.getText().toString();
+            String content = edComment.getText().toString();
+            String score=edScore.getText().toString();
             comModel.setContent(content);
             comModel.setTitle(title);
-            comModel.setScore(0);
+            comModel.setScore(Double.parseDouble(score));
             comModel.setLikes(0);
             comModel.setUser(FirebaseAuth.getInstance().getCurrentUser().getUid());
-            String maBL= commentController.ThemBinhLuan(maquanan,comModel, listHinhDuocChon);
+            commentController.ThemBinhLuan(maquanan, comModel, listHinhDuocChon);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("newComment","isNewComment");
-            editor.putString("newMaComment",maBL);
+            editor.putString("newComment", "true");
+//                editor.putString("newMaComment", maBL);
+            editor.putString("previousMaR", resModel.getMaR());
             editor.commit();
-            Intent startActivity=new Intent(BinhLuanActivity.this, ChiTietResActivity.class);
-            startActivity.putExtra("quanan",resModel);
+            Intent startActivity = new Intent(BinhLuanActivity.this, MainActivity.class);
             BinhLuanActivity.this.startActivity(startActivity);
             finish();
         }
@@ -109,7 +140,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
             {
                 listHinhDuocChon = new ArrayList<>();
                 listHinhDuocChon = data.getStringArrayListExtra("listHinhDuocChon");
-                adapterHienThiHinhBinhLuanDC = new AdapterHienThiHinhBinhLuanDC(this,R.layout.layout_hienthihinhduocchon,listHinhDuocChon);
+                adapterHienThiHinhBinhLuanDC = new AdapterHienThiHinhBinhLuanDC(this,R.layout.layout_hienthihinhduocchon,listHinhDuocChon,false);
                 recyclerViewChonHinhBinhLuan.setAdapter(adapterHienThiHinhBinhLuanDC);
                 adapterHienThiHinhBinhLuanDC.notifyDataSetChanged();
             }

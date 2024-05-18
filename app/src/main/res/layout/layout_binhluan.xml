@@ -15,21 +15,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtHuy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="3dp"
-        android:padding="5dp"
-        android:text="Hủy"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <TextView-->
+<!--        android:id="@+id/txtHuy"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="left"-->
+<!--        android:layout_marginLeft="5dp"-->
+<!--        android:layout_marginTop="3dp"-->
+<!--        android:padding="5dp"-->
+<!--        android:text="Hủy"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="20dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.043"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <TextView
         android:id="@+id/txtDangBinhLuan"
@@ -92,18 +92,35 @@
             android:textColor="#525252"
             android:text="323 Tran Hung Dao" />
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/editTextTitle"
+    <LinearLayout
+        android:id="@+id/linearLayoutTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tiêu đề (không bắt buộc)"
-        android:textColorHint="#cac9ce"
-        android:textSize="20dp"
+        android:background="#f5f5f5"
+        android:orientation="horizontal"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
+        <EditText
+            android:id="@+id/editTextTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Tiêu đề (không bắt buộc)"
+            android:textColorHint="#cac9ce"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/editTextScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:hint="Điểm(0-10)"
+            android:textColorHint="#cac9ce"
+            android:textSize="20dp" />
+    </LinearLayout>
     <View
         android:id="@+id/View"
         android:layout_width="match_parent"
@@ -111,7 +128,7 @@
         android:background="@color/silver"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTitle"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutTitle"
         />
 
     <EditText
