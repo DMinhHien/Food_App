@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -109,28 +110,49 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
         else if (id==R.id.txtDangBinhLuan) {
-            CommentModel comModel;
-            comModel = new CommentModel();
-            String title = edTitle.getText().toString();
-            String content = edComment.getText().toString();
-            String score=edScore.getText().toString();
-            comModel.setContent(content);
-            comModel.setTitle(title);
-            comModel.setScore(Double.parseDouble(score));
-            comModel.setLikes(0);
-            comModel.setUser(FirebaseAuth.getInstance().getCurrentUser().getUid());
-            commentController.ThemBinhLuan(maquanan, comModel, listHinhDuocChon);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("newComment", "true");
+            double score=Double.parseDouble(edScore.getText().toString());
+            if (!edComment.getText().toString().isEmpty() && !edScore.getText().toString().isEmpty()) {
+                if ((score>10.0)) {
+                    Toast.makeText(BinhLuanActivity.this, "Điểm phải từ 0-10",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    CommentModel comModel;
+                    comModel = new CommentModel();
+                    String title = edTitle.getText().toString();
+                    String content = edComment.getText().toString();
+                    comModel.setContent(content);
+                    comModel.setTitle(title);
+                    comModel.setScore(score);
+                    comModel.setLikes(0);
+                    comModel.setUser(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    commentController.ThemBinhLuan(maquanan, comModel, listHinhDuocChon);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("newComment", "true");
 //                editor.putString("newMaComment", maBL);
-            editor.putString("previousMaR", resModel.getMaR());
-            editor.commit();
-            Intent startActivity = new Intent(BinhLuanActivity.this, MainActivity.class);
-            BinhLuanActivity.this.startActivity(startActivity);
-            finish();
+                    editor.putString("previousMaR", resModel.getMaR());
+                    editor.commit();
+                    Intent startActivity = new Intent(BinhLuanActivity.this, MainActivity.class);
+                    BinhLuanActivity.this.startActivity(startActivity);
+                    finish();
+                }
+            }
+            else if(edComment.getText().toString().isEmpty() && edScore.getText().toString().isEmpty()){
+                Toast.makeText(BinhLuanActivity.this, "Hãy nhập đầy đủ",
+                        Toast.LENGTH_SHORT).show();
+            }
+            else if(edComment.getText().toString().isEmpty()){
+                Toast.makeText(BinhLuanActivity.this, "Hãy nhập nội dung",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+            else if(edScore.getText().toString().isEmpty()){
+                Toast.makeText(BinhLuanActivity.this, "Hãy nhập điểm",
+                        Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
