@@ -1,6 +1,9 @@
 package com.example.didong_foodapp.ui.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,9 @@ import com.example.didong_foodapp.ui.Models.CartModel;
 import com.example.didong_foodapp.ui.Models.DatMonModel;
 import com.example.didong_foodapp.ui.Models.FoodModel;
 import com.example.didong_foodapp.ui.Models.MenuModel;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +51,16 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
         FoodModel foodModel=foodModelList.get(position);
         holder.txtFoodName.setText(foodModel.getName());
         holder.txtSoluong.setTag(0);
-
+        holder.txtPrice.setText(Long.toString(foodModel.getPrice()));
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(foodModel.getImage());
+        long megabyte=1024*1024;
+        storageRef.getBytes(megabyte).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                holder.imageFood.setImageBitmap(bitmap);
+            }
+        });
         holder.imgTangSoLuong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +68,7 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
                 dem++;
                 holder.txtSoluong.setText(dem+"");
                 holder.txtSoluong.setTag(dem);
-
+                holder.txtPrice.setText(Long.toString(foodModel.getPrice()));
                 DatMonModel datMonTag = (DatMonModel) holder.imgGiamSoLuong.getTag();
                 if(datMonTag != null)
                 {
@@ -62,15 +77,17 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
 
                 DatMonModel datMon = new DatMonModel();
                 datMon.setSoluong(dem);
+                datMon.setPrice(Integer.parseInt(Long.toString(foodModel.getPrice())));
                 datMon.setTenMonAn(foodModel.getName());
-                holder.imgGiamSoLuong.setTag(datMon);
 
+                holder.imgGiamSoLuong.setTag(datMon);
 
                 Food.datMonList.add(datMon);
                 for(DatMonModel datmon1 : Food.datMonList)
                 {
-                    Log.d("kiemtra", datmon1.getTenMonAn()+" "+datmon1.getSoluong());
+                    Log.d("kiemtra", datmon1.getTenMonAn()+" "+datmon1.getSoluong() +  " " + datmon1.getPrice());
                 }
+
             }
         });
 
@@ -97,7 +114,8 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
     }
 
     public class HolderFood extends RecyclerView.ViewHolder {
-        TextView txtFoodName, txtSoluong;
+        TextView txtFoodName, txtSoluong, txtPrice;
+        ImageView imageFood;
         ImageView imgGiamSoLuong, imgTangSoLuong;
 
         public HolderFood(@NonNull View itemView) {
@@ -106,6 +124,8 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
             txtSoluong=itemView.findViewById(R.id.detail_Qty);
             imgGiamSoLuong= itemView.findViewById(R.id.detail_button_remove);
             imgTangSoLuong=itemView.findViewById(R.id.detail_button_add );
+            txtPrice = itemView.findViewById(R.id.detail_Price);
+            imageFood = itemView.findViewById(R.id.detail_Image);
         }
     }
 }
