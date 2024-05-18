@@ -40,12 +40,12 @@ public class CartFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         totalCost = view.findViewById(R.id.txtTotal);
         for(int i = 0; i < list.size(); i++){
-            total += Integer.parseInt(list.get(i).getPrice()) * Integer.parseInt(list.get(i).getQty());
+            total += Integer.parseInt(list.get(i).getPrice().replace(" đ","")) * Integer.parseInt(list.get(i).getQty());
         }
         totalDisplay = Integer.toString(total);
         adapter = new CartAdapter(list);
         recyclerView.setAdapter(adapter);
-        totalCost.setText(totalDisplay);
+        totalCost.setText(totalDisplay + " đ");
         return view;
     }
 
