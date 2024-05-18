@@ -5,10 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    style="@style/SCREEN"
     android:id="@+id/CardView">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        style="@style/SCREEN"
         android:orientation="vertical">
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -39,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Gogi House"
-                    android:textColor="@color/black"
+                    style="@style/TEXT"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -113,10 +115,10 @@
 
                 <TextView
                     android:id="@+id/titleTxt1"
-                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Gogi House"
+                    style="@style/TEXT"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -166,8 +168,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Gogi House"
-                    android:textColor="@color/black"
                     android:textSize="20sp"
+                    style="@style/TEXT"
                     android:textStyle="bold" />
 
                 <TextView
