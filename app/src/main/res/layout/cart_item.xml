@@ -80,6 +80,7 @@
                 >
 
                 <ImageButton
+                    android:id="@+id/detail_button_remove"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="#00FFFFFF"
@@ -96,6 +97,7 @@
                     android:textColor="#9d0208"/>
 
                 <ImageButton
+                    android:id="@+id/detail_button_add"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="#00FFFFFF"

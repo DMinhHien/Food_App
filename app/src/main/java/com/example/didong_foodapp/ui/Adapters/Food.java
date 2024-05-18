@@ -27,7 +27,7 @@ import java.util.List;
 public class Food extends RecyclerView.Adapter<Food.HolderFood>{
     Context context;
     List<FoodModel> foodModelList;
-    List<CartModel> cartModelList;
+
 
 
 

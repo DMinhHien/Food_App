@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.R;
 import com.example.didong_foodapp.ui.Models.CartModel;
+import com.example.didong_foodapp.ui.Models.FoodModel;
+import com.example.didong_foodapp.ui.fragments.CartFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -34,7 +36,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(list.get(position).getImage());
+        CartModel cartModel=list.get(position);
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(cartModel.getImage());
         long megabyte=1024*1024;
         storageRef.getBytes(megabyte).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
@@ -43,9 +46,45 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 holder.imageView.setImageBitmap(bitmap);
             }
         });
-        holder.name.setText(list.get(position).getName());
-        holder.price.setText(list.get(position).getPrice());
-        holder.qty.setText(list.get(position).getQty());
+        holder.name.setText(cartModel.getName());
+        holder.price.setText(cartModel.getPrice());
+        holder.qty.setText(cartModel.getQty());
+        holder.qty.setTag(cartModel.getQty());
+        holder.imgTangSoLuong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int dem = Integer.parseInt(holder.qty.getTag().toString());
+                dem++;
+                holder.qty.setText(dem+"");
+                holder.qty.setTag(dem);
+
+
+                CartModel temp = new CartModel(cartModel.getImage(), Integer.toString(dem), cartModel.getName(), cartModel.getPrice());
+                if(CartFragment.list.contains(temp)){
+                    CartFragment.list.remove(temp);
+                }
+                CartFragment.list.add(new CartModel(cartModel.getImage(), Integer.toString(dem), cartModel.getName(), cartModel.getPrice()));
+            }
+        });
+//
+//
+        holder.imgGiamSoLuong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int dem = Integer.parseInt(holder.qty.getTag().toString());
+                if(dem>0){
+                    CartModel temp = new CartModel(cartModel.getImage(), Integer.toString(dem), cartModel.getName(), cartModel.getPrice());
+                    CartFragment.list.remove(temp);
+                    dem--;
+                    if(dem!=0)
+                        CartFragment.list.add(new CartModel(cartModel.getImage(), Integer.toString(dem), cartModel.getName(),cartModel.getPrice()));
+                }
+
+                holder.qty.setText(dem+"");
+                holder.qty.setTag(dem);
+            }
+        });
     }
 
     @Override
@@ -57,6 +96,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     {
         ImageView imageView;
         TextView name, price, qty;
+        ImageView imgGiamSoLuong, imgTangSoLuong;
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
@@ -65,6 +105,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             name = itemView.findViewById(R.id.detail_Name);
             price = itemView.findViewById(R.id.detail_Price);
             qty = itemView.findViewById(R.id.detail_Qty);
+            imgGiamSoLuong= itemView.findViewById(R.id.detail_button_remove);
+            imgTangSoLuong=itemView.findViewById(R.id.detail_button_add );
         }
     }
 }
