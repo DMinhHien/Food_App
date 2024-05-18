@@ -48,8 +48,21 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
     public void onBindViewHolder(@NonNull Food.HolderFood holder, int position) {
         FoodModel foodModel=foodModelList.get(position);
         holder.txtFoodName.setText(foodModel.getName());
-        holder.txtSoluong.setTag(0);
         holder.txtPrice.setText(Long.toString(foodModel.getPrice()));
+
+        if(!CartFragment.list.isEmpty()) {
+            for(int i=0;i<CartFragment.list.size();i++) {
+                if (CartFragment.list.get(i).getName().equals(foodModel.getName())) {
+                    holder.txtSoluong.setTag(CartFragment.list.get(i).getQty());
+                    holder.txtSoluong.setText(CartFragment.list.get(i).getQty());
+                    break;
+                }
+            }
+        }
+        else{
+            holder.txtSoluong.setTag(0);
+        }
+
         StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(foodModel.getImage());
         long megabyte=1024*1024;
         storageRef.getBytes(megabyte).addOnSuccessListener(new OnSuccessListener<byte[]>() {
