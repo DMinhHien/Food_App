@@ -279,9 +279,9 @@
                     layout="@layout/comment_detail" />
             </LinearLayout>
             </LinearLayout>
-
-
         </androidx.core.widget.NestedScrollView>
+
+
 
     </LinearLayout>
 

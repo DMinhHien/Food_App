@@ -43,8 +43,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/radio_food"
                 android:button="@color/trans"
+                android:drawableLeft="@drawable/baseline_add_shopping_cart_24"
                 android:padding="10dp"
-                android:drawableLeft="@drawable/user_black"
                 android:textColor="@drawable/radio_changetext" />
 
             <RadioButton
@@ -53,8 +53,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/radio_food"
                 android:button="@color/trans"
+                android:drawableLeft="@drawable/baseline_bookmark_24_black"
                 android:padding="10dp"
-                android:drawableLeft="@drawable/user_black"
                 android:textColor="@drawable/radio_changetext" />
 
             <RadioButton

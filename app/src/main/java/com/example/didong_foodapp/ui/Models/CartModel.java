@@ -1,10 +1,13 @@
 package com.example.didong_foodapp.ui.Models;
 
+import java.util.Objects;
+
 public class CartModel {
-    int image;
+    String image;
     String name,price, qty;
 
-    public CartModel(int image,String qty, String name,String price)
+    public CartModel(){};
+    public CartModel(String image,String qty, String name,String price)
     {
         this.qty = qty;
         this.image = image;
@@ -12,11 +15,11 @@ public class CartModel {
         this.price = price;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -42,5 +45,20 @@ public class CartModel {
 
     public void setQty(String qty) {
         this.qty = qty;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CartModel cartModel = (CartModel) o;
+        return Objects.equals(image, cartModel.image) &&
+                Objects.equals(name, cartModel.name) &&
+                Objects.equals(price, cartModel.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(image, qty, name, price);
     }
 }
