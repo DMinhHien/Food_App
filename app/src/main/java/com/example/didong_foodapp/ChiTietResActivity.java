@@ -85,7 +85,7 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
     boolean check=true;
     boolean checkLike=true;
     List<String> list = new ArrayList<>();
-
+    List<String> listLike = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,8 +123,8 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         mDatabase = FirebaseDatabase.getInstance().getReference("LikeRestaurant");
         lDatabase= FirebaseDatabase.getInstance().getReference().child("restaurants").child(resModel.getMaR());
         likedDatabase=FirebaseDatabase.getInstance().getReference("likedRes");
+
         checkSave1(resModel);
-        list = new ArrayList<>();
         checkSave2(resModel);
         btnBinhLuan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -284,11 +284,11 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot snap : snapshot.getChildren()){
                     String resid = snap.getKey();
-                    list.add(resid);
+                    listLike.add(resid);
                 }
                 if(checkLike){
-                    for(int i = 0; i < list.size(); i++){
-                        if(restaurantModel.getMaR().equals(list.get(i))){
+                    for(int i = 0; i < listLike.size(); i++){
+                        if(restaurantModel.getMaR().equals(listLike.get(i))){
                             btnLike.setText("Đã thích");
                             btnLike.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.baseline_check_24,0,0);
                             checkLike=false;
