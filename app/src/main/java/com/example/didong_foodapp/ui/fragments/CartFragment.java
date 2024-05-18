@@ -19,13 +19,15 @@ import java.util.List;
 import java.util.concurrent.RecursiveAction;
 
 public class CartFragment extends Fragment {
-    List<CartModel> list;
-    CartAdapter adapter;
+    static List<CartModel> list;
+    static CartAdapter adapter;
     RecyclerView recyclerView;
+
 
     public CartFragment() {
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,14 +36,20 @@ public class CartFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         list = new ArrayList<>();
-        list.add(new CartModel(R.drawable.s1, 2,"Bánh bao", "10000 đ"));
-        list.add(new CartModel(R.drawable.s1, 3,"Bánh bao1", "20000 đ"));
-        list.add(new CartModel(R.drawable.s1, 4,"Bánh bao2", "30000 đ"));
-        list.add(new CartModel(R.drawable.s1, 5,"Bánh bao3", "40000 đ"));
+        list.add( new CartModel(R.drawable.s1, "10","Hien", "10 nghin"));
         adapter = new CartAdapter(list);
         recyclerView.setAdapter(adapter);
-
         return view;
+    }
+
+    public static void UpdateCart(List<CartModel> items)
+    {
+        if (items != null && !items.isEmpty())
+        {
+            list.addAll(items);
+            adapter.notifyDataSetChanged();
+        }
     }
 }

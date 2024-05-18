@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.R;
+import com.example.didong_foodapp.ui.Models.CartModel;
 import com.example.didong_foodapp.ui.Models.DatMonModel;
 import com.example.didong_foodapp.ui.Models.FoodModel;
 import com.example.didong_foodapp.ui.Models.MenuModel;
@@ -22,7 +23,7 @@ import java.util.List;
 public class Food extends RecyclerView.Adapter<Food.HolderFood>{
     Context context;
     List<FoodModel> foodModelList;
-
+    List<CartModel> cartModelList;
     public static  List<DatMonModel> datMonList = new ArrayList<>();
 
 
@@ -98,12 +99,13 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
     public class HolderFood extends RecyclerView.ViewHolder {
         TextView txtFoodName, txtSoluong;
         ImageView imgGiamSoLuong, imgTangSoLuong;
+
         public HolderFood(@NonNull View itemView) {
             super(itemView);
-            txtFoodName=itemView.findViewById(R.id.txtFoodName);
-            txtSoluong=itemView.findViewById(R.id.txtSoLuong);
-            imgGiamSoLuong= itemView.findViewById(R.id.imgGiamSoLuong);
-            imgTangSoLuong=itemView.findViewById(R.id.imgTangSoLuong);
+            txtFoodName=itemView.findViewById(R.id.detail_Name);
+            txtSoluong=itemView.findViewById(R.id.detail_Qty);
+            imgGiamSoLuong= itemView.findViewById(R.id.detail_button_remove);
+            imgTangSoLuong=itemView.findViewById(R.id.detail_button_add );
         }
     }
 }

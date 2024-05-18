@@ -32,7 +32,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.imageView.setImageResource(list.get(position).getImage());
         holder.name.setText(list.get(position).getName());
         holder.price.setText(list.get(position).getPrice());
-        holder.qty.setText(Integer.toString(list.get(position).getQty()));
+        holder.qty.setText(list.get(position).getQty());
     }
 
     @Override

@@ -8,7 +8,7 @@
         android:id="@+id/pickedToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/orange">
+        android:background="#a4161a">
 
         <TextView
             android:id="@+id/txtDone"

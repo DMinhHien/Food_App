@@ -309,6 +309,5 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
     protected void onResume() {
         super.onResume();
 
-
     }
 }
