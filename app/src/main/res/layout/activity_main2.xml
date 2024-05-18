@@ -38,7 +38,7 @@
                 android:textColor="@drawable/radio_changetext" />
 
             <RadioButton
-                android:id="@+id/group_food"
+                android:id="@+id/rdgiohang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/radio_food"
@@ -58,7 +58,7 @@
                 android:textColor="@drawable/radio_changetext" />
 
             <RadioButton
-                android:id="@+id/rdgiohang"
+                android:id="@+id/group_food"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/radio_food"
