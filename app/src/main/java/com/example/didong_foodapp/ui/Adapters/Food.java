@@ -3,7 +3,6 @@ package com.example.didong_foodapp.ui.Adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.R;
 import com.example.didong_foodapp.ui.Models.CartModel;
-import com.example.didong_foodapp.ui.Models.DatMonModel;
 import com.example.didong_foodapp.ui.Models.FoodModel;
-import com.example.didong_foodapp.ui.Models.MenuModel;
+import com.example.didong_foodapp.ui.fragments.CartFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -30,7 +28,7 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
     Context context;
     List<FoodModel> foodModelList;
     List<CartModel> cartModelList;
-    public static  List<DatMonModel> datMonList = new ArrayList<>();
+
 
 
     public Food(Context context, List<FoodModel> foodModelList) {
@@ -61,47 +59,41 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
                 holder.imageFood.setImageBitmap(bitmap);
             }
         });
+
         holder.imgTangSoLuong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 int dem = Integer.parseInt(holder.txtSoluong.getTag().toString());
                 dem++;
                 holder.txtSoluong.setText(dem+"");
                 holder.txtSoluong.setTag(dem);
-                holder.txtPrice.setText(Long.toString(foodModel.getPrice()));
-                DatMonModel datMonTag = (DatMonModel) holder.imgGiamSoLuong.getTag();
-                if(datMonTag != null)
-                {
-                    Food.datMonList.remove(datMonTag);
+
+
+                CartModel temp = new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice()));
+                if(CartFragment.list.contains(temp)){
+                    CartFragment.list.remove(temp);
                 }
-
-                DatMonModel datMon = new DatMonModel();
-                datMon.setSoluong(dem);
-                datMon.setPrice(Integer.parseInt(Long.toString(foodModel.getPrice())));
-                datMon.setTenMonAn(foodModel.getName());
-
-                holder.imgGiamSoLuong.setTag(datMon);
-
-                Food.datMonList.add(datMon);
-                for(DatMonModel datmon1 : Food.datMonList)
-                {
-                    Log.d("kiemtra", datmon1.getTenMonAn()+" "+datmon1.getSoluong() +  " " + datmon1.getPrice());
-                }
-
+                CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice())));
             }
         });
+
 
         holder.imgGiamSoLuong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int dem = Integer.parseInt(holder.txtSoluong.getTag().toString());
+                CartModel temp = new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice()));
+
                 if(dem!=0) {
                     dem--;
-                    if (dem == 0) {
-                        DatMonModel datMon = (DatMonModel) v.getTag();
-                        Food.datMonList.remove(datMon);
-                    }
+                    CartFragment.list.remove(temp);
+                    CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice())));
                 }
+                else {
+                    CartFragment.list.remove(temp);
+                }
+
                 holder.txtSoluong.setText(dem+"");
                 holder.txtSoluong.setTag(dem);
             }
