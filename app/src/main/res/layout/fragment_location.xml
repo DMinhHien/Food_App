@@ -10,13 +10,14 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/design_default_color_background"
+        style="@style/SCREEN"
         tools:context=".MainActivity">
 
         <SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            style="@style/TEXT"
             android:layout_margin="10dp"
             android:background="@drawable/searchbar_background"
             android:iconifiedByDefault="false"
@@ -50,6 +51,7 @@
                     android:id="@+id/recyclerLocation"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    style="@style/SCREEN"
                     >
 
                 </androidx.recyclerview.widget.RecyclerView>
