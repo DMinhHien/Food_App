@@ -99,6 +99,15 @@ public class AdapterSaveRestaurant extends RecyclerView.Adapter<AdapterSaveResta
         }
 
         //Load address and distance
+        if (resModel.getChiNhanhModelList().size()>0){
+            ChiNhanhModel chiNhanhGan= resModel.getChiNhanhModelList().get(0);
+            for (ChiNhanhModel chiNhanhModel: resModel.getChiNhanhModelList()){
+                if (chiNhanhGan.getDistance()>chiNhanhModel.getDistance())
+                    chiNhanhGan=chiNhanhModel;
+            }
+            holder.txtAddress.setText(chiNhanhGan.getDiachi());
+            holder.txtDistance.setText(String.format("%.1f",chiNhanhGan.getDistance())+" km");
+        }
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
