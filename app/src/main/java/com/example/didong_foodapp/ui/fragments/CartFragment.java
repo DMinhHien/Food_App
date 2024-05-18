@@ -19,10 +19,9 @@ import java.util.List;
 import java.util.concurrent.RecursiveAction;
 
 public class CartFragment extends Fragment {
-    static List<CartModel> list;
+    public static List<CartModel> list= new ArrayList<>();;
     static CartAdapter adapter;
     RecyclerView recyclerView;
-
 
     public CartFragment() {
 
@@ -37,11 +36,16 @@ public class CartFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        list = new ArrayList<>();
-        list.add( new CartModel(R.drawable.s1, "10","Hien", "10 nghin"));
+
         adapter = new CartAdapter(list);
         recyclerView.setAdapter(adapter);
         return view;
+    }
+
+    @Override
+    public void onStop() {
+
+        super.onStop();
     }
 
     public static void UpdateCart(List<CartModel> items)
