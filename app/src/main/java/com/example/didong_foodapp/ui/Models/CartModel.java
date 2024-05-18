@@ -1,10 +1,10 @@
 package com.example.didong_foodapp.ui.Models;
 
 public class CartModel {
-    int image, qty;
-    String name,price;
+    int image;
+    String name,price, qty;
 
-    public CartModel(int image,int qty, String name,String price)
+    public CartModel(int image,String qty, String name,String price)
     {
         this.qty = qty;
         this.image = image;
@@ -36,11 +36,11 @@ public class CartModel {
         this.price = price;
     }
 
-    public int getQty() {
+    public String getQty() {
         return qty;
     }
 
-    public void setQty(int qty) {
+    public void setQty(String qty) {
         this.qty = qty;
     }
 }

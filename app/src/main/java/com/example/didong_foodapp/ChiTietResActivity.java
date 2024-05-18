@@ -79,6 +79,7 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
     Button buttonSave;
     UserModel userModel;
     String uid;
+
     private DatabaseReference mDatabase;
     boolean check=true;
     List<String> list = new ArrayList<>();
@@ -243,7 +244,6 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
     @Override
     protected void onResume() {
         super.onResume();
-
 
     }
 }

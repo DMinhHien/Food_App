@@ -35,7 +35,6 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/gradient_button"
-        android:onClick="AddToCart"
         android:text="Update Cart"
         android:textAlignment="center"
         android:textColor="#FBFBFB"

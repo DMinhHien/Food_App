@@ -36,8 +36,11 @@ public class CartFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
 
+        list = new ArrayList<>();
+        list.add( new CartModel(R.drawable.s1, "10","Hien", "10 nghin"));
+        adapter = new CartAdapter(list);
+        recyclerView.setAdapter(adapter);
         return view;
     }
 
