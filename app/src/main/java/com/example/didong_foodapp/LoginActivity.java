@@ -93,8 +93,10 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void register(View view) {
         startActivity(new Intent(LoginActivity.this,RegistrationActivity.class));
+        finish();
     }
     public void login(View view) {
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
     }
 }
