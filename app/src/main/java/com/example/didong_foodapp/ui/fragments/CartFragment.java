@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.didong_foodapp.R;
 import com.example.didong_foodapp.ui.Adapters.CartAdapter;
@@ -22,7 +23,10 @@ public class CartFragment extends Fragment {
     public static List<CartModel> list= new ArrayList<>();;
     static CartAdapter adapter;
     RecyclerView recyclerView;
+    TextView totalCost;
 
+    String totalDisplay;
+    int total = 0;
     public CartFragment() {
 
     }
@@ -32,13 +36,16 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
-
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
+        totalCost = view.findViewById(R.id.txtTotal);
+        for(int i = 0; i < list.size(); i++){
+            total += Integer.parseInt(list.get(i).getPrice()) * Integer.parseInt(list.get(i).getQty());
+        }
+        totalDisplay = Integer.toString(total);
         adapter = new CartAdapter(list);
         recyclerView.setAdapter(adapter);
+        totalCost.setText(totalDisplay);
         return view;
     }
 

@@ -34,8 +34,8 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
     public Food(Context context, List<FoodModel> foodModelList) {
         this.context = context;
         this.foodModelList =foodModelList;
-
     }
+
     @NonNull
     @Override
     public Food.HolderFood onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,7 +48,7 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
     public void onBindViewHolder(@NonNull Food.HolderFood holder, int position) {
         FoodModel foodModel=foodModelList.get(position);
         holder.txtFoodName.setText(foodModel.getName());
-        holder.txtPrice.setText(Long.toString(foodModel.getPrice()));
+        holder.txtPrice.setText((foodModel.getPrice()) + " đ");
 
         if(!CartFragment.list.isEmpty()) {
             for(int i=0;i<CartFragment.list.size();i++) {
@@ -83,11 +83,11 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
                 holder.txtSoluong.setTag(dem);
 
 
-                CartModel temp = new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice()));
+                CartModel temp = new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), foodModel.getPrice() + " đ");
                 if(CartFragment.list.contains(temp)){
                     CartFragment.list.remove(temp);
                 }
-                CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice())));
+                CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), foodModel.getPrice() + " đ"));
             }
         });
 
@@ -96,6 +96,7 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
             @Override
             public void onClick(View v) {
                 int dem = Integer.parseInt(holder.txtSoluong.getTag().toString());
+
                 if(dem>0){
                     CartModel temp = new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice()));
                     CartFragment.list.remove(temp);
@@ -104,7 +105,7 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
                         CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice())));
                 }
 
-                holder.txtSoluong.setText(dem+"");
+                holder.txtSoluong.setText(dem+" ");
                 holder.txtSoluong.setTag(dem);
             }
         });
