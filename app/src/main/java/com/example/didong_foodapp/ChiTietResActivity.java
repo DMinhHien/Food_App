@@ -286,12 +286,12 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
                     String resid = snap.getKey();
                     list.add(resid);
                 }
-                if(check){
+                if(checkLike){
                     for(int i = 0; i < list.size(); i++){
                         if(restaurantModel.getMaR().equals(list.get(i))){
                             btnLike.setText("Đã thích");
                             btnLike.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.baseline_check_24,0,0);
-                            check=false;
+                            checkLike=false;
                             return;
                         }
                     }
