@@ -30,12 +30,12 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 
 public class AdapterSaveRestaurant extends RecyclerView.Adapter<AdapterSaveRestaurant.ViewHolder>  {
-    List<SaveRestaurantModel> resModelList;
+    List<RestaurantModel> resModelList;
     int resources;
     Context context;
     SharedPreferences sharedPreferences;
 
-    public AdapterSaveRestaurant(Context context, List<SaveRestaurantModel> resModelList, int resources){
+    public AdapterSaveRestaurant(Context context, List<RestaurantModel> resModelList, int resources){
         this.resModelList= resModelList;
         this.resources=resources;
         this.context=context;
@@ -45,23 +45,12 @@ public class AdapterSaveRestaurant extends RecyclerView.Adapter<AdapterSaveResta
         TextView txtNameRLocation,txtTitle1,txtTitle2,txtContent1,txtContent2,
                 txtScore1,txtScore2,txtTotalComment,txtTotalImage,txtAverage,
                 txtDistance,txtAddress;
-        Button btnOrder;
         ImageView imageLocationR;
-        LinearLayout commentContainer,commentContainer2;
         CardView cardView;
         public ViewHolder(View itemView){
             super(itemView);
             txtNameRLocation=(TextView) itemView.findViewById(R.id.txtNameRLocation);
-            btnOrder=itemView.findViewById(R.id.orderButton);
             imageLocationR=(ImageView) itemView.findViewById((R.id.imageLocation));
-            txtTitle1=itemView.findViewById(R.id.titleTxt1);
-            txtTitle2=itemView.findViewById(R.id.titleTxt2);
-            txtContent1=itemView.findViewById(R.id.contentTxt1);
-            txtContent2=itemView.findViewById(R.id.contentTxt2);
-            txtScore1=itemView.findViewById(R.id.scoreTxt1);
-            txtScore2=itemView.findViewById(R.id.scoreTxt2);
-            commentContainer=itemView.findViewById(R.id.commentContainer);
-            commentContainer2=itemView.findViewById(R.id.commentContainer2);
             txtTotalComment=itemView.findViewById(R.id.black_comment);
             txtTotalImage=itemView.findViewById(R.id.camera_black);
             txtAverage=itemView.findViewById(R.id.averageScore);
@@ -80,11 +69,9 @@ public class AdapterSaveRestaurant extends RecyclerView.Adapter<AdapterSaveResta
 
     @Override
     public void onBindViewHolder(@NonNull AdapterSaveRestaurant.ViewHolder holder, int position) {
-        SaveRestaurantModel resModel=resModelList.get(position);
+        RestaurantModel resModel = resModelList.get(position);
         holder.txtNameRLocation.setText(resModel.getNameR());
-        if (resModel.isOrder()==1){
-            holder.btnOrder.setVisibility(View.VISIBLE);
-        }
+
         if(!resModel.getImageR().isEmpty()){
             StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(resModel.getImageR().get(0));
             long megabyte=1024*1024;
@@ -97,18 +84,6 @@ public class AdapterSaveRestaurant extends RecyclerView.Adapter<AdapterSaveResta
             });
         }
         if (resModel.getComModel().size()>0){
-            CommentModel comModel =resModel.getComModel().get(0);
-            holder.txtTitle1.setText( comModel.getTitle());
-            holder.txtContent1.setText( comModel.getContent());
-            holder.txtScore1.setText(comModel.getScore()+"");
-            if(resModel.getComModel().size()>1){
-                CommentModel comModel2 =resModel.getComModel().get(1);
-                holder.txtTitle2.setText(comModel2.getTitle());
-                holder.txtContent2.setText( comModel2.getContent());
-                holder.txtScore2.setText(comModel2.getScore()+"");
-            }
-            else
-                holder.commentContainer2.setVisibility(View.GONE);
             holder.txtTotalComment.setText(resModel.getComModel().size()+"");
             int totalComment=0;
             int sumScore=0;
@@ -122,10 +97,7 @@ public class AdapterSaveRestaurant extends RecyclerView.Adapter<AdapterSaveResta
                 holder.txtTotalImage.setText(totalComment+"");
 
         }
-        else{
-            holder.commentContainer.setVisibility(View.GONE);
-            holder.commentContainer2.setVisibility(View.GONE);
-        }
+
         //Load address and distance
         if (resModel.getChiNhanhModelList().size()>0){
             ChiNhanhModel chiNhanhGan= resModel.getChiNhanhModelList().get(0);
@@ -136,6 +108,7 @@ public class AdapterSaveRestaurant extends RecyclerView.Adapter<AdapterSaveResta
             holder.txtAddress.setText(chiNhanhGan.getDiachi());
             holder.txtDistance.setText(String.format("%.1f",chiNhanhGan.getDistance())+" km");
         }
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

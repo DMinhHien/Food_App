@@ -33,7 +33,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
     TextView txtTenQuanAn, txtDiaChiQuanAn,txtPost;
     Toolbar toolbar;
     ImageButton btnChonHinh;
-    EditText edTitle,edComment;
+    EditText edTitle,edComment,edScore;
     RecyclerView recyclerViewChonHinhBinhLuan;
     AdapterHienThiHinhBinhLuanDC adapterHienThiHinhBinhLuanDC;
     String maquanan;
@@ -56,7 +56,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
         isEdit= getIntent().getStringExtra("isEdit");
         edTitle=findViewById(R.id.editTextTitle);
         edComment=findViewById(R.id.editTextComment);
-
+        edScore=findViewById(R.id.editTextScore);
         txtPost=findViewById(R.id.txtDangBinhLuan);
         txtTenQuanAn= findViewById(R.id.txtTenQuan);
         txtDiaChiQuanAn=findViewById(R.id.txtDiaChi);
@@ -113,9 +113,10 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
             comModel = new CommentModel();
             String title = edTitle.getText().toString();
             String content = edComment.getText().toString();
+            String score=edScore.getText().toString();
             comModel.setContent(content);
             comModel.setTitle(title);
-            comModel.setScore(0);
+            comModel.setScore(Double.parseDouble(score));
             comModel.setLikes(0);
             comModel.setUser(FirebaseAuth.getInstance().getCurrentUser().getUid());
             commentController.ThemBinhLuan(maquanan, comModel, listHinhDuocChon);

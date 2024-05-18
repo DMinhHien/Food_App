@@ -60,20 +60,26 @@
                 android:text="6.6 km" />
 
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/imageLocation"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/CardViewImage"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            tools:layout_editor_absoluteX="1dp" />
+            android:layout_height="250dp"
+            app:cardCornerRadius="10dp"
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            <ImageView
+                android:id="@+id/imageLocation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                />
+        </androidx.cardview.widget.CardView>
 
         <Button
             android:layout_width="match_parent"
             android:id="@+id/orderButton"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/imageLocation"
+            app:layout_constraintTop_toBottomOf="@+id/CardViewImage"
             android:text="Order"
             android:visibility="gone"
             android:background="@drawable/btn_bg"
@@ -88,7 +94,7 @@
             android:layout_margin="5dp"
             android:orientation="horizontal"
             android:padding="5dp"
-            app:layout_constraintTop_toBottomOf="@+id/imageLocation">
+            app:layout_constraintTop_toBottomOf="@+id/CardViewImage">
 
             <!--            <TextView-->
             <!--                android:layout_width="40dp"-->
@@ -181,6 +187,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -209,6 +216,15 @@
                 android:text="0"
                 app:layout_constraintTop_toBottomOf="@+id/black_comment" />
 
+
         </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -17,30 +17,34 @@ public class ViewPagerMain extends FragmentStateAdapter {
     FoodFragment food_fragment;
     LocationFragment location_fragment;
     SavedFragment saved_fragment;
+    CartFragment cartFragment;
 
     public ViewPagerMain(FragmentManager fragmentManager, Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
         food_fragment = new FoodFragment();
         location_fragment = new LocationFragment();
         saved_fragment = new SavedFragment();
+        cartFragment = new CartFragment();
     }
 
     @Override
     public Fragment createFragment(int position) {
-        switch (position) {
+        switch (position)
+        {
             case 0:
                 return location_fragment;
             case 1:
-                return food_fragment;
+                return cartFragment;
             case 2:
                 return saved_fragment;
-
+            case 3:
+                return food_fragment;
         }
         return null;
     }
 
     @Override
     public int getItemCount() {
-        return 3; // Số lượng fragment trong viewpager
+        return 4; // Số lượng fragment trong viewpager
     }
 }

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.R;
 import com.example.didong_foodapp.ui.Controller.LocationController;
+import com.example.didong_foodapp.ui.Controller.SaveController;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,7 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 public class SavedFragment extends Fragment {
-    LocationController locationController;
+    SaveController saveController;
     SharedPreferences sharedPreferences;
     //    RestaurantModel RModel;
     RecyclerView AdapterSaveRestaurant;
@@ -44,7 +45,7 @@ public class SavedFragment extends Fragment {
         Location currentLocation = new Location("");
         currentLocation.setLatitude(Double.parseDouble(sharedPreferences.getString("latitude","0")));
         currentLocation.setLongitude(Double.parseDouble(sharedPreferences.getString("longitude","0")));
-        locationController= new LocationController(getContext());
-        locationController.getRestaurantLocationList1(getContext(),AdapterSaveRestaurant,currentLocation);
+        saveController= new SaveController(getContext());
+        saveController.getRestaurantLocationList(getContext(),AdapterSaveRestaurant,currentLocation);
     }
 }

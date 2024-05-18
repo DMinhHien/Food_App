@@ -32,7 +32,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
     ViewPager2 viewPageMain;
-    RadioButton rdLocation,rdFood,rdLuuLai;
+    RadioButton rdLocation,rdFood,rdLuuLai,rdCart;
     RadioGroup rdGroup;
     SharedPreferences sharedPreferences;
     ConstraintLayout constraintMain;
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         rdLocation=(RadioButton) findViewById(R.id.group_place);
         rdFood= (RadioButton) findViewById(R.id.group_food);
         rdLuuLai =(RadioButton) findViewById(R.id.rdluulai);
+        rdCart=(RadioButton) findViewById(R.id.rdgiohang);
         rdGroup=(RadioGroup) findViewById(R.id.group_food_place);
         viewPageMain=(ViewPager2) findViewById(R.id.viewpager_main);
         ViewPagerMain viewpagermain = new ViewPagerMain(getSupportFragmentManager(), getLifecycle());
@@ -65,10 +66,13 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                           rdLocation.setChecked(true);
                         break;
                     case 1:
-                         rdFood.setChecked(true);
+                         rdCart.setChecked(true);
                         break;
                     case 2:
                         rdLuuLai.setChecked(true);
+                        break;
+                    case 3:
+                        rdFood.setChecked(true);
                         break;
 
                 }
@@ -91,12 +95,22 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
     @Override
     public void onCheckedChanged(RadioGroup group,@IdRes int checkedId) {
-        if (checkedId == R.id.group_place) {
+        if (checkedId == R.id.group_place)
+        {
             viewPageMain.setCurrentItem(0);
-        } else if (checkedId == R.id.group_food) {
-            viewPageMain.setCurrentItem(1);}
-            else if(checkedId==R.id.rdluulai)
-                viewPageMain.setCurrentItem(2);
+        }
+        else if (checkedId == R.id.rdgiohang)
+        {
+            viewPageMain.setCurrentItem(1);
+        }
+        else if(checkedId==R.id.rdluulai)
+        {
+            viewPageMain.setCurrentItem(2);
+        }
+        else if(checkedId==R.id.group_food)
+        {
+            viewPageMain.setCurrentItem(3);
+        }
 
     }
     public void logout(View view) {

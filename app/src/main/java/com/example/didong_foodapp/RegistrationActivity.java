@@ -92,8 +92,10 @@ public class RegistrationActivity extends AppCompatActivity {
     }
     public void sign(View view) {
         startActivity(new Intent(RegistrationActivity.this,LoginActivity.class));
+        finish();
     }
     public void login(View view) {
         startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+        finish();
     }
 }

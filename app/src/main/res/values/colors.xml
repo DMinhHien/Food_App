@@ -11,4 +11,5 @@
     <color name="trans">#00000000 </color>
     <color name="silver">#CCCCCCCC </color>
     <color name="transblack">#99000000</color>
+    <color name="red">#9d0208</color>
 </resources>
