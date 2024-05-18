@@ -83,15 +83,12 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
             @Override
             public void onClick(View v) {
                 int dem = Integer.parseInt(holder.txtSoluong.getTag().toString());
-                CartModel temp = new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice()));
-
-                if(dem!=0) {
+                if(dem>0){
+                    CartModel temp = new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice()));
+                    CartFragment.list.remove(temp);
                     dem--;
-                    CartFragment.list.remove(temp);
-                    CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice())));
-                }
-                else {
-                    CartFragment.list.remove(temp);
+                    if(dem!=0)
+                        CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice())));
                 }
 
                 holder.txtSoluong.setText(dem+"");
