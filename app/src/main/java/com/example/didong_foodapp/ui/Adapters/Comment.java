@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -46,6 +47,9 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
     List<CommentModel> commentModelList;
     SharedPreferences sharedPreferences;
     RestaurantModel resModel;
+    private DatabaseReference mDatabase,lDatabase;
+    List<String> listLike = new ArrayList<>();
+    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
 
@@ -58,15 +62,17 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
     }
 
     public class ViewHolder  extends RecyclerView.ViewHolder{
-        TextView txtCommentTitle,txtCommentContent,txtScore,avatar;
+        TextView txtCommentTitle,txtCommentContent,txtScore,avatar,like;
         RecyclerView recyclerImageComment;
         LinearLayout commentContainer;
+        boolean checkLike=true;
         public ViewHolder(View itemView){
 
             super(itemView);
             txtScore=itemView.findViewById(R.id.scoreTxtComment);
             txtCommentTitle=itemView.findViewById(R.id.titleTxtComment);
             txtCommentContent=itemView.findViewById(R.id.contentTxtComment);
+            like=itemView.findViewById(R.id.commentLike);
             avatar=itemView.findViewById(R.id.avatar);
             recyclerImageComment=itemView.findViewById(R.id.recycler_imagecomment);
             commentContainer=itemView.findViewById(R.id.linearComment);
@@ -86,10 +92,13 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
     public void onBindViewHolder(@NonNull Comment.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         final CommentModel comModel=commentModelList.get(position);
         if (comModel.getContent()!=null) {
+            mDatabase = FirebaseDatabase.getInstance().getReference("likedComments");
+            lDatabase= FirebaseDatabase.getInstance().getReference().child("commentR").child(resModel.getMaR());
             List<Bitmap> listbitmap = new ArrayList<>();
             holder.txtCommentTitle.setText(comModel.getTitle());
             holder.txtCommentContent.setText(comModel.getContent());
             holder.txtScore.setText(comModel.getScore() + "");
+            likeCheck(holder,comModel);
             if (Objects.equals(comModel.getUser(), FirebaseAuth.getInstance().getCurrentUser().getUid())){
                 holder.avatar.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.baseline_current_person_24,0,0);
             }
@@ -111,6 +120,32 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
                     }
                 });
             }
+            holder.like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DatabaseReference likeDatabase=lDatabase.child(comModel.getMaBL());
+                    if(holder.like.getText()=="Đã thích")
+                    {
+                        holder.like.setText("Thích");
+                        holder.like.setTextColor(Color.parseColor("#757575"));
+                        long currentLike= comModel.getLikes();
+                        currentLike=currentLike-1;
+                        comModel.setLikes( currentLike);
+                        likeDatabase.child("likes").setValue(currentLike);
+                        mDatabase.child(uid).child(comModel.getMaBL()).removeValue();
+                    }
+                    else
+                    {
+                        holder.like.setText("Đã thích");
+                        holder.like.setTextColor(Color.parseColor("#0000FF"));
+                        long currentLike= comModel.getLikes();
+                        currentLike=currentLike+1;
+                        comModel.setLikes( currentLike);
+                        likeDatabase.child("likes").setValue(currentLike);
+                        mDatabase.child(uid).child(comModel.getMaBL()).setValue(comModel.getMaBL());
+                    }
+                }
+            });
             holder.commentContainer.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -131,9 +166,6 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
                                 iBinhLuan.putExtra("currentComment", comModel);
                                 iBinhLuan.putExtra("isEdit", "true");
                                 context.startActivity(iBinhLuan);
-                                DatabaseReference nodeComment = FirebaseDatabase.getInstance().getReference().
-                                        child("commentR").child(resModel.getMaR()).child(comModel.getMaBL());
-                                nodeComment.removeValue();
                                 commentModelList.remove(position);
                                 return true;
                             } else if (item.getItemId() == R.id.menu_item_xoa) {
@@ -142,6 +174,7 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
                                         child("commentR").child(resModel.getMaR()).child(comModel.getMaBL());
                                 holder.commentContainer.removeAllViews();
                                 nodeComment.removeValue();
+                                mDatabase.child(uid).child(comModel.getMaBL()).removeValue();
                                 comModel.setContent(null);
                                 return true;
                             }
@@ -159,6 +192,34 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
     @Override
     public int getItemCount() {
             return commentModelList.size();
+    }
+    public void likeCheck(@NonNull Comment.ViewHolder holder,CommentModel comModel){
+        mDatabase.child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snap : snapshot.getChildren()){
+                    String resid = snap.getKey();
+                    listLike.add(resid);
+                }
+                if(holder.checkLike){
+                    for(int i = 0; i < listLike.size(); i++){
+                        if(comModel.getMaBL().equals(listLike.get(i))){
+                            holder.like.setText("Đã thích");
+                            holder.like.setTextColor(Color.parseColor("#0000FF"));
+                            holder.like.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.baseline_check_24,0,0);
+                            holder.checkLike=false;
+                            return;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
 
