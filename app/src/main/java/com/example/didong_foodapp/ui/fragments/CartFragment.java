@@ -23,7 +23,7 @@ public class CartFragment extends Fragment {
     public static List<CartModel> list= new ArrayList<>();;
     static CartAdapter adapter;
     RecyclerView recyclerView;
-    TextView totalCost;
+    public static TextView totalCost;
 
     String totalDisplay;
     int total = 0;
