@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.RadioGroup;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
@@ -25,9 +27,17 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.didong_foodapp.ui.Adapters.ViewPagerMain;
 import com.example.didong_foodapp.ui.Models.RestaurantModel;
+import com.example.didong_foodapp.ui.Models.UserInformation;
 import com.example.didong_foodapp.ui.fragments.LoadingFragment;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
@@ -36,9 +46,13 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     RadioGroup rdGroup;
     SharedPreferences sharedPreferences;
     ConstraintLayout constraintMain;
+    DatabaseReference databaseRef1;
+    List<String> listUser = new ArrayList<>();
+    boolean checkExist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        databaseRef1 = FirebaseDatabase.getInstance().getReference("InformationUser");
+        checkExist = false;
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         sharedPreferences= getSharedPreferences("restaurantFromComment", Context.MODE_PRIVATE);
@@ -89,6 +103,33 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             fragmentTransaction.addToBackStack(null); // Optional: để thêm vào stack
             fragmentTransaction.commit();
         }
+        databaseRef1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    String UserID = dataSnapshot.getKey();
+                    listUser.add(UserID);
+                }
+                for(int i = 0; i < listUser.size(); i++){
+                    if(listUser.get(i).equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                        checkExist = true;
+                        return;
+                    }
+                }
+                if(checkExist == false){
+                    String name = "";
+                    String phone = "";
+                    String address = "";
+                    UserInformation userInformation = new UserInformation(name, phone, address);
+                    databaseRef1.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(userInformation);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
     }
 
 
@@ -117,6 +158,4 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         startActivity(new Intent(MainActivity.this,WelcomeActivity.class));
         FirebaseAuth.getInstance().signOut();
     }
-
-
 }

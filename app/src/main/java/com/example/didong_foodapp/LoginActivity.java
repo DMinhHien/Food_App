@@ -3,6 +3,7 @@ package com.example.didong_foodapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -15,18 +16,26 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.didong_foodapp.ui.Models.UserInformation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     TextInputEditText InputMail,InputPassword;
     Button Reg;
     FirebaseAuth mAuth;
     ProgressBar bar;
+    String uid;
+    Map<String, String> updateInfo = new HashMap<>();
     @Override
     public void onStart() {
         super.onStart();
@@ -34,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             Intent intent=new Intent(getApplicationContext(), MainActivity.class);
+            uid = currentUser.getUid();
             startActivity(intent);
             finish();
         }
@@ -48,11 +58,13 @@ public class LoginActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         InputMail=findViewById(R.id.Email);
         InputPassword=findViewById(R.id.Pass);
         bar=findViewById(R.id.progressBar);
         mAuth=FirebaseAuth.getInstance();
         Reg=findViewById(R.id.button_sign);
+
         Reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +99,8 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             }
                         });
+
+
             }
         }
         );
@@ -99,4 +113,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
     }
+
+
 }
