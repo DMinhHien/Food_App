@@ -97,7 +97,6 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
             }
         });
 
-
         holder.imgGiamSoLuong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

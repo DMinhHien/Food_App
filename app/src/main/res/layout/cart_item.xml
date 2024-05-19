@@ -24,8 +24,7 @@
                 android:id="@+id/detail_Image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/burger1">
+                android:scaleType="centerCrop">
             </ImageView>
         </androidx.cardview.widget.CardView>
 
