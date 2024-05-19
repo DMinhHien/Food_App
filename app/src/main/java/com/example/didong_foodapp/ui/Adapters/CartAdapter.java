@@ -54,17 +54,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.imgTangSoLuong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                if (position == RecyclerView.NO_POSITION) return;
+
+                CartModel currentItem = CartFragment.list.get(position);
 
                 int dem = Integer.parseInt(holder.qty.getTag().toString());
                 dem++;
+
                 holder.qty.setText(dem+"");
                 holder.qty.setTag(dem);
-                
-                CartModel temp = new CartModel(cartModel.getImage(), Integer.toString(dem), cartModel.getName(), cartModel.getPrice());
-                if(CartFragment.list.contains(temp)){
-                    CartFragment.list.remove(temp);
-                }
-                CartFragment.list.add(new CartModel(cartModel.getImage(), Integer.toString(dem), cartModel.getName(), cartModel.getPrice()));
+
+                currentItem.setQty(Integer.toString(dem));
+
                 if(CartFragment.list.isEmpty()){
                     CartFragment.totalCost.setText("0 đ");
                 }
@@ -82,17 +84,22 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.imgGiamSoLuong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int dem = Integer.parseInt(holder.qty.getTag().toString());
-                if(dem>0){
-                    CartModel temp = new CartModel(cartModel.getImage(), Integer.toString(dem), cartModel.getName(), cartModel.getPrice());
-                    CartFragment.list.remove(temp);
-                    dem--;
-                    if(dem!=0)
-                        CartFragment.list.add(new CartModel(cartModel.getImage(), Integer.toString(dem), cartModel.getName(),cartModel.getPrice()));
-                }
+                int position = holder.getAdapterPosition();
+                if (position == RecyclerView.NO_POSITION) return;
 
+                CartModel currentItem = CartFragment.list.get(position);
+
+                int dem = Integer.parseInt(holder.qty.getTag().toString());
+                dem--;
                 holder.qty.setText(dem+"");
                 holder.qty.setTag(dem);
+
+                if (dem > 0) {
+                    currentItem.setQty(Integer.toString(dem));
+                } else {
+                    CartFragment.list.remove(position);
+                    CartFragment.adapter.notifyItemRemoved(position);
+                }
 
                 if(CartFragment.list.isEmpty()){
                     CartFragment.totalCost.setText("0 đ");
