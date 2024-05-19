@@ -102,7 +102,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                         CartFragment.list.add(new CartModel(cartModel.getImage(), Integer.toString(dem), cartModel.getName(),cartModel.getPrice()));
                     }
                     else {
-                        notifyDataSetChanged();
+                        notifyItemRemoved(holder.getAdapterPosition());
                     }
                 }
 
@@ -125,9 +125,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("troll",cartModel.getName());
                 CartFragment.list.remove(cartModel);
-                notifyDataSetChanged();
+                notifyItemRemoved(holder.getAdapterPosition());
 
                 if(CartFragment.list.isEmpty()){
                     CartFragment.totalCost.setText("0 đ");
