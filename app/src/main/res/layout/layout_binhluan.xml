@@ -117,7 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
-            android:hint="Điểm(0-10)"
+            android:hint="Điểm (0-10)"
             android:textColorHint="#cac9ce"
             android:textSize="20dp"
             android:inputType="numberDecimal"/>

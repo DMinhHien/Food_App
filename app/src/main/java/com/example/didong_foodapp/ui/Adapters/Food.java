@@ -57,11 +57,14 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
                     holder.txtSoluong.setText(CartFragment.list.get(i).getQty());
                     break;
                 }
+                else
+                {
+                    holder.txtSoluong.setTag(0);
+                }
             }
         }
         else{
             holder.txtSoluong.setTag(0);
-
         }
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(foodModel.getImage());
@@ -77,7 +80,6 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
         holder.imgTangSoLuong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 int dem = Integer.parseInt(holder.txtSoluong.getTag().toString());
                 dem++;
                 holder.txtSoluong.setText(dem+"");

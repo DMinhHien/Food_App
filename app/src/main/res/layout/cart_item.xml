@@ -103,6 +103,14 @@
                     android:background="#00FFFFFF"
                     android:scaleType="centerCrop"
                     android:src="@drawable/plus" />
+
+                <ImageButton
+                    android:id="@+id/delete"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#00FFFFFF"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/baseline_fastfood_24" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
