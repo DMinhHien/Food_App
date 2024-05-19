@@ -61,6 +61,7 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
         }
         else{
             holder.txtSoluong.setTag(0);
+
         }
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(foodModel.getImage());
@@ -82,12 +83,15 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
                 holder.txtSoluong.setText(dem+"");
                 holder.txtSoluong.setTag(dem);
 
-
-                CartModel temp = new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), foodModel.getPrice() + " đ");
-                if(CartFragment.list.contains(temp)){
-                    CartFragment.list.remove(temp);
+                if(!CartFragment.list.isEmpty()) {
+                    for(int i=0;i<CartFragment.list.size();i++) {
+                        if (CartFragment.list.get(i).getName().equals(foodModel.getName())) {
+                            CartFragment.list.remove(CartFragment.list.get(i));
+                            break;
+                        }
+                    }
                 }
-                CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), foodModel.getPrice() + " đ"));
+                CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice())));
             }
         });
 
@@ -96,16 +100,19 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
             @Override
             public void onClick(View v) {
                 int dem = Integer.parseInt(holder.txtSoluong.getTag().toString());
-
                 if(dem>0){
-                    CartModel temp = new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice()));
-                    CartFragment.list.remove(temp);
+                    for(int i=0;i<CartFragment.list.size();i++) {
+                        if (CartFragment.list.get(i).getName().equals(foodModel.getName())) {
+                            CartFragment.list.remove(CartFragment.list.get(i));
+                            break;
+                        }
+                    }
                     dem--;
                     if(dem!=0)
-                        CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice())));
+                        CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(),Long.toString(foodModel.getPrice())));
                 }
 
-                holder.txtSoluong.setText(dem+" ");
+                holder.txtSoluong.setText(dem+"");
                 holder.txtSoluong.setTag(dem);
             }
         });

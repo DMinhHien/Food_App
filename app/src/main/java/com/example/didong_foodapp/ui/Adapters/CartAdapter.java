@@ -1,7 +1,9 @@
 package com.example.didong_foodapp.ui.Adapters;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +25,10 @@ import java.util.*;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     List<CartModel> list;
-    public CartAdapter(List<CartModel> list)
+    Context context;
+    public CartAdapter(Context context,List<CartModel> list)
     {
+        this.context=context;
         this.list = list;
     }
 
@@ -59,10 +63,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 holder.qty.setText(dem+"");
                 holder.qty.setTag(dem);
 
-
-                CartModel temp = new CartModel(cartModel.getImage(), Integer.toString(dem), cartModel.getName(), cartModel.getPrice());
-                if(CartFragment.list.contains(temp)){
-                    CartFragment.list.remove(temp);
+                if(!CartFragment.list.isEmpty()) {
+                    for(int i=0;i<CartFragment.list.size();i++) {
+                        if (CartFragment.list.get(i).getName().equals(cartModel.getName())) {
+                            CartFragment.list.remove(i);
+                            break;
+                        }
+                    }
                 }
                 CartFragment.list.add(new CartModel(cartModel.getImage(), Integer.toString(dem), cartModel.getName(), cartModel.getPrice()));
             }
@@ -74,11 +81,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             public void onClick(View v) {
                 int dem = Integer.parseInt(holder.qty.getTag().toString());
                 if(dem>0){
-                    CartModel temp = new CartModel(cartModel.getImage(), Integer.toString(dem), cartModel.getName(), cartModel.getPrice());
-                    CartFragment.list.remove(temp);
+                    for(int i=0;i<CartFragment.list.size();i++) {
+                        if (CartFragment.list.get(i).getName().equals(cartModel.getName())) {
+                            Log.d("troll",CartFragment.list.get(i).getName()+" "+cartModel.getName() + cartModel.getQty());
+                            CartFragment.list.remove(i);
+
+                            break;
+                        }
+                    }
                     dem--;
-                    if(dem!=0)
+                    if(dem!=0){
                         CartFragment.list.add(new CartModel(cartModel.getImage(), Integer.toString(dem), cartModel.getName(),cartModel.getPrice()));
+                    }
                 }
 
                 holder.qty.setText(dem+"");
