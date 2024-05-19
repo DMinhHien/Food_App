@@ -166,9 +166,6 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
                                 iBinhLuan.putExtra("currentComment", comModel);
                                 iBinhLuan.putExtra("isEdit", "true");
                                 context.startActivity(iBinhLuan);
-                                DatabaseReference nodeComment = FirebaseDatabase.getInstance().getReference().
-                                        child("commentR").child(resModel.getMaR()).child(comModel.getMaBL());
-                                nodeComment.removeValue();
                                 commentModelList.remove(position);
                                 return true;
                             } else if (item.getItemId() == R.id.menu_item_xoa) {
