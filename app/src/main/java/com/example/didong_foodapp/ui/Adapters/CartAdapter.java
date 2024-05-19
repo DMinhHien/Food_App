@@ -25,10 +25,9 @@ import java.util.*;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     List<CartModel> list;
-    Context context;
-    public CartAdapter(Context context,List<CartModel> list)
+    int total = 0;
+    public CartAdapter(List<CartModel> list)
     {
-        this.context=context;
         this.list = list;
     }
 
@@ -51,7 +50,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             }
         });
         holder.name.setText(cartModel.getName());
-        holder.price.setText(cartModel.getPrice());
+        holder.price.setText(cartModel.getPrice()+ " đ");
         holder.qty.setText(cartModel.getQty());
         holder.qty.setTag(cartModel.getQty());
         holder.imgTangSoLuong.setOnClickListener(new View.OnClickListener() {

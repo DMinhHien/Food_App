@@ -24,6 +24,8 @@ import com.example.didong_foodapp.ui.Controller.CommentController;
 import com.example.didong_foodapp.ui.Models.CommentModel;
 import com.example.didong_foodapp.ui.Models.RestaurantModel;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
     SharedPreferences sharedPreferences;
     RestaurantModel resModel;
     CommentModel editingComment;
+    DatabaseReference lDatabase;
     String isEdit;
     final int REQUEST_CHONHINHBINHLUAN = 11;
     @Override
@@ -50,6 +53,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
         sharedPreferences = getSharedPreferences("restaurantFromComment", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         resModel=getIntent().getParcelableExtra("quananBinhLuan");
+        lDatabase= FirebaseDatabase.getInstance().getReference().child("commentR").child(resModel.getMaR());
         setContentView(R.layout.layout_binhluan);
         maquanan=getIntent().getStringExtra("maquan");
         String tenquan =getIntent().getStringExtra("tenquan");
@@ -71,6 +75,8 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
             txtPost.setText("Sửa");
             edTitle.setText(editingComment.getTitle());
             edComment.setText(editingComment.getContent());
+            double score=editingComment.getScore();
+            edScore.setText(String.valueOf(score));
             listHinhDuocChon=editingComment.getImageList();
             adapterHienThiHinhBinhLuanDC = new AdapterHienThiHinhBinhLuanDC(this,R.layout.layout_hienthihinhduocchon,listHinhDuocChon,true);
             recyclerViewChonHinhBinhLuan.setAdapter(adapterHienThiHinhBinhLuanDC);
@@ -126,7 +132,13 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
                     comModel.setScore(score);
                     comModel.setLikes(0);
                     comModel.setUser(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    commentController.ThemBinhLuan(maquanan, comModel, listHinhDuocChon);
+                    if  (Objects.equals(isEdit, "true")){
+                        comModel.setLikes(editingComment.getLikes());
+                        lDatabase.child(editingComment.getMaBL()).setValue(comModel);
+                    }
+                    else {
+                        commentController.ThemBinhLuan(maquanan, comModel, listHinhDuocChon);
+                    }
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("newComment", "true");
 //                editor.putString("newMaComment", maBL);
