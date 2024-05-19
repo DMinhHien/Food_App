@@ -39,6 +39,10 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
         this.resources=resources;
         this.context=context;
     }
+    public void setFiler( List<RestaurantModel> filterList){
+        this.resModelList= filterList;
+        notifyDataSetChanged();
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtNameRLocation,txtTitle1,txtTitle2,txtContent1,txtContent2,
