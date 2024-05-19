@@ -23,4 +23,12 @@
     <style name="Theme.DiDong_FoodApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.DiDong_FoodApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="SCREEN">
+        <item name="android:background">#FFF</item>
+    </style>
+
+    <style name="TEXT">
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>
