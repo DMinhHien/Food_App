@@ -1,5 +1,6 @@
 package com.example.didong_foodapp.ui.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,9 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.didong_foodapp.R;
+import com.example.didong_foodapp.ThanhtoanActivity;
 import com.example.didong_foodapp.ui.Adapters.CartAdapter;
 import com.example.didong_foodapp.ui.Models.CartModel;
 
@@ -19,11 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.RecursiveAction;
 
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment implements View.OnClickListener {
     public static List<CartModel> list= new ArrayList<>();;
     public static CartAdapter adapter;
     RecyclerView recyclerView;
     public static TextView totalCost;
+
+    public Button btnThanhToan;
 
     String totalDisplay;
     int total = 0;
@@ -37,6 +43,8 @@ public class CartFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
+        btnThanhToan = view.findViewById(R.id.button_newOrder);
+        btnThanhToan.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         totalCost = view.findViewById(R.id.txtTotal);
         for(int i = 0; i < list.size(); i++){
@@ -61,6 +69,16 @@ public class CartFragment extends Fragment {
         {
             list.addAll(items);
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if(id == R.id.button_newOrder)
+        {
+            Intent iThanhtoan = new Intent(this.getContext(),ThanhtoanActivity.class);
+            startActivity(iThanhtoan);
         }
     }
 }

@@ -24,6 +24,8 @@
             android:name=".ChiTietResActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"/>
+        <activity android:name=".ThanhtoanActivity"
+            />
         <activity
             android:name=".MainActivity"
             android:exported="false" />

@@ -78,8 +78,8 @@
 
                 <ImageView
                     android:id="@+id/detail_button_remove"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:background="#00FFFFFF"
                     android:scaleType="centerCrop"
                     android:src="@drawable/minus" />
@@ -88,16 +88,18 @@
                     android:id="@+id/detail_Qty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:text="0"
+                    android:layout_marginHorizontal="10dp"
                     android:onClick="AddToCart"
-                    android:textStyle="bold"
-                    android:textColor="#9d0208"/>
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="#9d0208"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/detail_button_add"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:background="#00FFFFFF"
                     android:scaleType="centerCrop"
                     android:src="@drawable/plus" />

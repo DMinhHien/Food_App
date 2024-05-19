@@ -92,7 +92,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 if(dem>0){
                     for(int i=0;i<CartFragment.list.size();i++) {
                         if (CartFragment.list.get(i).getName().equals(cartModel.getName())) {
-                            Log.d("troll",CartFragment.list.get(i).getName()+" "+cartModel.getName() + cartModel.getQty());
                             CartFragment.list.remove(i);
 
                             break;
@@ -102,10 +101,32 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     if(dem!=0){
                         CartFragment.list.add(new CartModel(cartModel.getImage(), Integer.toString(dem), cartModel.getName(),cartModel.getPrice()));
                     }
+                    else {
+                        notifyItemRemoved(holder.getAdapterPosition());
+                    }
                 }
 
                 holder.qty.setText(dem+"");
                 holder.qty.setTag(dem);
+
+                if(CartFragment.list.isEmpty()){
+                    CartFragment.totalCost.setText("0 đ");
+                }
+                else{
+                    total = 0;
+                    for(int i = 0; i < list.size(); i++){
+                        total += Integer.parseInt(list.get(i).getPrice().replace(" đ","")) * Integer.parseInt(list.get(i).getQty());
+                    }
+                    CartFragment.totalCost.setText(total + " đ");
+                }
+            }
+        });
+
+        holder.imgDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CartFragment.list.remove(cartModel);
+                notifyItemRemoved(holder.getAdapterPosition());
 
                 if(CartFragment.list.isEmpty()){
                     CartFragment.totalCost.setText("0 đ");
@@ -130,7 +151,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     {
         ImageView imageView;
         TextView name, price, qty;
-        ImageView imgGiamSoLuong, imgTangSoLuong;
+        ImageView imgGiamSoLuong, imgTangSoLuong, imgDelete;
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
@@ -140,6 +161,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             qty = itemView.findViewById(R.id.detail_Qty);
             imgGiamSoLuong= itemView.findViewById(R.id.detail_button_remove);
             imgTangSoLuong=itemView.findViewById(R.id.detail_button_add );
+            imgDelete=itemView.findViewById(R.id.delete);
         }
     }
 }

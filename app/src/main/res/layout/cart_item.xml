@@ -24,8 +24,7 @@
                 android:id="@+id/detail_Image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/burger1">
+                android:scaleType="centerCrop">
             </ImageView>
         </androidx.cardview.widget.CardView>
 
@@ -79,10 +78,10 @@
                 android:layout_marginTop="4dp"
                 >
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/detail_button_remove"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="#00FFFFFF"
                     android:scaleType="centerCrop"
                     android:src="@drawable/minus" />
@@ -91,18 +90,30 @@
                     android:id="@+id/detail_Qty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:onClick="AddToCart"
                     android:text="0"
-                    android:textStyle="bold"
-                    android:textColor="#9d0208"/>
+                    android:textAlignment="textStart"
+                    android:textColor="#9d0208"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/detail_button_add"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="#00FFFFFF"
                     android:scaleType="centerCrop"
                     android:src="@drawable/plus" />
+
+                <ImageButton
+                    android:id="@+id/delete"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="80dp"
+                    android:background="#00FFFFFF"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/trashbin" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
