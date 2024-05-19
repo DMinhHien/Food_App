@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -23,6 +24,8 @@ import com.example.didong_foodapp.ui.Controller.CommentController;
 import com.example.didong_foodapp.ui.Models.CommentModel;
 import com.example.didong_foodapp.ui.Models.RestaurantModel;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +45,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
     SharedPreferences sharedPreferences;
     RestaurantModel resModel;
     CommentModel editingComment;
+    DatabaseReference lDatabase;
     String isEdit;
     final int REQUEST_CHONHINHBINHLUAN = 11;
     @Override
@@ -49,6 +53,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
         sharedPreferences = getSharedPreferences("restaurantFromComment", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         resModel=getIntent().getParcelableExtra("quananBinhLuan");
+        lDatabase= FirebaseDatabase.getInstance().getReference().child("commentR").child(resModel.getMaR());
         setContentView(R.layout.layout_binhluan);
         maquanan=getIntent().getStringExtra("maquan");
         String tenquan =getIntent().getStringExtra("tenquan");
@@ -70,6 +75,8 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
             txtPost.setText("Sửa");
             edTitle.setText(editingComment.getTitle());
             edComment.setText(editingComment.getContent());
+            double score=editingComment.getScore();
+            edScore.setText(String.valueOf(score));
             listHinhDuocChon=editingComment.getImageList();
             adapterHienThiHinhBinhLuanDC = new AdapterHienThiHinhBinhLuanDC(this,R.layout.layout_hienthihinhduocchon,listHinhDuocChon,true);
             recyclerViewChonHinhBinhLuan.setAdapter(adapterHienThiHinhBinhLuanDC);
@@ -109,28 +116,55 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
         else if (id==R.id.txtDangBinhLuan) {
-            CommentModel comModel;
-            comModel = new CommentModel();
-            String title = edTitle.getText().toString();
-            String content = edComment.getText().toString();
-            String score=edScore.getText().toString();
-            comModel.setContent(content);
-            comModel.setTitle(title);
-            comModel.setScore(Double.parseDouble(score));
-            comModel.setLikes(0);
-            comModel.setUser(FirebaseAuth.getInstance().getCurrentUser().getUid());
-            commentController.ThemBinhLuan(maquanan, comModel, listHinhDuocChon);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("newComment", "true");
+            double score=Double.parseDouble(edScore.getText().toString());
+            if (!edComment.getText().toString().isEmpty() && !edScore.getText().toString().isEmpty()) {
+                if ((score>10.0)) {
+                    Toast.makeText(BinhLuanActivity.this, "Điểm phải từ 0-10",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    CommentModel comModel;
+                    comModel = new CommentModel();
+                    String title = edTitle.getText().toString();
+                    String content = edComment.getText().toString();
+                    comModel.setContent(content);
+                    comModel.setTitle(title);
+                    comModel.setScore(score);
+                    comModel.setLikes(0);
+                    comModel.setUser(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    if  (Objects.equals(isEdit, "true")){
+                        comModel.setLikes(editingComment.getLikes());
+                        lDatabase.child(editingComment.getMaBL()).setValue(comModel);
+                    }
+                    else {
+                        commentController.ThemBinhLuan(maquanan, comModel, listHinhDuocChon);
+                    }
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("newComment", "true");
 //                editor.putString("newMaComment", maBL);
-            editor.putString("previousMaR", resModel.getMaR());
-            editor.commit();
-            Intent startActivity = new Intent(BinhLuanActivity.this, MainActivity.class);
-            BinhLuanActivity.this.startActivity(startActivity);
-            finish();
+                    editor.putString("previousMaR", resModel.getMaR());
+                    editor.commit();
+                    Intent startActivity = new Intent(BinhLuanActivity.this, MainActivity.class);
+                    BinhLuanActivity.this.startActivity(startActivity);
+                    finish();
+                }
+            }
+            else if(edComment.getText().toString().isEmpty() && edScore.getText().toString().isEmpty()){
+                Toast.makeText(BinhLuanActivity.this, "Hãy nhập đầy đủ",
+                        Toast.LENGTH_SHORT).show();
+            }
+            else if(edComment.getText().toString().isEmpty()){
+                Toast.makeText(BinhLuanActivity.this, "Hãy nhập nội dung",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+            else if(edScore.getText().toString().isEmpty()){
+                Toast.makeText(BinhLuanActivity.this, "Hãy nhập điểm",
+                        Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

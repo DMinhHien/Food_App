@@ -27,15 +27,15 @@ import java.util.List;
 public class Food extends RecyclerView.Adapter<Food.HolderFood>{
     Context context;
     List<FoodModel> foodModelList;
-    List<CartModel> cartModelList;
+
 
 
 
     public Food(Context context, List<FoodModel> foodModelList) {
         this.context = context;
         this.foodModelList =foodModelList;
-
     }
+
     @NonNull
     @Override
     public Food.HolderFood onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,8 +48,22 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
     public void onBindViewHolder(@NonNull Food.HolderFood holder, int position) {
         FoodModel foodModel=foodModelList.get(position);
         holder.txtFoodName.setText(foodModel.getName());
-        holder.txtSoluong.setTag(0);
-        holder.txtPrice.setText(Long.toString(foodModel.getPrice()));
+        holder.txtPrice.setText((foodModel.getPrice()) + " đ");
+
+        if(!CartFragment.list.isEmpty()) {
+            for(int i=0;i<CartFragment.list.size();i++) {
+                if (CartFragment.list.get(i).getName().equals(foodModel.getName())) {
+                    holder.txtSoluong.setTag(CartFragment.list.get(i).getQty());
+                    holder.txtSoluong.setText(CartFragment.list.get(i).getQty());
+                    break;
+                }
+            }
+        }
+        else{
+            holder.txtSoluong.setTag(0);
+
+        }
+
         StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(foodModel.getImage());
         long megabyte=1024*1024;
         storageRef.getBytes(megabyte).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -69,10 +83,13 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
                 holder.txtSoluong.setText(dem+"");
                 holder.txtSoluong.setTag(dem);
 
-
-                CartModel temp = new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice()));
-                if(CartFragment.list.contains(temp)){
-                    CartFragment.list.remove(temp);
+                if(!CartFragment.list.isEmpty()) {
+                    for(int i=0;i<CartFragment.list.size();i++) {
+                        if (CartFragment.list.get(i).getName().equals(foodModel.getName())) {
+                            CartFragment.list.remove(CartFragment.list.get(i));
+                            break;
+                        }
+                    }
                 }
                 CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice())));
             }
@@ -83,15 +100,16 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
             @Override
             public void onClick(View v) {
                 int dem = Integer.parseInt(holder.txtSoluong.getTag().toString());
-                CartModel temp = new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice()));
-
-                if(dem!=0) {
+                if(dem>0){
+                    for(int i=0;i<CartFragment.list.size();i++) {
+                        if (CartFragment.list.get(i).getName().equals(foodModel.getName())) {
+                            CartFragment.list.remove(CartFragment.list.get(i));
+                            break;
+                        }
+                    }
                     dem--;
-                    CartFragment.list.remove(temp);
-                    CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice())));
-                }
-                else {
-                    CartFragment.list.remove(temp);
+                    if(dem!=0)
+                        CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(),Long.toString(foodModel.getPrice())));
                 }
 
                 holder.txtSoluong.setText(dem+"");
