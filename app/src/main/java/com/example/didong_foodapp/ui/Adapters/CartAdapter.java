@@ -23,6 +23,7 @@ import java.util.*;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     List<CartModel> list;
+    int total = 0;
     public CartAdapter(List<CartModel> list)
     {
         this.list = list;
@@ -58,13 +59,22 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 dem++;
                 holder.qty.setText(dem+"");
                 holder.qty.setTag(dem);
-
-
+                
                 CartModel temp = new CartModel(cartModel.getImage(), Integer.toString(dem), cartModel.getName(), cartModel.getPrice());
                 if(CartFragment.list.contains(temp)){
                     CartFragment.list.remove(temp);
                 }
                 CartFragment.list.add(new CartModel(cartModel.getImage(), Integer.toString(dem), cartModel.getName(), cartModel.getPrice()));
+                if(CartFragment.list.isEmpty()){
+                    CartFragment.totalCost.setText("0 đ");
+                }
+                else{
+                    total = 0;
+                    for(int i = 0; i < list.size(); i++){
+                        total += Integer.parseInt(list.get(i).getPrice().replace(" đ","")) * Integer.parseInt(list.get(i).getQty());
+                    }
+                    CartFragment.totalCost.setText(total + " đ");
+                }
             }
         });
 //
@@ -83,6 +93,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
                 holder.qty.setText(dem+"");
                 holder.qty.setTag(dem);
+
+                if(CartFragment.list.isEmpty()){
+                    CartFragment.totalCost.setText("0 đ");
+                }
+                else{
+                    total = 0;
+                    for(int i = 0; i < list.size(); i++){
+                        total += Integer.parseInt(list.get(i).getPrice().replace(" đ","")) * Integer.parseInt(list.get(i).getQty());
+                    }
+                    CartFragment.totalCost.setText(total + " đ");
+                }
             }
         });
     }
@@ -100,7 +121,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
-
             imageView = itemView.findViewById(R.id.detail_Image);
             name = itemView.findViewById(R.id.detail_Name);
             price = itemView.findViewById(R.id.detail_Price);
