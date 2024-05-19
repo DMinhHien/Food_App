@@ -177,6 +177,7 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
                                         child("commentR").child(resModel.getMaR()).child(comModel.getMaBL());
                                 holder.commentContainer.removeAllViews();
                                 nodeComment.removeValue();
+                                mDatabase.child(uid).child(comModel.getMaBL()).removeValue();
                                 comModel.setContent(null);
                                 return true;
                             }
