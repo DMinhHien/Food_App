@@ -46,6 +46,7 @@
                     android:id="@+id/txtAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/TEXT"
                     android:text="36 Triệu Quang Phục Quận 3" />
 
             </LinearLayout>
@@ -112,6 +113,7 @@
 
                 <TextView
                     android:id="@+id/titleTxt1"
+                    style="@style/TEXT"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Gogi House"
@@ -161,6 +163,7 @@
 
                 <TextView
                     android:id="@+id/titleTxt2"
+                    style="@style/TEXT"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Gogi House"
