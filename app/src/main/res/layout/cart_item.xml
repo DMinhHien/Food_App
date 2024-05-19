@@ -24,8 +24,7 @@
                 android:id="@+id/detail_Image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/burger1">
+                android:scaleType="centerCrop">
             </ImageView>
         </androidx.cardview.widget.CardView>
 
@@ -103,6 +102,14 @@
                     android:background="#00FFFFFF"
                     android:scaleType="centerCrop"
                     android:src="@drawable/plus" />
+
+                <ImageButton
+                    android:id="@+id/delete"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#00FFFFFF"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/baseline_fastfood_24" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
