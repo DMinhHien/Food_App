@@ -43,7 +43,7 @@ public class CartFragment extends Fragment {
             total += Integer.parseInt(list.get(i).getPrice().replace(" đ","")) * Integer.parseInt(list.get(i).getQty());
         }
         totalDisplay = Integer.toString(total);
-        adapter = new CartAdapter(this.getContext(),list);
+        adapter = new CartAdapter(list);
         recyclerView.setAdapter(adapter);
         totalCost.setText(totalDisplay + " đ");
         return view;
