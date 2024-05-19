@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
+            android:id="@+id/close"
             android:layout_width="55dp"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -97,6 +98,7 @@
             android:textSize="20sp" />
 
         <Button
+            android:id="@+id/btnXacnhan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
