@@ -21,7 +21,7 @@ import java.util.concurrent.RecursiveAction;
 
 public class CartFragment extends Fragment {
     public static List<CartModel> list= new ArrayList<>();;
-    static CartAdapter adapter;
+    public static CartAdapter adapter;
     RecyclerView recyclerView;
     public static TextView totalCost;
 

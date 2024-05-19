@@ -84,9 +84,9 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
 
 
                 CartModel temp = new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), foodModel.getPrice() + " đ");
-                if(CartFragment.list.contains(temp)){
-                    CartFragment.list.remove(temp);
-                }
+
+                CartFragment.list.remove(temp);
+
                 CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), foodModel.getPrice() + " đ"));
             }
         });
