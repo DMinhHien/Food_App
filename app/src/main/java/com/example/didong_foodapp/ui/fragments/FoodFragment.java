@@ -2,6 +2,8 @@ package com.example.didong_foodapp.ui.fragments;
 
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,11 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.didong_foodapp.LoginActivity;
 import com.example.didong_foodapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,6 +37,7 @@ public class FoodFragment extends Fragment {
     Button btUpdate;
     DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference databaseRef1 = FirebaseDatabase.getInstance().getReference("InformationUser");
+    SharedPreferences sharedPreferences;
     @Nullable
     @Override
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
@@ -45,6 +50,12 @@ public class FoodFragment extends Fragment {
         address = view.findViewById(R.id.address);
         btUpdate = view.findViewById(R.id.btnUpdate);
         String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        sharedPreferences = getActivity().getSharedPreferences("Thongtinnguoidung", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("name",name.getText().toString());
+        editor.putString("diachi",address.getText().toString());
+        editor.putString("phone",name.getText().toString());
+        editor.commit();
         DatabaseReference childRef = databaseRef.child("users").child(uid).child("username");
         databaseRef1.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
@@ -80,7 +91,15 @@ public class FoodFragment extends Fragment {
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadInformation(address.getText().toString(), name.getText().toString(), phone.getText().toString());
+
+                if(address.getText().toString().isEmpty() == true ||name.getText().toString().isEmpty() == true || phone.getText().toString().isEmpty()==true)
+                    Toast.makeText(getContext(), "Update Failed",
+                            Toast.LENGTH_SHORT).show();
+                else {
+                    loadInformation(address.getText().toString(), name.getText().toString(), phone.getText().toString());
+                    Toast.makeText(getContext(), "Update Successfully",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;
@@ -100,5 +119,17 @@ public class FoodFragment extends Fragment {
                 }
             }
         });
+    }
+    public String getName()
+    {
+        return name.getText().toString();
+    }
+    public String getPhone()
+    {
+        return phone.getText().toString();
+    }
+    public String getAddress()
+    {
+        return address.getText().toString();
     }
 }
