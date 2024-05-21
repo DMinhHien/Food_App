@@ -24,10 +24,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 public class ThanhtoanActivity extends AppCompatActivity implements View.OnClickListener  {
 
 
@@ -48,9 +44,8 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
     Button btnConfirm;
     ImageButton btnclose;
     String mk1, mk2, mk3;
-
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference databaseReference1=FirebaseDatabase.getInstance().getReference("Chitiethoadon");
+    String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+    DatabaseReference databaseRef1 = FirebaseDatabase.getInstance().getReference("InformationUser");
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,14 +57,19 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
         btnConfirm= (Button) findViewById(R.id.btnXacnhan);
         btnclose = findViewById(R.id.close);
         btnclose.setOnClickListener(this);
-        //add len Firebase
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        databaseReference1.child(uid).addValueEventListener(new ValueEventListener() {
+        databaseRef1.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren())
-                {
-
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    if(dataSnapshot.getKey().equals("address")){
+                        txtaddress.setText(dataSnapshot.getValue().toString());
+                    }
+                    else if(dataSnapshot.getKey().equals("name")){
+                        txtName.setText(dataSnapshot.getValue().toString());
+                    }
+                    else{
+                        txtsdt.setText(dataSnapshot.getValue().toString());
+                    }
                 }
             }
 
@@ -78,19 +78,6 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
 
             }
         });
-        //listsanpham
-        sharedPreferences = getSharedPreferences("Thongtinnguoidung",Context.MODE_PRIVATE );
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        txtName.setText(sharedPreferences.getString("name","12"));
-        txtaddress.setText(sharedPreferences.getString("diachi","12"));
-        txtsdt.setText(sharedPreferences.getString("phone","12"));
-
-
-
-    }
-    public void loaddata(String uid, String tongtien, String tenkhachhang, String tendiachi, String phone, List<CartModel> listvatpham, String madon)
-    {
-        DatabaseReference nodeHoadon= FirebaseDatabase.getInstance().getReference().child(uid);
 
 
     }

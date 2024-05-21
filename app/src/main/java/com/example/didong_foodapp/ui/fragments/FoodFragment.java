@@ -37,7 +37,7 @@ public class FoodFragment extends Fragment {
     Button btUpdate;
     DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference databaseRef1 = FirebaseDatabase.getInstance().getReference("InformationUser");
-    SharedPreferences sharedPreferences;
+
     @Nullable
     @Override
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
@@ -50,12 +50,6 @@ public class FoodFragment extends Fragment {
         address = view.findViewById(R.id.address);
         btUpdate = view.findViewById(R.id.btnUpdate);
         String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
-        sharedPreferences = getActivity().getSharedPreferences("Thongtinnguoidung", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("name",name.getText().toString());
-        editor.putString("diachi",address.getText().toString());
-        editor.putString("phone",name.getText().toString());
-        editor.commit();
         DatabaseReference childRef = databaseRef.child("users").child(uid).child("username");
         databaseRef1.child(uid).addValueEventListener(new ValueEventListener() {
             @Override

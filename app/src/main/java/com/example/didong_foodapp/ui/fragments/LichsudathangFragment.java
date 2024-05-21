@@ -29,6 +29,9 @@ public class LichsudathangFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lichsudathang, container, false);
+        recyclerViewDathang=view.findViewById(R.id.recyclerHistory);
+        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getContext());
+        recyclerViewDathang.setLayoutManager(layoutManager);
         List<LichsuModel> list = new ArrayList<>();
         //lay du lieu cho list tu firebase
         //
@@ -36,6 +39,8 @@ public class LichsudathangFragment extends Fragment {
         //
         recyclerViewDathang = this.getActivity().findViewById(R.id.recyclerView1);
         recyclerViewDathang.setAdapter(new LichsuhoadonAdapter(list));
+        LichsuhoadonAdapter adapterDatHangHistory=new LichsuhoadonAdapter(getContext(),list,R.layout.lichsu_item);
+        recyclerViewDathang.setAdapter(adapterDatHangHistory);
         return view;
     }
 
