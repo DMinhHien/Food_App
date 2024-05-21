@@ -38,7 +38,7 @@ public class CartFragment extends Fragment implements View.OnClickListener {
     public Button btnThanhToan;
     SharedPreferences sharedPreferences1;
 
-    String totalDisplay;
+    public static String totalDisplay;
     int total = 0;
     public CartFragment() {
 
