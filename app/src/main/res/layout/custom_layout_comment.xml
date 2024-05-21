@@ -16,6 +16,7 @@
         app:layout_constraintTop_toBottomOf="@+id/orderButton">
 
         <TextView
+            android:id="@+id/avatar"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:background="@drawable/ic_baseline_person_24_black"
@@ -60,14 +61,14 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/commentLike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="Thích"
-            android:textSize="15dp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/commentLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="Thích"
+                android:textSize="15dp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 

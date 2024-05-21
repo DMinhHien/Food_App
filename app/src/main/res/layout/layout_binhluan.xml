@@ -113,7 +113,7 @@
             android:id="@+id/editTextScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="40dp"
             android:hint="Điểm (0-10)"
             android:textColorHint="#cac9ce"
             android:textSize="20dp"
@@ -132,12 +132,13 @@
     <EditText
         android:id="@+id/editTextComment"
         android:layout_width="match_parent"
-        android:layout_height="321dp"
+        android:layout_height="300dp"
         android:layout_weight="1"
         android:gravity="top"
         android:textColorHint="#b5b5b5"
         android:hint="Viết trên 100 từ, đúng chính tả, ngôn từ văn hóa để có điểm thưởng "
         android:textSize="20dp"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/View" />
