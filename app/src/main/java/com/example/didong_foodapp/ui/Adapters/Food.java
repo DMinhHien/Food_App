@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,17 +24,16 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Food extends RecyclerView.Adapter<Food.HolderFood>{
     Context context;
+    String maR;
     List<FoodModel> foodModelList;
-
-
-
-
-    public Food(Context context, List<FoodModel> foodModelList) {
+    public Food(Context context, List<FoodModel> foodModelList, String maR) {
         this.context = context;
         this.foodModelList =foodModelList;
+        this.maR = maR;
     }
 
     @NonNull
@@ -94,6 +94,15 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
                     }
                 }
                 CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice())));
+
+                if (Objects.equals(CartFragment.CurrentRestaurant, ""))
+                {
+                    CartFragment.CurrentRestaurant = maR;
+                }
+                else if (!Objects.equals(CartFragment.CurrentRestaurant, maR))
+                {
+                    Toast.makeText(context, "Noob", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -25,8 +25,11 @@ import java.util.List;
 import java.util.concurrent.RecursiveAction;
 
 public class CartFragment extends Fragment implements View.OnClickListener {
-    public static List<CartModel> list= new ArrayList<>();;
+    public static List<CartModel> list= new ArrayList<>();
+
     public static CartAdapter adapter;
+
+    public static String CurrentRestaurant;
     RecyclerView recyclerView;
     public static TextView totalCost;
 

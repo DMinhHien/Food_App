@@ -24,7 +24,7 @@ public class MenuController {
             @Override
             public void getMenuSuccess(List<MenuModel> menuModelList) {
                 for (MenuModel menuModel: menuModelList){
-                    Menu adapterMenu = new Menu(context,menuModelList);
+                    Menu adapterMenu = new Menu(context,menuModelList,maR);
                     recyclerView.setAdapter(adapterMenu);
                     adapterMenu.notifyDataSetChanged();
                 }
