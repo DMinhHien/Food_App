@@ -42,9 +42,9 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
         btnclose.setOnClickListener(this);
         sharedPreferences = getSharedPreferences("Thongtinnguoidung",Context.MODE_PRIVATE );
         SharedPreferences.Editor editor = sharedPreferences.edit();
-//        txtName.setText(sharedPreferences.getString("name","12"));
-//        txtaddress.setText(sharedPreferences.getString("diachi","12"));
-//        txtsdt.setText(sharedPreferences.getString("phone","12"));
+        txtName.setText(sharedPreferences.getString("name","12"));
+        txtaddress.setText(sharedPreferences.getString("diachi","12"));
+        txtsdt.setText(sharedPreferences.getString("phone","12"));
         mk1 = sharedPreferences.getString("name","12");
         mk2 = sharedPreferences.getString("diachi","12");
         mk3 = sharedPreferences.getString("phone","12");

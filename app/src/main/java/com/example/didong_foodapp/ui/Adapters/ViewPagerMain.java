@@ -9,6 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.didong_foodapp.ui.fragments.CartFragment;
 import com.example.didong_foodapp.ui.fragments.FoodFragment;
+import com.example.didong_foodapp.ui.fragments.LichsudathangFragment;
 import com.example.didong_foodapp.ui.fragments.LocationFragment;
 import com.example.didong_foodapp.ui.fragments.SavedFragment;
 
@@ -19,12 +20,15 @@ public class ViewPagerMain extends FragmentStateAdapter {
     SavedFragment saved_fragment;
     CartFragment cartFragment;
 
+    LichsudathangFragment lichsudathangFragment;
+
     public ViewPagerMain(FragmentManager fragmentManager, Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
         food_fragment = new FoodFragment();
         location_fragment = new LocationFragment();
         saved_fragment = new SavedFragment();
         cartFragment = new CartFragment();
+        lichsudathangFragment = new LichsudathangFragment();
     }
 
     @Override
@@ -39,12 +43,14 @@ public class ViewPagerMain extends FragmentStateAdapter {
                 return saved_fragment;
             case 3:
                 return food_fragment;
+            case 4:
+                return lichsudathangFragment;
         }
         return null;
     }
 
     @Override
     public int getItemCount() {
-        return 4; // Số lượng fragment trong viewpager
+        return 5; // Số lượng fragment trong viewpager
     }
 }
