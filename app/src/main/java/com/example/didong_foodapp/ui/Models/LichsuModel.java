@@ -3,9 +3,6 @@ package com.example.didong_foodapp.ui.Models;
 import java.util.List;
 
 public class LichsuModel {
-
-
-
     String tongtien;
     UserInformation person;
     List<CartModel> listdoan;
@@ -19,7 +16,6 @@ public class LichsuModel {
     public UserInformation getPerson() {
         return person;
     }
-
     public void setPerson(UserInformation person) {
         this.person = person;
     }

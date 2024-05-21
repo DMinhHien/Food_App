@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.R;
@@ -27,9 +28,12 @@ public class LichsudathangFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lichsudathang, container, false);
+        recyclerViewDathang=view.findViewById(R.id.recyclerHistory);
+        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getContext());
+        recyclerViewDathang.setLayoutManager(layoutManager);
         List<LichsuModel> list = new ArrayList<>();
-
-        recyclerViewDathang.setAdapter(new LichsuhoadonAdapter(list));
+        LichsuhoadonAdapter adapterDatHangHistory=new LichsuhoadonAdapter(getContext(),list,R.layout.lichsu_item);
+        recyclerViewDathang.setAdapter(adapterDatHangHistory);
         return view;
     }
 }

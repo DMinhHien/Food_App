@@ -33,7 +33,7 @@
         app:layout_constraintWidth_percent=".6" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerHistory"
         android:layout_width="match_parent"
         android:layout_height="450dp"
         android:layout_marginTop="5dp"

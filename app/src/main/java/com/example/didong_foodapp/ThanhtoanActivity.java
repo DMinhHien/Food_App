@@ -11,10 +11,17 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.didong_foodapp.ui.fragments.FoodFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ThanhtoanActivity extends AppCompatActivity implements View.OnClickListener  {
 
@@ -29,6 +36,8 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
     Button btnConfirm;
     ImageButton btnclose;
     String mk1, mk2, mk3;
+    String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+    DatabaseReference databaseRef1 = FirebaseDatabase.getInstance().getReference("InformationUser");
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,14 +49,27 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
         btnConfirm= (Button) findViewById(R.id.btnXacnhan);
         btnclose = findViewById(R.id.close);
         btnclose.setOnClickListener(this);
-        sharedPreferences = getSharedPreferences("Thongtinnguoidung",Context.MODE_PRIVATE );
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        txtName.setText(sharedPreferences.getString("name","12"));
-        txtaddress.setText(sharedPreferences.getString("diachi","12"));
-        txtsdt.setText(sharedPreferences.getString("phone","12"));
-        mk1 = sharedPreferences.getString("name","12");
-        mk2 = sharedPreferences.getString("diachi","12");
-        mk3 = sharedPreferences.getString("phone","12");
+        databaseRef1.child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    if(dataSnapshot.getKey().equals("address")){
+                        txtaddress.setText(dataSnapshot.getValue().toString());
+                    }
+                    else if(dataSnapshot.getKey().equals("name")){
+                        txtName.setText(dataSnapshot.getValue().toString());
+                    }
+                    else{
+                        txtsdt.setText(dataSnapshot.getValue().toString());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
     }
