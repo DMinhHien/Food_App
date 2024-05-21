@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.didong_foodapp.ui.Models.CartModel;
 import com.example.didong_foodapp.ui.fragments.FoodFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,12 +24,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ThanhtoanActivity extends AppCompatActivity implements View.OnClickListener  {
 
 
     private Context context;
 
+    public List<CartModel> listsanpham = new ArrayList<>();
+
+    public FoodFragment fm = new FoodFragment();
+
     SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences1;
+
+
 
     public FoodFragment foodFragment;
 

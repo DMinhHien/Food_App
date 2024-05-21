@@ -21,8 +21,8 @@
 
             <ImageView
                 android:id="@+id/detail_Image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:scaleType="centerCrop"
                 >
             </ImageView>
@@ -78,8 +78,8 @@
 
                 <ImageView
                     android:id="@+id/detail_button_remove"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:background="#00FFFFFF"
                     android:scaleType="centerCrop"
                     android:src="@drawable/minus" />
@@ -88,18 +88,17 @@
                     android:id="@+id/detail_Qty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="5dp"
                     android:onClick="AddToCart"
                     android:text="0"
                     android:textAlignment="center"
-                    android:textColor="#9d0208"
-                    android:textSize="28sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/detail_button_add"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:background="#00FFFFFF"
                     android:scaleType="centerCrop"
                     android:src="@drawable/plus" />

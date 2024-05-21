@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.didong_foodapp.R;
 import com.example.didong_foodapp.ui.Adapters.LichsuhoadonAdapter;
 import com.example.didong_foodapp.ui.Models.LichsuModel;
+import com.example.didong_foodapp.ui.Models.UserInformation;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +34,14 @@ public class LichsudathangFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getContext());
         recyclerViewDathang.setLayoutManager(layoutManager);
         List<LichsuModel> list = new ArrayList<>();
+        //lay du lieu cho list tu firebase
+        //
+        list.add(new LichsuModel(new UserInformation("Trinh Xuan Duong","0865671403","Binh Duong"), new ArrayList<>(),"100000"));
+        //
+
         LichsuhoadonAdapter adapterDatHangHistory=new LichsuhoadonAdapter(getContext(),list,R.layout.lichsu_item);
         recyclerViewDathang.setAdapter(adapterDatHangHistory);
         return view;
     }
+
 }

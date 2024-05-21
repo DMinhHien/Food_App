@@ -73,6 +73,7 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
             txtCommentTitle=itemView.findViewById(R.id.titleTxtComment);
             txtCommentContent=itemView.findViewById(R.id.contentTxtComment);
             like=itemView.findViewById(R.id.commentLike);
+            avatar=itemView.findViewById(R.id.avatar);
             recyclerImageComment=itemView.findViewById(R.id.recycler_imagecomment);
             commentContainer=itemView.findViewById(R.id.linearComment);
 
@@ -99,7 +100,7 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
             holder.txtScore.setText(comModel.getScore() + "");
             likeCheck(holder,comModel);
             if (Objects.equals(comModel.getUser(), FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                holder.avatar.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.baseline_current_person_24,0,0);
+                holder.avatar.setBackgroundResource(R.drawable.baseline_current_person_24);
             }
             for (String link : comModel.getImageList()) {
                 StorageReference storageImage = FirebaseStorage.getInstance().getReference().child(link);
@@ -136,7 +137,7 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
                     else
                     {
                         holder.like.setText("Đã thích");
-                        holder.like.setTextColor(Color.parseColor("#0000FF"));
+                        holder.like.setTextColor(Color.parseColor("#1e81b0"));
                         long currentLike= comModel.getLikes();
                         currentLike=currentLike+1;
                         comModel.setLikes( currentLike);
@@ -204,7 +205,7 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
                     for(int i = 0; i < listLike.size(); i++){
                         if(comModel.getMaBL().equals(listLike.get(i))){
                             holder.like.setText("Đã thích");
-                            holder.like.setTextColor(Color.parseColor("#0000FF"));
+                            holder.like.setTextColor(Color.parseColor("#1e81b0"));
                             holder.checkLike=false;
                             return;
                         }
