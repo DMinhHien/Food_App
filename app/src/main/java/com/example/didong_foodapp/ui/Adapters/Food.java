@@ -80,28 +80,32 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
         holder.imgTangSoLuong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int dem = Integer.parseInt(holder.txtSoluong.getTag().toString());
-                dem++;
-                holder.txtSoluong.setText(dem+"");
-                holder.txtSoluong.setTag(dem);
-
-                if(!CartFragment.list.isEmpty()) {
-                    for(int i=0;i<CartFragment.list.size();i++) {
-                        if (CartFragment.list.get(i).getName().equals(foodModel.getName())) {
-                            CartFragment.list.remove(CartFragment.list.get(i));
-                            break;
-                        }
-                    }
-                }
-                CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice())));
-
-                if (Objects.equals(CartFragment.CurrentRestaurant, ""))
+                //check trung`
+                if (Objects.equals(CartFragment.CurrentRestaurant, "")
+                        || Objects.equals(CartFragment.CurrentRestaurant, maR)
+                        || CartFragment.list.isEmpty())
                 {
                     CartFragment.CurrentRestaurant = maR;
+
+                    //them vao gio hang
+                    int dem = Integer.parseInt(holder.txtSoluong.getTag().toString());
+                    dem++;
+                    holder.txtSoluong.setText(dem+"");
+                    holder.txtSoluong.setTag(dem);
+
+                    if(!CartFragment.list.isEmpty()) {
+                        for(int i=0;i<CartFragment.list.size();i++) {
+                            if (CartFragment.list.get(i).getName().equals(foodModel.getName())) {
+                                CartFragment.list.remove(CartFragment.list.get(i));
+                                break;
+                            }
+                        }
+                    }
+                    CartFragment.list.add(new CartModel(foodModel.getImage(), Integer.toString(dem), foodModel.getName(), Long.toString(foodModel.getPrice())));
                 }
-                else if (!Objects.equals(CartFragment.CurrentRestaurant, maR))
+                else
                 {
-                    Toast.makeText(context, "Noob", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Vui lòng chỉ chọn món của một nhà hàng.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

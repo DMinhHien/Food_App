@@ -31,7 +31,7 @@ public class CartFragment extends Fragment implements View.OnClickListener {
 
     public static CartAdapter adapter;
 
-    public static String CurrentRestaurant;
+    public static String CurrentRestaurant = "";
     RecyclerView recyclerView;
     public static TextView totalCost;
 
@@ -72,15 +72,6 @@ public class CartFragment extends Fragment implements View.OnClickListener {
     public void onStop() {
 
         super.onStop();
-    }
-
-    public static void UpdateCart(List<CartModel> items)
-    {
-        if (items != null && !items.isEmpty())
-        {
-            list.addAll(items);
-            adapter.notifyDataSetChanged();
-        }
     }
 
     @Override
