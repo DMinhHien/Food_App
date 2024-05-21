@@ -47,7 +47,7 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
     List<CommentModel> commentModelList;
     SharedPreferences sharedPreferences;
     RestaurantModel resModel;
-    private DatabaseReference mDatabase,lDatabase;
+    private DatabaseReference mDatabase,lDatabase,uDatabase;
     List<String> listLike = new ArrayList<>();
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -62,13 +62,14 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
     }
 
     public class ViewHolder  extends RecyclerView.ViewHolder{
-        TextView txtCommentTitle,txtCommentContent,txtScore,avatar,like;
+        TextView txtCommentTitle,txtCommentContent,txtScore,avatar,like,txtUser;
         RecyclerView recyclerImageComment;
         LinearLayout commentContainer;
         boolean checkLike=true;
         public ViewHolder(View itemView){
 
             super(itemView);
+            txtUser=itemView.findViewById(R.id.username);
             txtScore=itemView.findViewById(R.id.scoreTxtComment);
             txtCommentTitle=itemView.findViewById(R.id.titleTxtComment);
             txtCommentContent=itemView.findViewById(R.id.contentTxtComment);
@@ -94,6 +95,23 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
         if (comModel.getContent()!=null) {
             mDatabase = FirebaseDatabase.getInstance().getReference("likedComments");
             lDatabase= FirebaseDatabase.getInstance().getReference().child("commentR").child(resModel.getMaR());
+            uDatabase= FirebaseDatabase.getInstance().getReference("users");
+            
+            //cho nay ne ban
+            uDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        if(dataSnapshot.getKey().equals("username")){
+                            holder.txtUser.setText(dataSnapshot.getValue().toString());
+                        }
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
             List<Bitmap> listbitmap = new ArrayList<>();
             holder.txtCommentTitle.setText(comModel.getTitle());
             holder.txtCommentContent.setText(comModel.getContent());
