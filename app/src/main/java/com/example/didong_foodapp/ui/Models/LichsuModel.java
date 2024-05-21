@@ -3,6 +3,16 @@ package com.example.didong_foodapp.ui.Models;
 import java.util.List;
 
 public class LichsuModel {
+
+    public String getMaLichsu() {
+        return maLichsu;
+    }
+
+    public void setMaLichsu(String maLichsu) {
+        this.maLichsu = maLichsu;
+    }
+
+    String maLichsu;
     String tongtien;
     UserInformation person;
     List<CartModel> listdoan;
@@ -29,6 +39,8 @@ public class LichsuModel {
     public void setListdoan(List<CartModel> listdoan) {
         this.listdoan = listdoan;
     }
+
+    public LichsuModel(){};
 
 
 
