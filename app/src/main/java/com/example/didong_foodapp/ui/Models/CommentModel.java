@@ -141,7 +141,7 @@ public class CommentModel implements Parcelable {
     }
     public void ThemBinhLuan(String maR,CommentModel comModel,final List<String> listImage){
         DatabaseReference nodeComment= FirebaseDatabase.getInstance().getReference().child("commentR");
-        String key =nodeComment.child(maR).push().getKey();
+        String key = nodeComment.child(maR).push().getKey();
 
         nodeComment.child(maR).child(key).setValue(comModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

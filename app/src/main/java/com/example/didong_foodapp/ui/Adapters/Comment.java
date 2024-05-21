@@ -27,6 +27,7 @@ import com.example.didong_foodapp.ChiTietResActivity;
 import com.example.didong_foodapp.R;
 import com.example.didong_foodapp.ui.Models.CommentModel;
 import com.example.didong_foodapp.ui.Models.RestaurantModel;
+import com.example.didong_foodapp.ui.Models.UserModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,20 +39,26 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
     Context context;
     int layout;
     List<CommentModel> commentModelList;
     SharedPreferences sharedPreferences;
+    HashMap<String, Boolean> userAndid = new HashMap<>();
     RestaurantModel resModel;
-    private DatabaseReference mDatabase,lDatabase,uDatabase;
+    private DatabaseReference mDatabase,lDatabase,uDatabase, usDatabase;
     List<String> listLike = new ArrayList<>();
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-
+    List<String> UserComment = new ArrayList<>();
+    List<String> UserNameComment = new ArrayList<>();
+    int dem;
 
     public Comment(Context context, int layout, List<CommentModel> commentModelListA,String maR,RestaurantModel resModel) {
         this.context = context;
@@ -78,6 +85,7 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
             recyclerImageComment=itemView.findViewById(R.id.recycler_imagecomment);
             commentContainer=itemView.findViewById(R.id.linearComment);
 
+
         }
     }
 
@@ -92,21 +100,46 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull Comment.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         final CommentModel comModel=commentModelList.get(position);
+        Log.d("CommentModel", comModel.getUser());
         if (comModel.getContent()!=null) {
             mDatabase = FirebaseDatabase.getInstance().getReference("likedComments");
             lDatabase= FirebaseDatabase.getInstance().getReference().child("commentR").child(resModel.getMaR());
-            uDatabase= FirebaseDatabase.getInstance().getReference("users");
-            
-            //cho nay ne ban
-            uDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            uDatabase = FirebaseDatabase.getInstance().getReference("commentR");
+            usDatabase = FirebaseDatabase.getInstance().getReference("users");
+            uDatabase.child(resModel.getMaR()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                        if(dataSnapshot.getKey().equals("username")){
-                            holder.txtUser.setText(dataSnapshot.getValue().toString());
+                        for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                            if(dataSnapshot1.getKey().equals("user")){
+                                userAndid.put(dataSnapshot1.getValue().toString(), true);
+                            }
                         }
                     }
+                    Set<Map.Entry<String, Boolean>> entrySet = userAndid.entrySet();
+                    for(Map.Entry<String, Boolean> entry : entrySet){
+                        if(entry.getKey().equals(comModel.getUser()) && userAndid.get(entry.getKey())){
+                            usDatabase.child(entry.getKey()).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                        if(dataSnapshot.getKey().equals("username")){
+                                            holder.txtUser.setText(dataSnapshot.getValue().toString());
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                            userAndid.put(entry.getKey(), false);
+                        }
+
+                    }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
