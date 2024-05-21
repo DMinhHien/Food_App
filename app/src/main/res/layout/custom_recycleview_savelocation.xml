@@ -28,7 +28,7 @@
                 android:id="@+id/averageScore"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/background_cycle"
+                android:background="@drawable/background_cycle_red"
                 android:gravity="center"
                 android:text="0"
                 android:textColor="@color/white" />
@@ -61,7 +61,6 @@
                 android:id="@+id/txtDistance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="bottom"
                 android:text="6.6 km"
                 android:textAlignment="textEnd"
                 android:textSize="15dp" />

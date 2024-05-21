@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.didong_foodapp.R;
 import com.example.didong_foodapp.ThanhtoanActivity;
@@ -77,8 +78,15 @@ public class CartFragment extends Fragment implements View.OnClickListener {
         int id = v.getId();
         if(id == R.id.button_newOrder)
         {
-            Intent iThanhtoan = new Intent(this.getContext(),ThanhtoanActivity.class);
-            startActivity(iThanhtoan);
+            if(list.isEmpty()){
+                Toast.makeText(this.getContext(), "Giỏ hàng trống!",
+                        Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Intent iThanhtoan = new Intent(this.getContext(),ThanhtoanActivity.class);
+                startActivity(iThanhtoan);
+            }
+
         }
     }
 }

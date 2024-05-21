@@ -1,10 +1,12 @@
 package com.example.didong_foodapp.ui.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +41,8 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
         this.resources=resources;
         this.context=context;
     }
-    public void setFiler( List<RestaurantModel> filterList){
+    @SuppressLint("NotifyDataSetChanged")
+    public void setFiler(List<RestaurantModel> filterList){
         this.resModelList= filterList;
         notifyDataSetChanged();
     }
@@ -55,7 +58,6 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
         public ViewHolder(View itemView){
             super(itemView);
             txtNameRLocation=(TextView) itemView.findViewById(R.id.txtNameRLocation);
-            btnOrder=itemView.findViewById(R.id.orderButton);
             imageLocationR=(ImageView) itemView.findViewById((R.id.imageLocation));
             txtTitle1=itemView.findViewById(R.id.titleTxt1);
             txtTitle2=itemView.findViewById(R.id.titleTxt2);
@@ -85,9 +87,6 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
     public void onBindViewHolder(@NonNull RecyclerLocation.ViewHolder holder, int position) {
         RestaurantModel resModel=resModelList.get(position);
         holder.txtNameRLocation.setText(resModel.getNameR());
-        if (resModel.isOrder()==1){
-            holder.btnOrder.setVisibility(View.VISIBLE);
-        }
         if(!resModel.getImageR().isEmpty()){
             StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(resModel.getImageR().get(0));
             long megabyte=1024*1024;
@@ -114,13 +113,22 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
                 holder.commentContainer2.setVisibility(View.GONE);
             holder.txtTotalComment.setText(resModel.getComModel().size()+"");
             int totalComment=0;
-            int sumScore=0;
+            float sumScore=0;
             for (CommentModel commentModel1:resModel.getComModel()){
                 totalComment+=commentModel1.getImageList().size();
                 sumScore+=commentModel1.getScore();
             }
             double average=sumScore/resModel.getComModel().size();
             holder.txtAverage.setText(String.format("%.1f",average));
+            if(average<2.5)
+                holder.txtAverage.setBackgroundResource(R.drawable.background_cycle_red);
+            else if (average>=2.5 &&average<5 )
+                holder.txtAverage.setBackgroundResource(R.drawable.background_cycle_yellow);
+            else if (average>=5 &&average<7.5 )
+                holder.txtAverage.setBackgroundResource(R.drawable.background_cycle_green);
+            else if (average>=7.5 )
+                holder.txtAverage.setBackgroundResource(R.drawable.background_cycle_blue);
+
             if (totalComment>0)
                 holder.txtTotalImage.setText(totalComment+"");
 

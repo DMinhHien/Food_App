@@ -68,7 +68,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
-        android:background="#f5f5f5"
         android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,14 +88,12 @@
             android:id="@+id/txtDiaChi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#525252"
             android:text="323 Tran Hung Dao" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/linearLayoutTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#f5f5f5"
         android:orientation="horizontal"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"

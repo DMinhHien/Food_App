@@ -24,13 +24,15 @@
                 android:id="@+id/averageScore"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/background_cycle"
+                android:background="@drawable/background_cycle_red"
                 android:gravity="center"
                 android:text="0"
+                android:textStyle="bold"
+                android:textSize="20sp"
                 android:textColor="@color/white" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:layout_marginLeft="5dp"
@@ -57,8 +59,8 @@
                 android:id="@+id/txtDistance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
-                android:gravity="bottom"
+                android:textAlignment="viewEnd"
+                android:textStyle="bold"
                 android:textSize="15dp"
                 android:text="6.6 km" />
 
@@ -78,17 +80,6 @@
                 />
         </androidx.cardview.widget.CardView>
 
-        <Button
-            android:layout_width="match_parent"
-            android:id="@+id/orderButton"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/CardViewImage"
-            android:text="Order"
-            android:visibility="gone"
-            android:background="@drawable/btn_bg"
-            android:drawableTop="@drawable/white_add_shopping_cart_24"
-            android:textAllCaps="false"
-            android:layout_margin="5dp"/>
 
         <LinearLayout
             android:id="@+id/commentContainer"
@@ -97,7 +88,8 @@
             android:layout_margin="5dp"
             android:orientation="horizontal"
             android:padding="5dp"
-            app:layout_constraintTop_toBottomOf="@+id/CardViewImage">
+            app:layout_constraintTop_toBottomOf="@+id/CardViewImage"
+            tools:layout_editor_absoluteX="8dp">
 
             <!--            <TextView-->
             <!--                android:layout_width="40dp"-->
@@ -115,10 +107,10 @@
 
                 <TextView
                     android:id="@+id/titleTxt1"
+                    style="@style/TEXT"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Gogi House"
-                    style="@style/TEXT"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -140,6 +132,7 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/commentContainer2"
             android:layout_width="match_parent"
