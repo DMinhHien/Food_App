@@ -42,7 +42,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
     ViewPager2 viewPageMain;
-    RadioButton rdLocation,rdFood,rdLuuLai,rdCart;
+    RadioButton rdLocation,rdFood,rdLuuLai,rdCart,rdHistory;
     RadioGroup rdGroup;
     SharedPreferences sharedPreferences;
     ConstraintLayout constraintMain;
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         rdLuuLai =(RadioButton) findViewById(R.id.rdluulai);
         rdCart=(RadioButton) findViewById(R.id.rdgiohang);
         rdGroup=(RadioGroup) findViewById(R.id.group_food_place);
+        rdHistory = (RadioButton) findViewById(R.id.rdlichsu);
         viewPageMain=(ViewPager2) findViewById(R.id.viewpager_main);
         ViewPagerMain viewpagermain = new ViewPagerMain(getSupportFragmentManager(), getLifecycle());
         viewPageMain.setAdapter(viewpagermain);
@@ -87,6 +88,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                         break;
                     case 3:
                         rdFood.setChecked(true);
+                        break;
+                    case 4:
+                        rdHistory.setChecked(true);
                         break;
 
                 }
@@ -151,6 +155,10 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         else if(checkedId==R.id.group_food)
         {
             viewPageMain.setCurrentItem(3);
+        }
+        else if(checkedId==R.id.rdlichsu)
+        {
+            viewPageMain.setCurrentItem(4);
         }
 
     }

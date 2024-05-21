@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="?attr/actionBarSize"-->
+<!--        android:background="#a4161a"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/close"-->
+<!--            android:layout_width="55dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            android:src="@drawable/delete"-->
+<!--            android:background="@color/trans"-->
+<!--            android:layout_gravity="end"/>-->
+
+<!--    </androidx.appcompat.widget.Toolbar>-->
+
+    <LinearLayout
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="20dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fontFamily="monospace"
+        android:layout_marginBottom="5dp"
+        android:text="Thông tin đơn hàng
+"
+        android:textColor="@color/white"
+        android:padding="5dp"
+        android:backgroundTint="@color/red"
+        android:background="@drawable/searchbar_background"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/TEXT"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginVertical="5dp"
+        android:maxLines="1"
+        android:background="@drawable/searchbar_background"
+        android:drawableLeft="@drawable/user_black"
+        android:drawablePadding="13dp"
+        android:fontFamily="sans-serif-condensed"
+        android:paddingHorizontal="10dp"
+        android:textColorHint="#808080"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/phone"
+        style="@style/TEXT"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginVertical="5dp"
+        android:maxLines="1"
+        android:background="@drawable/searchbar_background"
+        android:drawableLeft="@drawable/user_black"
+        android:drawablePadding="13dp"
+        android:fontFamily="sans-serif-condensed"
+        android:paddingHorizontal="10dp"
+        android:textColorHint="#808080"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/address"
+        style="@style/TEXT"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:maxLines="1"
+        android:layout_marginVertical="5dp"
+        android:background="@drawable/searchbar_background"
+        android:drawableLeft="@drawable/user_black"
+        android:drawablePadding="13dp"
+        android:fontFamily="sans-serif-condensed"
+        android:paddingHorizontal="10dp"
+        android:textColorHint="#808080"
+        android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/total"
+            style="@style/TEXT"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:maxLines="1"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/searchbar_background"
+            android:drawableLeft="@drawable/user_black"
+            android:drawablePadding="13dp"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingHorizontal="10dp"
+            android:textColorHint="#808080"
+            android:textSize="20sp" />
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMonAn"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/info" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
