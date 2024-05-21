@@ -28,12 +28,12 @@ import java.util.Objects;
 
 public class Food extends RecyclerView.Adapter<Food.HolderFood>{
     Context context;
-    String maR;
+    String nameR;
     List<FoodModel> foodModelList;
-    public Food(Context context, List<FoodModel> foodModelList, String maR) {
+    public Food(Context context, List<FoodModel> foodModelList, String nameR) {
         this.context = context;
         this.foodModelList =foodModelList;
-        this.maR = maR;
+        this.nameR = nameR;
     }
 
     @NonNull
@@ -82,10 +82,10 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
             public void onClick(View v) {
                 //check trung`
                 if (Objects.equals(CartFragment.CurrentRestaurant, "")
-                        || Objects.equals(CartFragment.CurrentRestaurant, maR)
+                        || Objects.equals(CartFragment.CurrentRestaurant, nameR)
                         || CartFragment.list.isEmpty())
                 {
-                    CartFragment.CurrentRestaurant = maR;
+                    CartFragment.CurrentRestaurant = nameR;
 
                     //them vao gio hang
                     int dem = Integer.parseInt(holder.txtSoluong.getTag().toString());
@@ -105,7 +105,7 @@ public class Food extends RecyclerView.Adapter<Food.HolderFood>{
                 }
                 else
                 {
-                    Toast.makeText(context, "Vui lòng chỉ chọn món của một nhà hàng.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Vui lòng chỉ chọn món của " +CartFragment.CurrentRestaurant +" hoặc xóa giỏ hàng.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

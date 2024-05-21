@@ -17,14 +17,14 @@ public class MenuController {
     public MenuController() {
         menuModel = new MenuModel();
     }
-    public void GetRestaurentMenuList(final Context context, String maR,final RecyclerView recyclerView){
+    public void GetRestaurentMenuList(final Context context, String maR,final RecyclerView recyclerView, String nameR){
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         MenuInterface menuInterface= new MenuInterface() {
             @Override
             public void getMenuSuccess(List<MenuModel> menuModelList) {
                 for (MenuModel menuModel: menuModelList){
-                    Menu adapterMenu = new Menu(context,menuModelList,maR);
+                    Menu adapterMenu = new Menu(context,menuModelList,nameR);
                     recyclerView.setAdapter(adapterMenu);
                     adapterMenu.notifyDataSetChanged();
                 }

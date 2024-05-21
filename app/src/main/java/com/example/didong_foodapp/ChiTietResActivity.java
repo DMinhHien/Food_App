@@ -235,7 +235,7 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         adapterComment.notifyDataSetChanged();
         NestedScrollView nestedChiTiet=findViewById(R.id.NestedChiTiet);
         nestedChiTiet.smoothScrollTo(0,0);
-        menuController.GetRestaurentMenuList(this,resModel.getMaR(),recyclerMenu);
+        menuController.GetRestaurentMenuList(this,resModel.getMaR(),recyclerMenu, resModel.getNameR());
 
     }
 
