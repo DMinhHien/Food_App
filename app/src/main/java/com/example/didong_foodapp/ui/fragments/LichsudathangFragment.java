@@ -39,6 +39,7 @@ public class LichsudathangFragment extends Fragment {
         //
         recyclerViewDathang = this.getActivity().findViewById(R.id.recyclerView1);
         recyclerViewDathang.setAdapter(new LichsuhoadonAdapter(list));
+        recyclerViewDathang = this.getActivity().findViewById(R.id.recyclerHistory);
         LichsuhoadonAdapter adapterDatHangHistory=new LichsuhoadonAdapter(getContext(),list,R.layout.lichsu_item);
         recyclerViewDathang.setAdapter(adapterDatHangHistory);
         return view;
