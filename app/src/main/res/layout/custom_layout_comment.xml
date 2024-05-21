@@ -14,15 +14,16 @@
         android:orientation="horizontal"
         android:padding="5dp"
         app:layout_constraintTop_toBottomOf="@+id/orderButton">
+
         <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/avatar"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/baseline_person_24"
-            android:layout_gravity="bottom"/>
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:background="@drawable/ic_baseline_person_24_black"
+            android:gravity="center"
+            android:textColor="@color/white" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -32,36 +33,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Gogi House"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/contentTxtComment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="36 Triệu Quang Phục Quận 3" />
+                android:text="36 Triệu Quang Phục Quận 3"
+                android:textSize="15dp" />
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
         <TextView
             android:id="@+id/scoreTxtComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="6.6 km"
             android:textColor="@color/orange"
+            android:layout_gravity="right"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/commentLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="Thích"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/commentLike"
-        android:text="Thích"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:layout_gravity="right"
-        android:layout_marginRight="80dp"
-        android:layout_marginBottom="5dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_imagecomment"

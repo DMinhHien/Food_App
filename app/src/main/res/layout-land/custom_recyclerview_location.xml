@@ -22,7 +22,7 @@
                 android:id="@+id/averageScore"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/background_cycle"
+                android:background="@drawable/background_cycle_red"
                 android:gravity="center"
                 android:text="0"
                 android:textColor="@color/white" />

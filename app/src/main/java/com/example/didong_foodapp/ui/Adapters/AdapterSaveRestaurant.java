@@ -86,13 +86,24 @@ public class AdapterSaveRestaurant extends RecyclerView.Adapter<AdapterSaveResta
         if (resModel.getComModel().size()>0){
             holder.txtTotalComment.setText(resModel.getComModel().size()+"");
             int totalComment=0;
-            int sumScore=0;
+            float sumScore=0;
             for (CommentModel commentModel1:resModel.getComModel()){
                 totalComment+=commentModel1.getImageList().size();
                 sumScore+=commentModel1.getScore();
             }
             double average=sumScore/resModel.getComModel().size();
             holder.txtAverage.setText(String.format("%.1f",average));
+
+            if(average<2.5)
+                holder.txtAverage.setBackgroundResource(R.drawable.background_cycle_red);
+            else if (average>=2.5 &&average<5 )
+                holder.txtAverage.setBackgroundResource(R.drawable.background_cycle_yellow);
+            else if (average>=5 &&average<7.5 )
+                holder.txtAverage.setBackgroundResource(R.drawable.background_cycle_green);
+            else if (average>=7.5 )
+                holder.txtAverage.setBackgroundResource(R.drawable.background_cycle_blue);
+
+
             if (totalComment>0)
                 holder.txtTotalImage.setText(totalComment+"");
 
