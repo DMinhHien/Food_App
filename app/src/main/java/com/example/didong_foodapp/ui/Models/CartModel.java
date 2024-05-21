@@ -62,6 +62,6 @@ public class CartModel {
         return Objects.hash(image, qty, name, price);
     }
 
-    public void ThemCartModel
+
     public void ThemCartModel(){};
 }
