@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Menu"
-        style="@style/TEXT"
         android:textSize="30dp"
+        style="Style/TEXT"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         />
