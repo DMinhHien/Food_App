@@ -1,5 +1,8 @@
 package com.example.didong_foodapp.ui.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.example.didong_foodapp.ui.Controller.Interface.LichSuInterface;
@@ -13,7 +16,34 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LichsuModel {
+public class LichsuModel implements Parcelable {
+    String nameR;
+
+    String maLichsu;
+    String tongtien;
+    UserInformation person;
+    List<CartModel> listdoan;
+    protected LichsuModel(Parcel in) {
+        nameR = in.readString();
+        maLichsu = in.readString();
+        tongtien = in.readString();
+        date = in.readString();
+        listdoan = new ArrayList<CartModel>();
+        in.readTypedList(listdoan,CartModel.CREATOR);
+        person = in.readParcelable(UserInformation.class.getClassLoader());
+    }
+
+    public static final Creator<LichsuModel> CREATOR = new Creator<LichsuModel>() {
+        @Override
+        public LichsuModel createFromParcel(Parcel in) {
+            return new LichsuModel(in);
+        }
+
+        @Override
+        public LichsuModel[] newArray(int size) {
+            return new LichsuModel[size];
+        }
+    };
 
     public String getMaLichsu() {
         return maLichsu;
@@ -32,12 +62,7 @@ public class LichsuModel {
         this.nameR = nameR;
     }
 
-    String nameR;
 
-    String maLichsu;
-    String tongtien;
-    UserInformation person;
-    List<CartModel> listdoan;
 
     public String getDate() {
         return date;
@@ -106,4 +131,18 @@ public class LichsuModel {
         });
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(nameR);
+        dest.writeString(maLichsu);
+        dest.writeString(tongtien);
+        dest.writeString(date);
+        dest.writeTypedList(listdoan);
+        dest.writeParcelable(person,flags);
+    }
 }

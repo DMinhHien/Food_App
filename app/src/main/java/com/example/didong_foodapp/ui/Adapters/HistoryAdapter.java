@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.ChiTietResActivity;
+import com.example.didong_foodapp.ChitietHoadonActivity;
 import com.example.didong_foodapp.R;
 import com.example.didong_foodapp.ui.Models.CartModel;
 import com.example.didong_foodapp.ui.Models.LichsuModel;
@@ -50,6 +51,14 @@ public class HistoryAdapter  extends RecyclerView.Adapter<HistoryAdapter.ViewHol
 //                context.startActivity(startActivity);
 //            }
 //        });
+        holder.hisCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startActivity = new Intent(context, ChitietHoadonActivity.class);
+                startActivity.putExtra("lichsu",lichsuModel);
+                context.startActivity(startActivity);
+            }
+        });
     }
 
     @Override
