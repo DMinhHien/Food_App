@@ -42,9 +42,9 @@ public class ViewPagerMain extends FragmentStateAdapter {
             case 2:
                 return saved_fragment;
             case 3:
-                return food_fragment;
-            case 4:
                 return lichsudathangFragment;
+            case 4:
+                return food_fragment;
         }
         return null;
     }
