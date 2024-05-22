@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="17dp"
         android:text="UserName"/>
     <LinearLayout
         android:id="@+id/commentContainer"
