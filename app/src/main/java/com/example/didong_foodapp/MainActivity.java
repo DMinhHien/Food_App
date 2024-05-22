@@ -87,10 +87,10 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                         rdLuuLai.setChecked(true);
                         break;
                     case 3:
-                        rdFood.setChecked(true);
+                        rdHistory.setChecked(true);
                         break;
                     case 4:
-                        rdHistory.setChecked(true);
+                        rdFood.setChecked(true);
                         break;
 
                 }
@@ -154,11 +154,11 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         }
         else if(checkedId==R.id.group_food)
         {
-            viewPageMain.setCurrentItem(3);
+            viewPageMain.setCurrentItem(4);
         }
         else if(checkedId==R.id.rdlichsu)
         {
-            viewPageMain.setCurrentItem(4);
+            viewPageMain.setCurrentItem(3);
         }
 
     }

@@ -73,7 +73,7 @@
             android:layout_marginVertical="5dp"
             android:maxLines="1"
             android:background="@drawable/searchbar_background"
-            android:drawableLeft="@drawable/user_black"
+            android:drawableLeft="@drawable/baseline_contact_phone_24"
             android:drawablePadding="13dp"
             android:fontFamily="sans-serif-condensed"
             android:hint="Nhập số điện thoại"
@@ -89,7 +89,7 @@
             android:maxLines="1"
             android:layout_marginVertical="5dp"
             android:background="@drawable/searchbar_background"
-            android:drawableLeft="@drawable/user_black"
+            android:drawableLeft="@drawable/baseline_add_location_24"
             android:drawablePadding="13dp"
             android:fontFamily="sans-serif-condensed"
             android:hint="Nhập địa chỉ giao hàng"
@@ -118,7 +118,5 @@
             android:layout_height="300dp"
             android:layout_marginTop="30dp"
             app:srcCompat="@drawable/deli" />
-
-
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
