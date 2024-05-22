@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="5dp"
         android:padding="5dp"
         android:text="Gửi"
@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="10dp"
         android:padding="5dp"
         android:text="Viết bình luận"
         android:textStyle="bold"
@@ -67,7 +67,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="50dp"
         android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,21 +81,22 @@
             android:layout_height="wrap_content"
             android:text="Gogi House"
             android:textColor="#e91012"
-            android:textSize="20dp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtDiaChi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="323 Tran Hung Dao" />
+            android:text="323 Tran Hung Dao"
+            android:textSize="15sp" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/linearLayoutTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp"
+        android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
