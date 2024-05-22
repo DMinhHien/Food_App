@@ -66,13 +66,8 @@ public class LocationController {
             if(rModel.getNameR().toLowerCase().contains(text.toLowerCase())){
                 filterlist.add(rModel);
             }
-            if(rModel.getMenus()!=null) {
-                for (MenuModel menu : rModel.getMenus()) {
-                    for (FoodModel food : menu.getFoodList())
-                        if (food.getName().toLowerCase().contains(text.toLowerCase()) && (!filterlist.contains(rModel))) {
-                            filterlist.add(rModel);
-                        }
-                }
+            if (rModel.getSignature().toLowerCase().contains(text.toLowerCase()) && (!filterlist.contains(rModel))) {
+                filterlist.add(rModel);
             }
         }
 

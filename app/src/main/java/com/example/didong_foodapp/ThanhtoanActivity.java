@@ -10,12 +10,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.didong_foodapp.ui.Models.CartModel;
+import com.example.didong_foodapp.ui.Models.LichsuModel;
+import com.example.didong_foodapp.ui.Models.UserInformation;
 import com.example.didong_foodapp.ui.fragments.CartFragment;
 import com.example.didong_foodapp.ui.fragments.FoodFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,19 +38,34 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
     ImageButton btnclose;
     String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
     String tongtien;
+
+    List<CartModel> listvatpham;
     DatabaseReference databaseRef1 = FirebaseDatabase.getInstance().getReference("InformationUser");
+
+    DatabaseReference databaseRef2 = FirebaseDatabase.getInstance().getReference("Chitiethoadon");
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_thanhtoan);
         tongtien = CartFragment.totalDisplay;
+        listvatpham = CartFragment.list;
         txtName = findViewById(R.id.name);
         txtsdt = findViewById(R.id.phone);
         txtaddress= findViewById(R.id.address);
         btnConfirm= (Button) findViewById(R.id.btnXacnhan);
         btnclose = findViewById(R.id.close);
         btnclose.setOnClickListener(this);
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LichsuModel data = new LichsuModel(new UserInformation(txtName.getText().toString(),txtsdt.getText().toString(),txtaddress.getText().toString()),listvatpham,tongtien);
+                String key =databaseRef2.child(uid).push().getKey();
+                databaseRef2.child(uid).child(key).setValue(data);
+                Toast.makeText(ThanhtoanActivity.this, "Thêm hóa đơn thành công!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         databaseRef1.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
@@ -77,10 +95,7 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if(id == R.id.btnXacnhan)
-        {
 
-        }
         if(id== R.id.close)
         {
             finish();
