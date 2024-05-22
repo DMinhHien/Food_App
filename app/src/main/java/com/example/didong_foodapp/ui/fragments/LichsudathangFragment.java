@@ -13,9 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.R;
 import com.example.didong_foodapp.ui.Adapters.LichsuhoadonAdapter;
+import com.example.didong_foodapp.ui.Controller.LichsuController;
 import com.example.didong_foodapp.ui.Models.LichsuModel;
 import com.example.didong_foodapp.ui.Models.UserInformation;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,24 +30,27 @@ public class LichsudathangFragment extends Fragment {
 
     public RecyclerView recyclerViewDathang;
 
+    LichsuController lichsuController;
+
     public LichsudathangFragment(){};
+
+    DatabaseReference databaseRef2 = FirebaseDatabase.getInstance().getReference("Chitiethoadon");
+    String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lichsudathang, container, false);
         recyclerViewDathang=view.findViewById(R.id.recyclerHistory);
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getContext());
-        recyclerViewDathang.setLayoutManager(layoutManager);
-        List<LichsuModel> list = new ArrayList<>();
-        //lay du lieu cho list tu firebase
-        //
-        list.add(new LichsuModel(new UserInformation("Trinh Xuan Duong","0865671403","Binh Duong"), new ArrayList<>(),"100000"));
-        //
 
-        LichsuhoadonAdapter adapterDatHangHistory=new LichsuhoadonAdapter(getContext(),list,R.layout.lichsu_item);
-        recyclerViewDathang.setAdapter(adapterDatHangHistory);
+
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        lichsuController = new LichsuController();
+        lichsuController.GetLichSuList(this.getContext(),uid,recyclerViewDathang);
+    }
 }

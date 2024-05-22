@@ -20,18 +20,17 @@ import java.util.List;
 public class LichsuhoadonAdapter extends RecyclerView.Adapter<LichsuhoadonAdapter.ViewHolder> {
     Context context;
     List<LichsuModel> list;
-    int resources;
 
-    public LichsuhoadonAdapter(Context context, List<LichsuModel> list, int resources) {
+
+    public LichsuhoadonAdapter(Context context, List<LichsuModel> list) {
         this.context=context;
         this.list=list;
-        this.resources=resources;
     }
 
     @NonNull
     @Override
     public LichsuhoadonAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(resources,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.lichsu_item,parent,false);
         ViewHolder viewholder=new ViewHolder(view);
         return viewholder;
     }
@@ -39,12 +38,16 @@ public class LichsuhoadonAdapter extends RecyclerView.Adapter<LichsuhoadonAdapte
     @Override
     public void onBindViewHolder(@NonNull LichsuhoadonAdapter.ViewHolder holder, int position) {
         LichsuModel lichsuModel = list.get(position);
-        List<CartModel> listmonan = lichsuModel.getListdoan();
         holder.txtTenKhachHang.setText(lichsuModel.getPerson().getName());
         holder.txtdiachi.setText(lichsuModel.getPerson().getAddress());
         holder.txtsodienthoai.setText(lichsuModel.getPerson().getPhone());
         holder.txtTongTien.setText(lichsuModel.getTongtien());
-        holder.recyclerViewMonan.setAdapter(new CartAdapter(listmonan));
+        RecyclerView.LayoutManager layoutmanager= new LinearLayoutManager(context);
+        holder.recyclerViewMonan.setLayoutManager(layoutmanager);
+        CartAdapter adapter = new CartAdapter(lichsuModel.getListdoan());
+        holder.recyclerViewMonan.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -58,14 +61,13 @@ public class LichsuhoadonAdapter extends RecyclerView.Adapter<LichsuhoadonAdapte
 
         RecyclerView recyclerViewMonan;
 
-        public ViewHolder( View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTenKhachHang = itemView.findViewById(R.id.name);
             txtsodienthoai = itemView.findViewById(R.id.phone);
             txtdiachi = itemView.findViewById(R.id.address);
             txtTongTien = itemView.findViewById(R.id.total);
             recyclerViewMonan = itemView.findViewById(R.id.recyclerViewMonAn);
-            recyclerViewMonan.setLayoutManager(new LinearLayoutManager(recyclerViewMonan.getContext()));
         }
     }
 
