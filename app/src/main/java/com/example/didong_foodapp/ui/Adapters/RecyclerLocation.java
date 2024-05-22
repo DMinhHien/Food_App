@@ -98,7 +98,7 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
                 }
             });
         }
-//        if (resModel.getComModel().size()>0){
+        if (resModel.getComModel().size()>0){
 //            CommentModel comModel =resModel.getComModel().get(0);
 //            holder.txtTitle1.setText( comModel.getTitle());
 //            holder.txtContent1.setText( comModel.getContent());
@@ -113,7 +113,7 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
 //                holder.commentContainer2.setVisibility(View.GONE);
             holder.txtTotalComment.setText(resModel.getComModel().size()+"");
             int totalComment=0;
-            float sumScore=0;
+            double sumScore=0;
             for (CommentModel commentModel1:resModel.getComModel()){
                 totalComment+=commentModel1.getImageList().size();
                 sumScore+=commentModel1.getScore();
@@ -132,7 +132,7 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
             if (totalComment>0)
                 holder.txtTotalImage.setText(totalComment+"");
 
-//        }
+        }
 //        else{
 //            holder.commentContainer.setVisibility(View.GONE);
 //            holder.commentContainer2.setVisibility(View.GONE);
