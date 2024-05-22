@@ -40,10 +40,8 @@ public class LichsudathangFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_lichsudathang, container, false);
+        View view = inflater.inflate(R.layout.fragment_history, container, false);
         recyclerViewDathang=view.findViewById(R.id.recyclerHistory);
-
-
         return view;
     }
 

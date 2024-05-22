@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.didong_foodapp.ui.Adapters.HistoryAdapter;
 import com.example.didong_foodapp.ui.Adapters.LichsuhoadonAdapter;
 import com.example.didong_foodapp.ui.Controller.Interface.LichSuInterface;
 import com.example.didong_foodapp.ui.Models.LichsuModel;
@@ -24,7 +25,7 @@ public class LichsuController {
             public void getLichSuSuccess(List<LichsuModel> lichsuModelList) {
                 for(LichsuModel lichsuModel:lichsuModelList)
                 {
-                    LichsuhoadonAdapter adapterLichSu = new LichsuhoadonAdapter(context,lichsuModelList);
+                    HistoryAdapter adapterLichSu = new HistoryAdapter(context,lichsuModelList);
                     recyclerView.setAdapter(adapterLichSu);
                     adapterLichSu.notifyDataSetChanged();
                 }
