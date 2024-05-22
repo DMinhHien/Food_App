@@ -28,7 +28,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class ThanhtoanActivity extends AppCompatActivity implements View.OnClickListener  {
@@ -37,7 +39,7 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
     Button btnConfirm;
     ImageButton btnclose;
     String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
-    String tongtien;
+    String tongtien,nameR;
 
     List<CartModel> listvatpham;
     DatabaseReference databaseRef1 = FirebaseDatabase.getInstance().getReference("InformationUser");
@@ -49,6 +51,7 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_thanhtoan);
+        nameR=CartFragment.CurrentRestaurant;
         tongtien = CartFragment.totalDisplay;
         listvatpham = CartFragment.list;
         txtName = findViewById(R.id.name);
@@ -61,6 +64,11 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View v) {
                 LichsuModel data = new LichsuModel(new UserInformation(txtName.getText().toString(),txtsdt.getText().toString(),txtaddress.getText().toString()),listvatpham,tongtien);
+                Calendar calendar=Calendar.getInstance();
+                SimpleDateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy");
+                String currentTime=dateFormat.format(calendar.getTime());
+                data.setDate(currentTime);
+                data.setNameR(nameR);
                 String key =databaseRef2.child(uid).push().getKey();
                 databaseRef2.child(uid).child(key).setValue(data);
                 Toast.makeText(ThanhtoanActivity.this, "Thêm hóa đơn thành công!", Toast.LENGTH_SHORT).show();

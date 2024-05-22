@@ -23,10 +23,31 @@ public class LichsuModel {
         this.maLichsu = maLichsu;
     }
 
+
+    public String getNameR() {
+        return nameR;
+    }
+
+    public void setNameR(String nameR) {
+        this.nameR = nameR;
+    }
+
+    String nameR;
+
     String maLichsu;
     String tongtien;
     UserInformation person;
     List<CartModel> listdoan;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    String date;
 
     List<LichsuModel> lichsuModelList;
     public String getTongtien() {
