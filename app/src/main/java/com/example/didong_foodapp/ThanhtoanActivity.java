@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.didong_foodapp.ui.Adapters.CartAdapter;
 import com.example.didong_foodapp.ui.Models.CartModel;
 import com.example.didong_foodapp.ui.Models.LichsuModel;
 import com.example.didong_foodapp.ui.Models.UserInformation;
@@ -72,8 +73,8 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
                 String key =databaseRef2.child(uid).push().getKey();
                 databaseRef2.child(uid).child(key).setValue(data);
                 Toast.makeText(ThanhtoanActivity.this, "Thêm hóa đơn thành công!", Toast.LENGTH_SHORT).show();
-
                 CartFragment.list.clear();
+                CartFragment.adapter.notifyDataSetChanged();
                 CartFragment.totalCost.setText("0 đ");
                 //Xoa list cart
                 btnclose.callOnClick();
