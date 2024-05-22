@@ -65,8 +65,8 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
             txtContent2=itemView.findViewById(R.id.contentTxt2);
             txtScore1=itemView.findViewById(R.id.scoreTxt1);
             txtScore2=itemView.findViewById(R.id.scoreTxt2);
-            commentContainer=itemView.findViewById(R.id.commentContainer);
-            commentContainer2=itemView.findViewById(R.id.commentContainer2);
+//            commentContainer=itemView.findViewById(R.id.commentContainer);
+//            commentContainer2=itemView.findViewById(R.id.commentContainer2);
             txtTotalComment=itemView.findViewById(R.id.black_comment);
             txtTotalImage=itemView.findViewById(R.id.camera_black);
             txtAverage=itemView.findViewById(R.id.averageScore);
@@ -98,19 +98,19 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
                 }
             });
         }
-        if (resModel.getComModel().size()>0){
-            CommentModel comModel =resModel.getComModel().get(0);
-            holder.txtTitle1.setText( comModel.getTitle());
-            holder.txtContent1.setText( comModel.getContent());
-            holder.txtScore1.setText(comModel.getScore()+"");
-            if(resModel.getComModel().size()>1){
-                CommentModel comModel2 =resModel.getComModel().get(1);
-                holder.txtTitle2.setText(comModel2.getTitle());
-                holder.txtContent2.setText( comModel2.getContent());
-                holder.txtScore2.setText(comModel2.getScore()+"");
-            }
-            else
-                holder.commentContainer2.setVisibility(View.GONE);
+//        if (resModel.getComModel().size()>0){
+//            CommentModel comModel =resModel.getComModel().get(0);
+//            holder.txtTitle1.setText( comModel.getTitle());
+//            holder.txtContent1.setText( comModel.getContent());
+//            holder.txtScore1.setText(comModel.getScore()+"");
+//            if(resModel.getComModel().size()>1){
+//                CommentModel comModel2 =resModel.getComModel().get(1);
+//                holder.txtTitle2.setText(comModel2.getTitle());
+//                holder.txtContent2.setText( comModel2.getContent());
+//                holder.txtScore2.setText(comModel2.getScore()+"");
+//            }
+//            else
+//                holder.commentContainer2.setVisibility(View.GONE);
             holder.txtTotalComment.setText(resModel.getComModel().size()+"");
             int totalComment=0;
             float sumScore=0;
@@ -132,11 +132,11 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
             if (totalComment>0)
                 holder.txtTotalImage.setText(totalComment+"");
 
-        }
-        else{
-            holder.commentContainer.setVisibility(View.GONE);
-            holder.commentContainer2.setVisibility(View.GONE);
-        }
+//        }
+//        else{
+//            holder.commentContainer.setVisibility(View.GONE);
+//            holder.commentContainer2.setVisibility(View.GONE);
+//        }
         //Load address and distance
         if (resModel.getChiNhanhModelList().size()>0){
             ChiNhanhModel chiNhanhGan= resModel.getChiNhanhModelList().get(0);
