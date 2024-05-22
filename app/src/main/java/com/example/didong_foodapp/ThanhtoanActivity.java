@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,7 +63,7 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
                 LichsuModel data = new LichsuModel(new UserInformation(txtName.getText().toString(),txtsdt.getText().toString(),txtaddress.getText().toString()),listvatpham,tongtien);
                 String key =databaseRef2.child(uid).push().getKey();
                 databaseRef2.child(uid).child(key).setValue(data);
-
+                Toast.makeText(ThanhtoanActivity.this, "Thêm hóa đơn thành công!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -94,11 +95,7 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if(id == R.id.btnXacnhan)
-        {
-            LichsuModel data = new LichsuModel(new UserInformation(txtName.getText().toString(),txtsdt.getText().toString(),txtaddress.getText().toString()),listvatpham,tongtien);
-            databaseRef2.child(uid).setValue(data);
-        }
+
         if(id== R.id.close)
         {
             finish();
