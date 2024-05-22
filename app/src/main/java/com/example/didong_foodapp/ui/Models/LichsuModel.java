@@ -14,46 +14,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LichsuModel {
-
-    public String getMaLichsu() {
-        return maLichsu;
-    }
-
-    public void setMaLichsu(String maLichsu) {
-        this.maLichsu = maLichsu;
-    }
-
-
-    public String getNameR() {
-        return nameR;
-    }
-
-    public void setNameR(String nameR) {
-        this.nameR = nameR;
-    }
-
     String nameR;
-
     String maLichsu;
     String tongtien;
     UserInformation person;
     List<CartModel> listdoan;
+    String date;
+    List<LichsuModel> lichsuModelList;
+    public LichsuModel(){};
+    public LichsuModel(UserInformation person, List<CartModel> listdoan, String tongtien)
+    {
+        this.person=person;
+        this.listdoan=listdoan;
+        this.tongtien=tongtien;
+    }
 
+    public String getMaLichsu() {
+        return maLichsu;
+    }
+    public void setMaLichsu(String maLichsu) {
+        this.maLichsu = maLichsu;
+    }
+    public String getNameR() {
+        return nameR;
+    }
+    public void setNameR(String nameR) {
+        this.nameR = nameR;
+    }
     public String getDate() {
         return date;
     }
-
     public void setDate(String date) {
         this.date = date;
     }
-
-    String date;
-
-    List<LichsuModel> lichsuModelList;
     public String getTongtien() {
         return tongtien;
     }
-
     public void setTongtien(String tongtien) {
         this.tongtien = tongtien;
     }
@@ -63,24 +59,11 @@ public class LichsuModel {
     public void setPerson(UserInformation person) {
         this.person = person;
     }
-
-
-
     public List<CartModel> getListdoan() {
         return listdoan;
     }
-
     public void setListdoan(List<CartModel> listdoan) {
         this.listdoan = listdoan;
-    }
-
-    public LichsuModel(){};
-
-    public LichsuModel(UserInformation person, List<CartModel> listdoan, String tongtien)
-    {
-        this.person=person;
-        this.listdoan=listdoan;
-        this.tongtien=tongtien;
     }
     public void setLichsuList(List<LichsuModel> lichsuModelList){this.lichsuModelList = lichsuModelList;}
     public void GetLichSuList(String maid, LichSuInterface lichSuInterface)
