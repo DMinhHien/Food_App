@@ -42,7 +42,7 @@ public class LichsudathangFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lichsudathang, container, false);
         recyclerViewDathang=view.findViewById(R.id.recyclerHistory);
-        lichsuController = new LichsuController();
+
 
         return view;
     }
@@ -50,6 +50,7 @@ public class LichsudathangFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        lichsuController = new LichsuController();
         lichsuController.GetLichSuList(this.getContext(),uid,recyclerViewDathang);
     }
 }

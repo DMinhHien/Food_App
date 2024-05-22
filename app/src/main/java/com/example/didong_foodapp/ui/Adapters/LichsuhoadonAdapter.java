@@ -42,6 +42,8 @@ public class LichsuhoadonAdapter extends RecyclerView.Adapter<LichsuhoadonAdapte
         holder.txtdiachi.setText(lichsuModel.getPerson().getAddress());
         holder.txtsodienthoai.setText(lichsuModel.getPerson().getPhone());
         holder.txtTongTien.setText(lichsuModel.getTongtien());
+        RecyclerView.LayoutManager layoutmanager= new LinearLayoutManager(context);
+        holder.recyclerViewMonan.setLayoutManager(layoutmanager);
         CartAdapter adapter = new CartAdapter(lichsuModel.getListdoan());
         holder.recyclerViewMonan.setAdapter(adapter);
         adapter.notifyDataSetChanged();

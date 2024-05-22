@@ -3,7 +3,7 @@ public class UserInformation {
     String name;
     String phone;
     String address;
-
+    public UserInformation(){};
 
 
 
