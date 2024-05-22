@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginBottom="5dp"
+    app:cardCornerRadius="20dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/check"
+                    android:paddingTop="5dp"/>
+
+                <TextView
+                    android:id="@+id/receipt_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:maxLines="1"
+                    android:text="Restaurant Name"
+                    style="@style/TEXT"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.75"/>
+
+                <TextView
+                    android:id="@+id/receipt_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="20dp"
+                    android:paddingTop="5dp"
+                    android:text="10 May 2004"
+                    android:textAlignment="center"
+                    style="@style/TEXT" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Tổng tiền: "
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    style="@style/TEXT" />
+
+                <TextView
+                    android:id="@+id/receipt_Price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="100,000 đ"
+                    android:textAlignment="center"
+                    style="@style/TEXT" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Số lượng: "
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    style="@style/TEXT" />
+
+                <TextView
+                    android:id="@+id/receipt_qty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="5 món"
+                    android:textAlignment="center"
+                    style="@style/TEXT" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#9d0208"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="40dp"
+                app:layout_constraintTop_toBottomOf="@+id/receipt_qty"/>
+            
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
