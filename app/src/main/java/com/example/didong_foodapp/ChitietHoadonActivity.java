@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.ui.Adapters.CartAdapter;
+import com.example.didong_foodapp.ui.Adapters.FoodHistoryAdapter;
 import com.example.didong_foodapp.ui.Adapters.LichsuhoadonAdapter;
 import com.example.didong_foodapp.ui.Models.LichsuModel;
 
@@ -35,7 +36,7 @@ public class ChitietHoadonActivity extends AppCompatActivity  {
         super.onStart();
         RecyclerView.LayoutManager layoutmanager= new LinearLayoutManager(ChitietHoadonActivity.this);
         recyclerviewvatpham.setLayoutManager(layoutmanager);
-        CartAdapter cartAdapter =  new CartAdapter(lichsuModel.getListdoan());
+        FoodHistoryAdapter cartAdapter =  new FoodHistoryAdapter(lichsuModel.getListdoan());
         recyclerviewvatpham.setAdapter(cartAdapter);
         txtname.setText(lichsuModel.getPerson().getName());
         txtphone.setText(lichsuModel.getPerson().getPhone());

@@ -98,8 +98,7 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         txtStatus=findViewById(R.id.Status);
         txtTotalImage=findViewById(R.id.txtTotalImage);
         txtTotalComment=findViewById(R.id.txtTotalComment);
-        txtTotalSave=findViewById(R.id.txtTotalSave);
-        txtTotalCheckIn=findViewById(R.id.txtTotalCheckIn);
+
         txtLikes=findViewById(R.id.txtTotalLike);
         ImageR=findViewById(R.id.imageChiTiet);
         txtTitleToolbar=findViewById(R.id.titleToolbar);

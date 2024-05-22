@@ -31,7 +31,7 @@ public class FoodHistoryAdapter extends RecyclerView.Adapter<FoodHistoryAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_item,parent,false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.receipt_detail_item,parent,false));
     }
 
     @Override
@@ -50,9 +50,6 @@ public class FoodHistoryAdapter extends RecyclerView.Adapter<FoodHistoryAdapter.
         holder.price.setText(cartModel.getPrice()+ " đ");
         holder.qty.setText(cartModel.getQty());
         holder.qty.setTag(cartModel.getQty());
-
-//
-//
 
     }
 
