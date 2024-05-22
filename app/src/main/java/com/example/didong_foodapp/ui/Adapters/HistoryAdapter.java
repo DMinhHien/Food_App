@@ -2,6 +2,7 @@ package com.example.didong_foodapp.ui.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import java.util.List;
 public class HistoryAdapter  extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
     Context context;
     List<LichsuModel> list;
+    SharedPreferences sharedPreferences;
 
     public HistoryAdapter(Context context, List<LichsuModel> list) {
         this.context=context;

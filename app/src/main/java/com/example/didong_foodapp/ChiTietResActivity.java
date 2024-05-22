@@ -90,7 +90,6 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.main_chi_tiet);
         resModel=getIntent().getParcelableExtra("quanan");
         txtName=findViewById(R.id.nameR);

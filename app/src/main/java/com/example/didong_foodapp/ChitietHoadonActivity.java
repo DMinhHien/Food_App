@@ -28,6 +28,11 @@ public class ChitietHoadonActivity extends AppCompatActivity  {
         txtphone = findViewById(R.id.phone);
         txttongtien = findViewById(R.id.total);
         recyclerviewvatpham = findViewById(R.id.recyclerViewMonAn);
+
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
         RecyclerView.LayoutManager layoutmanager= new LinearLayoutManager(ChitietHoadonActivity.this);
         recyclerviewvatpham.setLayoutManager(layoutmanager);
         CartAdapter cartAdapter =  new CartAdapter(lichsuModel.getListdoan());
