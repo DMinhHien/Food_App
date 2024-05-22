@@ -64,12 +64,13 @@ public class LoginActivity extends AppCompatActivity {
         bar=findViewById(R.id.progressBar);
         mAuth=FirebaseAuth.getInstance();
         Reg=findViewById(R.id.button_sign);
+        bar.setVisibility(View.INVISIBLE);
 
         Reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email,password;
-                bar.setVisibility(View.GONE);
+                bar.setVisibility(View.VISIBLE);
                 email=InputMail.getText().toString();
                 password=InputPassword.getText().toString();
                 if (TextUtils.isEmpty(email)){
