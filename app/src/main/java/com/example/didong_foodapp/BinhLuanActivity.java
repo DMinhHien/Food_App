@@ -146,6 +146,8 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
                     editor.commit();
                     Intent startActivity = new Intent(BinhLuanActivity.this, MainActivity.class);
                     BinhLuanActivity.this.startActivity(startActivity);
+                    Toast.makeText(BinhLuanActivity.this, "Đã đăng bình luận",
+                            Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
