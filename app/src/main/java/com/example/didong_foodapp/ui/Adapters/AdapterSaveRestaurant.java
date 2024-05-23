@@ -35,6 +35,8 @@ public class AdapterSaveRestaurant extends RecyclerView.Adapter<AdapterSaveResta
     Context context;
     SharedPreferences sharedPreferences;
 
+    public static Boolean SavedView=false;
+
     public AdapterSaveRestaurant(Context context, List<RestaurantModel> resModelList, int resources){
         this.resModelList= resModelList;
         this.resources=resources;
@@ -124,6 +126,7 @@ public class AdapterSaveRestaurant extends RecyclerView.Adapter<AdapterSaveResta
             @Override
             public void onClick(View v) {
                 Intent startActivity=new Intent(context, ChiTietResActivity.class);
+                SavedView=true;
                 startActivity.putExtra("quanan",resModel);
                 context.startActivity(startActivity);
             }

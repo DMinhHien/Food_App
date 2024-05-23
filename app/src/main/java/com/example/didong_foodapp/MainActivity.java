@@ -25,6 +25,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.didong_foodapp.ui.Adapters.AdapterSaveRestaurant;
 import com.example.didong_foodapp.ui.Adapters.ViewPagerMain;
 import com.example.didong_foodapp.ui.Models.RestaurantModel;
 import com.example.didong_foodapp.ui.Models.UserInformation;
@@ -111,6 +112,10 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         if(ChiTietResActivity.CartView){
             rdCart.setChecked(true);
             ChiTietResActivity.CartView=false;
+        }
+        if(AdapterSaveRestaurant.SavedView){
+            rdLuuLai.setChecked(true);
+            AdapterSaveRestaurant.SavedView=false;
         }
 
         databaseRef1.addValueEventListener(new ValueEventListener() {
