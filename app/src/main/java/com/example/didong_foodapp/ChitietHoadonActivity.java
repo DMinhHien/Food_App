@@ -1,6 +1,8 @@
 package com.example.didong_foodapp;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -19,6 +21,8 @@ public class ChitietHoadonActivity extends AppCompatActivity  {
     RecyclerView recyclerviewvatpham;
 
     LichsuModel lichsuModel;
+
+    ImageButton btnclose;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +33,13 @@ public class ChitietHoadonActivity extends AppCompatActivity  {
         txtphone = findViewById(R.id.phone);
         txttongtien = findViewById(R.id.total);
         recyclerviewvatpham = findViewById(R.id.recyclerViewMonAn);
+        btnclose = findViewById(R.id.close_receipt);
+        btnclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
     @Override
