@@ -112,6 +112,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
         if (id == R.id.btnChonHinh)
         {
             Intent iChonHinhBinhLuan = new Intent(this,ChonHinhBinhLuanActivity.class);
+            iChonHinhBinhLuan.putExtra("currentListImage",editingComment);
             startActivityForResult(iChonHinhBinhLuan,REQUEST_CHONHINHBINHLUAN);
             return;
         }
@@ -134,7 +135,8 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
                     comModel.setUser(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     if  (Objects.equals(isEdit, "true")){
                         comModel.setLikes(editingComment.getLikes());
-                        lDatabase.child(editingComment.getMaBL()).setValue(comModel);
+                        commentController.SuaBinhLuan(maquanan,editingComment.getMaBL(),comModel,listHinhDuocChon);
+//                        lDatabase.child(editingComment.getMaBL()).setValue(comModel);
                     }
                     else {
                         commentController.ThemBinhLuan(maquanan, comModel, listHinhDuocChon);
@@ -146,8 +148,14 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
                     editor.commit();
                     Intent startActivity = new Intent(BinhLuanActivity.this, MainActivity.class);
                     BinhLuanActivity.this.startActivity(startActivity);
-                    Toast.makeText(BinhLuanActivity.this, "Đã đăng bình luận",
-                            Toast.LENGTH_SHORT).show();
+                    if  (Objects.equals(isEdit, "true")){
+                        Toast.makeText(BinhLuanActivity.this, "Đã sửa bình luận",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(BinhLuanActivity.this, "Đã đăng bình luận",
+                                Toast.LENGTH_SHORT).show();
+                    }
                     finish();
                 }
             }

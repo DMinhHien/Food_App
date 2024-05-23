@@ -169,5 +169,34 @@ public class CommentModel implements Parcelable {
             }
         }
     }
+    public void SuaBinhLuan(String maR,String maBl,CommentModel comModel,final List<String> listImage){
+        DatabaseReference nodeComment= FirebaseDatabase.getInstance().getReference().child("commentR");
+        FirebaseDatabase.getInstance().getReference().child("imageComment").child(maBl).removeValue();
+        nodeComment.child(maR).child(maBl).setValue(comModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    if(listImage.size()>0) {
+                        for (String valueImage : listImage) {
+                            Uri uri = Uri.fromFile(new File(valueImage));
+                            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(uri.getLastPathSegment());
+                            storageRef.putFile(uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        });
+        if(listImage.size()>0) {
+            for (String valueImage : listImage) {
+                Uri uri = Uri.fromFile(new File(valueImage));
+                FirebaseDatabase.getInstance().getReference().child("imageComment").child(maBl).push().setValue(uri.getLastPathSegment());
+            }
+        }
+    }
 
 }
