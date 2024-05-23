@@ -68,13 +68,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbarPost">
-
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
         <TextView
             android:id="@+id/txtTenQuan"
             android:layout_width="wrap_content"
@@ -90,6 +92,22 @@
             android:layout_height="wrap_content"
             android:text="323 Tran Hung Dao"
             android:textSize="15sp" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <ImageButton
+            android:id="@+id/btnChonHinh"
+            style="@android:style/Widget.Material.ImageButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/photocamera"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/linearLayoutTitle"
@@ -109,27 +127,21 @@
             android:hint="Tiêu đề (không bắt buộc)"
             android:textColorHint="#cac9ce"
             android:textSize="20dp" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
         <EditText
             android:id="@+id/editTextScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:hint="Điểm (0-10)"
+            android:inputType="numberDecimal"
             android:textColorHint="#cac9ce"
-            android:layout_marginStart="5dp"
-            android:textSize="20dp"
-            android:inputType="numberDecimal"/>
+            android:textSize="20dp" />
 
-        <ImageButton
-            android:id="@+id/btnChonHinh"
-            style="@android:style/Widget.Material.ImageButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="5dp"
-            android:background="@drawable/photocamera"
-            android:cropToPadding="true"
-            android:scaleType="fitCenter"
-            android:layout_marginRight="5dp"/>
     </LinearLayout>
     <View
         android:id="@+id/View"
