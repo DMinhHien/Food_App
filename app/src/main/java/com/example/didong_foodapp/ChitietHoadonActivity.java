@@ -1,8 +1,11 @@
 package com.example.didong_foodapp;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,7 +20,7 @@ public class ChitietHoadonActivity extends AppCompatActivity  {
 
     TextView txtname, txtphone, txtaddress, txttongtien;
     RecyclerView recyclerviewvatpham;
-
+    ImageButton close;
     LichsuModel lichsuModel;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,8 +32,10 @@ public class ChitietHoadonActivity extends AppCompatActivity  {
         txtphone = findViewById(R.id.phone);
         txttongtien = findViewById(R.id.total);
         recyclerviewvatpham = findViewById(R.id.recyclerViewMonAn);
+        close=findViewById((R.id.close_receipt));
 
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -42,5 +47,17 @@ public class ChitietHoadonActivity extends AppCompatActivity  {
         txtphone.setText(lichsuModel.getPerson().getPhone());
         txtaddress.setText(lichsuModel.getPerson().getAddress());
         txttongtien.setText(lichsuModel.getTongtien());
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int id = v.getId();
+
+                if(id== R.id.close_receipt)
+                {
+                    finish();
+                }
+            }
+        });
     }
 }

@@ -1,11 +1,14 @@
 package com.example.didong_foodapp;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +35,7 @@ public class ShowDetailCommentActivity extends AppCompatActivity {
     List<Bitmap> listbitmap;
     CommentModel comModel;
     String user,likeStatus;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +68,11 @@ public class ShowDetailCommentActivity extends AppCompatActivity {
                 }
             }
         });
+
+        if(likes.getText()=="Đã thích")
+
         if(likes.getText().toString().equals("Đã thích"))
+
         {
             likes.setTextColor(Color.parseColor("#1e81b0"));
         }

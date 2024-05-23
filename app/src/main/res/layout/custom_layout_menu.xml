@@ -8,7 +8,9 @@
         android:id="@+id/menuName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"/>
+        android:paddingLeft="5dp"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerFood"
