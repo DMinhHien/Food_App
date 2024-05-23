@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -39,6 +41,7 @@ public class ChonHinhBinhLuanActivity extends AppCompatActivity implements View.
     AdapterChonHinhBinhLuan adapterChonHinhBinhLuan;
     TextView txtDone;
     CommentModel editingComment;
+    Toolbar toolbar;
     private static final int REQUEST_PERMISSION_CODE = 1;
     private Context context;
 
@@ -57,6 +60,7 @@ public class ChonHinhBinhLuanActivity extends AppCompatActivity implements View.
             listHinhDuocChon = new ArrayList<>();
         }
         recyclerChonHinhBinhLuan = (RecyclerView) findViewById(R.id.recyclerChonHinhBinhLuan);
+        toolbar=findViewById(R.id.pickedToolbar);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         adapterChonHinhBinhLuan = new AdapterChonHinhBinhLuan(this, R.layout.custom_layout_chonhinhbinhluan, listDuongDan);
         recyclerChonHinhBinhLuan.setLayoutManager(layoutManager);
@@ -73,7 +77,20 @@ public class ChonHinhBinhLuanActivity extends AppCompatActivity implements View.
         }
 
         txtDone.setOnClickListener(this);
-
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

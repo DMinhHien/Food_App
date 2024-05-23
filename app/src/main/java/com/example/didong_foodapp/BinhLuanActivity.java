@@ -119,8 +119,8 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
         else if (id==R.id.txtDangBinhLuan) {
-            double score=Double.parseDouble(edScore.getText().toString());
             if (!edComment.getText().toString().isEmpty() && !edScore.getText().toString().isEmpty()) {
+                double score=Double.parseDouble(edScore.getText().toString());
                 if ((score>10.0)) {
                     Toast.makeText(BinhLuanActivity.this, "Điểm phải từ 0-10",
                             Toast.LENGTH_SHORT).show();

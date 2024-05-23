@@ -160,7 +160,8 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                         listbitmap.add(bitmap);
                         if (listbitmap.size() == comModel.getImageList().size()) {
-                            ImageComment adapterRecyclerImageComment = new ImageComment(context, R.layout.custom_imagecomment, listbitmap, comModel, false);
+                            ImageComment adapterRecyclerImageComment = new ImageComment(context, R.layout.custom_imagecomment,
+                                    listbitmap, comModel, false, holder.txtUser.getText().toString(),holder.like.getText().toString());
                             RecyclerView.LayoutManager layoutmanager = new GridLayoutManager(context, 2);
                             holder.recyclerImageComment.setLayoutManager(layoutmanager);
                             holder.recyclerImageComment.setAdapter(adapterRecyclerImageComment);
