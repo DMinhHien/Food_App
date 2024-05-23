@@ -45,11 +45,11 @@ public class RegistrationActivity extends AppCompatActivity {
         bar=findViewById(R.id.progressBar);
         mAuth=FirebaseAuth.getInstance();
         Reg=findViewById(R.id.button_register);
+        bar.setVisibility(View.INVISIBLE);
         Reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email,password;
-                bar.setVisibility(View.VISIBLE);
                 email=InputMail.getText().toString();
                 password=InputPassword.getText().toString();
                 if (TextUtils.isEmpty(email)){
@@ -64,9 +64,9 @@ public class RegistrationActivity extends AppCompatActivity {
                         .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                bar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(RegistrationActivity.this, "Account created.",
+                                    bar.setVisibility(View.VISIBLE);
+                                    Toast.makeText(RegistrationActivity.this, "Account created",
                                             Toast.LENGTH_SHORT).show();
                                     UserModel uModel=new UserModel();
                                     uModel.setEmail(email);
@@ -78,7 +78,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                     
                                 } else {
                                     // If sign in fails, display a message to the user.
-                                    Toast.makeText(RegistrationActivity.this, "Authentication failed.",
+                                    Toast.makeText(RegistrationActivity.this, "Password must contain 6 characters or more",
                                             Toast.LENGTH_SHORT).show();
 
                                 }
