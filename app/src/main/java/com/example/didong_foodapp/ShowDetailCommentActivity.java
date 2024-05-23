@@ -69,8 +69,6 @@ public class ShowDetailCommentActivity extends AppCompatActivity {
             }
         });
 
-        if(likes.getText()=="Đã thích")
-
         if(likes.getText().toString().equals("Đã thích"))
 
         {
