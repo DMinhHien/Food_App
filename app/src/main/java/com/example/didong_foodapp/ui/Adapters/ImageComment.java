@@ -31,15 +31,18 @@ public class ImageComment extends RecyclerView.Adapter<ImageComment.ViewHolder>{
     List<Bitmap> listimage;
     CommentModel comModel;
     boolean isDetail;
+    String user,likeStatus;
 
 
 
-    public ImageComment(Context context, int resources, List<Bitmap> listimage,CommentModel comModel,  boolean isDetail) {
+    public ImageComment(Context context, int resources, List<Bitmap> listimage,CommentModel comModel,  boolean isDetail,String user,String likeStatus) {
         this.context = context;
         this.resources = resources;
         this.listimage = listimage;
         this.comModel=comModel;
         this.isDetail=isDetail;
+        this.user=user;
+        this.likeStatus=likeStatus;
 
     }
 
@@ -80,6 +83,8 @@ public class ImageComment extends RecyclerView.Adapter<ImageComment.ViewHolder>{
                           Log.d("Clicked", "Success");
                           Intent ChiTietComment = new Intent(context, ShowDetailCommentActivity.class);
                           ChiTietComment.putExtra("commentmodel", comModel);
+                          ChiTietComment.putExtra("commentuser",user);
+                          ChiTietComment.putExtra("commentlike",likeStatus);
                           context.startActivity(ChiTietComment);
 
                       }
