@@ -68,7 +68,7 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
     TextView txtName,txtAddress,txtTime,txtStatus,txtTotalImage,
             txtTotalComment,txtTotalSave,txtTotalCheckIn,txtTitleToolbar,txtLikes;
     ImageView ImageR;
-    Button btnBinhLuan,btnLike;
+    Button btnBinhLuan,btnLike,btnOrder;
     RestaurantModel resModel;
     Toolbar toolbar;
     Comment adapterComment;
@@ -86,6 +86,7 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
     boolean checkLike=true;
     List<String> list = new ArrayList<>();
     List<String> listLike = new ArrayList<>();
+    public static Boolean CartView=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +117,7 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
         btnBinhLuan = (Button) findViewById(R.id.btnBinhLuan);
         btnLike=findViewById(R.id.btnLike);
         buttonSave = (Button) findViewById(R.id.btSave);
+        btnOrder=findViewById(R.id.btnDatHang);
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         userModel = new UserModel();
         mDatabase = FirebaseDatabase.getInstance().getReference("LikeRestaurant");
@@ -182,6 +184,15 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
                     lDatabase.child("likes").setValue(currentLike);
                     likedDatabase.child(uid).child(resModel.getMaR()).setValue(resModel);
                 }
+            }
+        });
+
+        btnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CartView=true;
+                startActivity(new Intent(ChiTietResActivity.this,MainActivity.class));
+                finish();
             }
         });
     }

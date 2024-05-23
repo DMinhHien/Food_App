@@ -107,6 +107,12 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             fragmentTransaction.addToBackStack(null); // Optional: để thêm vào stack
             fragmentTransaction.commit();
         }
+
+        if(ChiTietResActivity.CartView){
+            rdCart.setChecked(true);
+            ChiTietResActivity.CartView=false;
+        }
+
         databaseRef1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
