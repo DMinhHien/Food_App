@@ -51,6 +51,7 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
     Context context;
     int layout;
     List<CommentModel> commentModelList;
+    ImageComment adapterRecyclerImageComment;
     SharedPreferences sharedPreferences;
     HashMap<String, Boolean> userAndid = new HashMap<>();
     RestaurantModel resModel;
@@ -157,12 +158,13 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
                 StorageReference storageImage = FirebaseStorage.getInstance().getReference().child(link);
                 long megabyte = 1024 * 1024;
                 storageImage.getBytes(megabyte).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onSuccess(byte[] bytes) {
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                         listbitmap.add(bitmap);
                         if (listbitmap.size() == comModel.getImageList().size()) {
-                            ImageComment adapterRecyclerImageComment = new ImageComment(context, R.layout.custom_imagecomment,
+                            adapterRecyclerImageComment = new ImageComment(context, R.layout.custom_imagecomment,
                                     listbitmap, comModel, false, holder.txtUser.getText().toString(),holder.like.getText().toString());
                             RecyclerView.LayoutManager layoutmanager = new GridLayoutManager(context, 2);
                             holder.recyclerImageComment.setLayoutManager(layoutmanager);
@@ -196,6 +198,7 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
                         likeDatabase.child("likes").setValue(currentLike);
                         mDatabase.child(uid).child(comModel.getMaBL()).setValue(comModel.getMaBL());
                     }
+                    adapterRecyclerImageComment.setLikeStatus(holder.like.getText().toString());
                 }
             });
             if (Objects.equals(comModel.getUser(), FirebaseAuth.getInstance().getCurrentUser().getUid())) {
