@@ -76,7 +76,6 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
                 CartFragment.list.clear();
                 CartFragment.adapter.notifyDataSetChanged();
                 CartFragment.totalCost.setText("0 đ");
-                //Xoa list cart
                 btnclose.callOnClick();
             }
         });

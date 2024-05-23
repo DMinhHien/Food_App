@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -72,6 +73,7 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
         TextView txtCommentTitle,txtCommentContent,txtScore,avatar,like,txtUser;
         RecyclerView recyclerImageComment;
         LinearLayout commentContainer;
+        ImageButton close;
         boolean checkLike=true;
         public ViewHolder(View itemView){
 
@@ -84,8 +86,8 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
             avatar=itemView.findViewById(R.id.avatar);
             recyclerImageComment=itemView.findViewById(R.id.recycler_imagecomment);
             commentContainer=itemView.findViewById(R.id.linearComment);
-
-
+            close=itemView.findViewById(R.id.close);
+            close.setVisibility(View.INVISIBLE);
         }
     }
 
