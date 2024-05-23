@@ -126,6 +126,7 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
 
         checkSave1(resModel);
         checkSave2(resModel);
+
         btnBinhLuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
