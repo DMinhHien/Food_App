@@ -49,13 +49,13 @@ public class ShowDetailCommentActivity extends AppCompatActivity {
         txtScore.setText(comModel.getScore()+"");
         txtUser.setText(user);
         likes.setText( likeStatus);
-        if(likes.getText()=="Đã thích")
+        if(likes.getText().toString().equals("Đã thích"))
         {
-            likes.setTextColor(Color.parseColor("#757575"));
+            likes.setTextColor(Color.parseColor("#1e81b0"));
         }
         else
         {
-            likes.setTextColor(Color.parseColor("#1e81b0"));
+            likes.setTextColor(Color.parseColor("#757575"));
         }
         if (Objects.equals(comModel.getUser(), FirebaseAuth.getInstance().getCurrentUser().getUid())) {
            avatar.setBackgroundResource(R.drawable.baseline_current_person_24);
