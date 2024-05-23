@@ -217,6 +217,19 @@
                     layout="@layout/layout_function_detail"/>
                 <include
                     layout="@layout/layout_detail_menu"/>
+                <Button
+                    android:id="@+id/btnDatHang"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/gradient_button"
+                    android:text="Đặt hàng"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@color/white" />
                 <include
                     layout="@layout/comment_detail" />
             </LinearLayout>
