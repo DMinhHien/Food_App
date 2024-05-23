@@ -137,7 +137,6 @@ public class ChiTietResActivity extends AppCompatActivity implements OnMapReadyC
                 iBinhLuan.putExtra("maquan",resModel.getMaR());
                 iBinhLuan.putExtra("isEdit", "false");
                 ChiTietResActivity.this.startActivity(iBinhLuan);
-                Log.d("Kiemtra","ok");
                 finish();
             }
         });
