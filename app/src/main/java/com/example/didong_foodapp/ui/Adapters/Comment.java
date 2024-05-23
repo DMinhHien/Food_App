@@ -150,9 +150,7 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
             holder.txtCommentContent.setText(comModel.getContent());
             holder.txtScore.setText(comModel.getScore() + "");
             likeCheck(holder,comModel);
-            if (Objects.equals(comModel.getUser(), FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                holder.avatar.setBackgroundResource(R.drawable.baseline_current_person_24);
-            }
+
             for (String link : comModel.getImageList()) {
                 StorageReference storageImage = FirebaseStorage.getInstance().getReference().child(link);
                 long megabyte = 1024 * 1024;
@@ -197,45 +195,49 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
                     }
                 }
             });
-            holder.commentContainer.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
+            if (Objects.equals(comModel.getUser(), FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                holder.avatar.setBackgroundResource(R.drawable.baseline_current_person_24);
 
-                    PopupMenu popupMenu = new PopupMenu(context, v);
-                    popupMenu.getMenuInflater().inflate(R.menu.option_menu, popupMenu.getMenu());
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            // Xử lý các hành động khi mục menu được chọn
-                            if (item.getItemId() == R.id.menu_item_sua) {
-                                // Xử lý hành động cho menu item 1
-                                Intent iBinhLuan = new Intent(context, BinhLuanActivity.class);
-                                iBinhLuan.putExtra("quananBinhLuan", resModel);
-                                iBinhLuan.putExtra("tenquan", resModel.getNameR());
-                                iBinhLuan.putExtra("diachi", resModel.getChiNhanhModelList().get(0).getDiachi());
-                                iBinhLuan.putExtra("maquan", resModel.getMaR());
-                                iBinhLuan.putExtra("currentComment", comModel);
-                                iBinhLuan.putExtra("isEdit", "true");
-                                context.startActivity(iBinhLuan);
-                                commentModelList.remove(position);
-                                return true;
-                            } else if (item.getItemId() == R.id.menu_item_xoa) {
-                                // Xử lý hành động cho menu item 2
-                                DatabaseReference nodeComment = FirebaseDatabase.getInstance().getReference().
-                                        child("commentR").child(resModel.getMaR()).child(comModel.getMaBL());
-                                holder.commentContainer.removeAllViews();
-                                nodeComment.removeValue();
-                                mDatabase.child(uid).child(comModel.getMaBL()).removeValue();
-                                comModel.setContent(null);
-                                return true;
+                holder.commentContainer.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+
+                        PopupMenu popupMenu = new PopupMenu(context, v);
+                        popupMenu.getMenuInflater().inflate(R.menu.option_menu, popupMenu.getMenu());
+                        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                // Xử lý các hành động khi mục menu được chọn
+                                if (item.getItemId() == R.id.menu_item_sua) {
+                                    // Xử lý hành động cho menu item 1
+                                    Intent iBinhLuan = new Intent(context, BinhLuanActivity.class);
+                                    iBinhLuan.putExtra("quananBinhLuan", resModel);
+                                    iBinhLuan.putExtra("tenquan", resModel.getNameR());
+                                    iBinhLuan.putExtra("diachi", resModel.getChiNhanhModelList().get(0).getDiachi());
+                                    iBinhLuan.putExtra("maquan", resModel.getMaR());
+                                    iBinhLuan.putExtra("currentComment", comModel);
+                                    iBinhLuan.putExtra("isEdit", "true");
+                                    context.startActivity(iBinhLuan);
+                                    commentModelList.remove(position);
+                                    return true;
+                                } else if (item.getItemId() == R.id.menu_item_xoa) {
+                                    // Xử lý hành động cho menu item 2
+                                    DatabaseReference nodeComment = FirebaseDatabase.getInstance().getReference().
+                                            child("commentR").child(resModel.getMaR()).child(comModel.getMaBL());
+                                    holder.commentContainer.removeAllViews();
+                                    nodeComment.removeValue();
+                                    mDatabase.child(uid).child(comModel.getMaBL()).removeValue();
+                                    comModel.setContent(null);
+                                    return true;
+                                }
+                                return false;
                             }
-                            return false;
-                        }
-                    });
-                    popupMenu.show();
-                    return true;
-                }
-            });
+                        });
+                        popupMenu.show();
+                        return true;
+                    }
+                });
+            }
         }
 
     }
