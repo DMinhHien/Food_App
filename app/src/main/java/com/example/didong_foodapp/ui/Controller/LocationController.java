@@ -70,13 +70,7 @@ public class LocationController {
                 filterlist.add(rModel);
             }
         }
-
-        if (filterlist.isEmpty()){
-            Toast.makeText(context, "Không tìm thấy",
-                    Toast.LENGTH_SHORT).show();
-        }else{
             adapterRecyclerLocation.setFiler(filterlist);
-        }
     }
 
 }

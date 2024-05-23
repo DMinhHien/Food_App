@@ -1,5 +1,6 @@
 package com.example.didong_foodapp.ui.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -44,6 +45,11 @@ public class ImageComment extends RecyclerView.Adapter<ImageComment.ViewHolder>{
         this.user=user;
         this.likeStatus=likeStatus;
 
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    public void setLikeStatus(String likeStatus){
+        this.likeStatus=likeStatus;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
