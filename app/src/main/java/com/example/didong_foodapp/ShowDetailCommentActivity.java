@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +28,7 @@ import java.util.Objects;
 public class ShowDetailCommentActivity extends AppCompatActivity {
     TextView txtCommentTitle,txtCommentContent,txtScore,txtUser,likes,avatar;
     RecyclerView recyclerImageComment;
+    ImageButton close;
     List<Bitmap> listbitmap;
     CommentModel comModel;
     String user,likeStatus;
@@ -33,6 +36,7 @@ public class ShowDetailCommentActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_layout_comment);
+        close=findViewById(R.id.close);
         txtScore=findViewById(R.id.scoreTxtComment);
         txtCommentTitle=findViewById(R.id.titleTxtComment);
         txtCommentContent=findViewById(R.id.contentTxtComment);
@@ -49,6 +53,17 @@ public class ShowDetailCommentActivity extends AppCompatActivity {
         txtScore.setText(comModel.getScore()+"");
         txtUser.setText(user);
         likes.setText( likeStatus);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int id = v.getId();
+
+                if(id== R.id.close)
+                {
+                    finish();
+                }
+            }
+        });
         if(likes.getText().toString().equals("Đã thích"))
         {
             likes.setTextColor(Color.parseColor("#1e81b0"));
