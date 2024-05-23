@@ -42,6 +42,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
     String maquanan;
     CommentController commentController;
     List<String> listHinhDuocChon;
+    int listHinhDaDuocChon;
     SharedPreferences sharedPreferences;
     RestaurantModel resModel;
     CommentModel editingComment;
@@ -50,6 +51,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
     final int REQUEST_CHONHINHBINHLUAN = 11;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         sharedPreferences = getSharedPreferences("restaurantFromComment", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         resModel=getIntent().getParcelableExtra("quananBinhLuan");
@@ -78,7 +80,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
             double score=editingComment.getScore();
             edScore.setText(String.valueOf(score));
             listHinhDuocChon=editingComment.getImageList();
-            adapterHienThiHinhBinhLuanDC = new AdapterHienThiHinhBinhLuanDC(this,R.layout.layout_hienthihinhduocchon,listHinhDuocChon,true);
+            adapterHienThiHinhBinhLuanDC = new AdapterHienThiHinhBinhLuanDC(this,R.layout.layout_hienthihinhduocchon,listHinhDuocChon, listHinhDuocChon.size());
             recyclerViewChonHinhBinhLuan.setAdapter(adapterHienThiHinhBinhLuanDC);
             adapterHienThiHinhBinhLuanDC.notifyDataSetChanged();
         }
@@ -112,12 +114,13 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
         if (id == R.id.btnChonHinh)
         {
             Intent iChonHinhBinhLuan = new Intent(this,ChonHinhBinhLuanActivity.class);
+            iChonHinhBinhLuan.putExtra("currentComment", editingComment);
             startActivityForResult(iChonHinhBinhLuan,REQUEST_CHONHINHBINHLUAN);
             return;
         }
         else if (id==R.id.txtDangBinhLuan) {
-            double score=Double.parseDouble(edScore.getText().toString());
             if (!edComment.getText().toString().isEmpty() && !edScore.getText().toString().isEmpty()) {
+                double score=Double.parseDouble(edScore.getText().toString());
                 if ((score>10.0)) {
                     Toast.makeText(BinhLuanActivity.this, "Điểm phải từ 0-10",
                             Toast.LENGTH_SHORT).show();
@@ -134,7 +137,8 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
                     comModel.setUser(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     if  (Objects.equals(isEdit, "true")){
                         comModel.setLikes(editingComment.getLikes());
-                        lDatabase.child(editingComment.getMaBL()).setValue(comModel);
+                        commentController.SuaBinhLuan(maquanan,editingComment.getMaBL(),comModel,listHinhDuocChon);
+//                        lDatabase.child(editingComment.getMaBL()).setValue(comModel);
                     }
                     else {
                         commentController.ThemBinhLuan(maquanan, comModel, listHinhDuocChon);
@@ -146,6 +150,14 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
                     editor.commit();
                     Intent startActivity = new Intent(BinhLuanActivity.this, MainActivity.class);
                     BinhLuanActivity.this.startActivity(startActivity);
+                    if  (Objects.equals(isEdit, "true")){
+                        Toast.makeText(BinhLuanActivity.this, "Đã sửa bình luận",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(BinhLuanActivity.this, "Đã đăng bình luận",
+                                Toast.LENGTH_SHORT).show();
+                    }
                     finish();
                 }
             }
@@ -172,9 +184,10 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
         {
             if(resultCode == RESULT_OK)
             {
+                listHinhDaDuocChon= listHinhDuocChon.size();
                 listHinhDuocChon = new ArrayList<>();
                 listHinhDuocChon = data.getStringArrayListExtra("listHinhDuocChon");
-                adapterHienThiHinhBinhLuanDC = new AdapterHienThiHinhBinhLuanDC(this,R.layout.layout_hienthihinhduocchon,listHinhDuocChon,false);
+                adapterHienThiHinhBinhLuanDC = new AdapterHienThiHinhBinhLuanDC(this, R.layout.layout_hienthihinhduocchon, listHinhDuocChon, listHinhDaDuocChon);
                 recyclerViewChonHinhBinhLuan.setAdapter(adapterHienThiHinhBinhLuanDC);
                 adapterHienThiHinhBinhLuanDC.notifyDataSetChanged();
             }

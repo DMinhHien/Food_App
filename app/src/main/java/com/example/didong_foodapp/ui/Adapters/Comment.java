@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -72,6 +73,7 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
         TextView txtCommentTitle,txtCommentContent,txtScore,avatar,like,txtUser;
         RecyclerView recyclerImageComment;
         LinearLayout commentContainer;
+        ImageButton close;
         boolean checkLike=true;
         public ViewHolder(View itemView){
 
@@ -84,8 +86,8 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
             avatar=itemView.findViewById(R.id.avatar);
             recyclerImageComment=itemView.findViewById(R.id.recycler_imagecomment);
             commentContainer=itemView.findViewById(R.id.linearComment);
-
-
+            close=itemView.findViewById(R.id.close);
+            close.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -150,9 +152,7 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
             holder.txtCommentContent.setText(comModel.getContent());
             holder.txtScore.setText(comModel.getScore() + "");
             likeCheck(holder,comModel);
-            if (Objects.equals(comModel.getUser(), FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                holder.avatar.setBackgroundResource(R.drawable.baseline_current_person_24);
-            }
+
             for (String link : comModel.getImageList()) {
                 StorageReference storageImage = FirebaseStorage.getInstance().getReference().child(link);
                 long megabyte = 1024 * 1024;
@@ -162,7 +162,8 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                         listbitmap.add(bitmap);
                         if (listbitmap.size() == comModel.getImageList().size()) {
-                            ImageComment adapterRecyclerImageComment = new ImageComment(context, R.layout.custom_imagecomment, listbitmap, comModel, false);
+                            ImageComment adapterRecyclerImageComment = new ImageComment(context, R.layout.custom_imagecomment,
+                                    listbitmap, comModel, false, holder.txtUser.getText().toString(),holder.like.getText().toString());
                             RecyclerView.LayoutManager layoutmanager = new GridLayoutManager(context, 2);
                             holder.recyclerImageComment.setLayoutManager(layoutmanager);
                             holder.recyclerImageComment.setAdapter(adapterRecyclerImageComment);
@@ -197,45 +198,49 @@ public class Comment extends RecyclerView.Adapter<Comment.ViewHolder> {
                     }
                 }
             });
-            holder.commentContainer.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
+            if (Objects.equals(comModel.getUser(), FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                holder.avatar.setBackgroundResource(R.drawable.baseline_current_person_24);
 
-                    PopupMenu popupMenu = new PopupMenu(context, v);
-                    popupMenu.getMenuInflater().inflate(R.menu.option_menu, popupMenu.getMenu());
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            // Xử lý các hành động khi mục menu được chọn
-                            if (item.getItemId() == R.id.menu_item_sua) {
-                                // Xử lý hành động cho menu item 1
-                                Intent iBinhLuan = new Intent(context, BinhLuanActivity.class);
-                                iBinhLuan.putExtra("quananBinhLuan", resModel);
-                                iBinhLuan.putExtra("tenquan", resModel.getNameR());
-                                iBinhLuan.putExtra("diachi", resModel.getChiNhanhModelList().get(0).getDiachi());
-                                iBinhLuan.putExtra("maquan", resModel.getMaR());
-                                iBinhLuan.putExtra("currentComment", comModel);
-                                iBinhLuan.putExtra("isEdit", "true");
-                                context.startActivity(iBinhLuan);
-                                commentModelList.remove(position);
-                                return true;
-                            } else if (item.getItemId() == R.id.menu_item_xoa) {
-                                // Xử lý hành động cho menu item 2
-                                DatabaseReference nodeComment = FirebaseDatabase.getInstance().getReference().
-                                        child("commentR").child(resModel.getMaR()).child(comModel.getMaBL());
-                                holder.commentContainer.removeAllViews();
-                                nodeComment.removeValue();
-                                mDatabase.child(uid).child(comModel.getMaBL()).removeValue();
-                                comModel.setContent(null);
-                                return true;
+                holder.commentContainer.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+
+                        PopupMenu popupMenu = new PopupMenu(context, v);
+                        popupMenu.getMenuInflater().inflate(R.menu.option_menu, popupMenu.getMenu());
+                        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                // Xử lý các hành động khi mục menu được chọn
+                                if (item.getItemId() == R.id.menu_item_sua) {
+                                    // Xử lý hành động cho menu item 1
+                                    Intent iBinhLuan = new Intent(context, BinhLuanActivity.class);
+                                    iBinhLuan.putExtra("quananBinhLuan", resModel);
+                                    iBinhLuan.putExtra("tenquan", resModel.getNameR());
+                                    iBinhLuan.putExtra("diachi", resModel.getChiNhanhModelList().get(0).getDiachi());
+                                    iBinhLuan.putExtra("maquan", resModel.getMaR());
+                                    iBinhLuan.putExtra("currentComment", comModel);
+                                    iBinhLuan.putExtra("isEdit", "true");
+                                    context.startActivity(iBinhLuan);
+                                    commentModelList.remove(position);
+                                    return true;
+                                } else if (item.getItemId() == R.id.menu_item_xoa) {
+                                    // Xử lý hành động cho menu item 2
+                                    DatabaseReference nodeComment = FirebaseDatabase.getInstance().getReference().
+                                            child("commentR").child(resModel.getMaR()).child(comModel.getMaBL());
+                                    holder.commentContainer.removeAllViews();
+                                    nodeComment.removeValue();
+                                    mDatabase.child(uid).child(comModel.getMaBL()).removeValue();
+                                    comModel.setContent(null);
+                                    return true;
+                                }
+                                return false;
                             }
-                            return false;
-                        }
-                    });
-                    popupMenu.show();
-                    return true;
-                }
-            });
+                        });
+                        popupMenu.show();
+                        return true;
+                    }
+                });
+            }
         }
 
     }

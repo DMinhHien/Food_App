@@ -23,13 +23,13 @@ public class AdapterHienThiHinhBinhLuanDC extends RecyclerView.Adapter<AdapterHi
     Context context;
     int resource;
     List<String> list;
-    boolean isEdit;
-    public AdapterHienThiHinhBinhLuanDC(Context context,int resource, List<String> list,boolean isEdit)
+    int previousImage;
+    public AdapterHienThiHinhBinhLuanDC(Context context,int resource, List<String> list,int previousImage)
     {
         this.context=context;
         this.resource=resource;
         this.list=list;
-        this.isEdit=isEdit;
+        this.previousImage=previousImage;
     }
     @NonNull
     @Override
@@ -42,7 +42,7 @@ public class AdapterHienThiHinhBinhLuanDC extends RecyclerView.Adapter<AdapterHi
 
     @Override
     public void onBindViewHolder(@NonNull AdapterHienThiHinhBinhLuanDC.ViewHolderHinhBinhLuan holder, int position) {
-        if (!isEdit) {
+        if (position>=previousImage) {
             Uri uri = Uri.parse(list.get(position));
             Bitmap bit = BitmapFactory.decodeFile(String.valueOf(uri));
             holder.imageView.setImageBitmap(bit);

@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="5dp"
         android:padding="5dp"
         android:text="Gửi"
@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="10dp"
         android:padding="5dp"
         android:text="Viết bình luận"
         android:textStyle="bold"
@@ -67,7 +67,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="50dp"
         android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,21 +81,22 @@
             android:layout_height="wrap_content"
             android:text="Gogi House"
             android:textColor="#e91012"
-            android:textSize="20dp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtDiaChi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="323 Tran Hung Dao" />
+            android:text="323 Tran Hung Dao"
+            android:textSize="15sp" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/linearLayoutTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp"
+        android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,11 +114,22 @@
             android:id="@+id/editTextScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
             android:hint="Điểm (0-10)"
             android:textColorHint="#cac9ce"
+            android:layout_marginStart="5dp"
             android:textSize="20dp"
             android:inputType="numberDecimal"/>
+
+        <ImageButton
+            android:id="@+id/btnChonHinh"
+            style="@android:style/Widget.Material.ImageButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/photocamera"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter"
+            android:layout_marginRight="5dp"/>
     </LinearLayout>
     <View
         android:id="@+id/View"
@@ -132,7 +144,7 @@
     <EditText
         android:id="@+id/editTextComment"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:layout_weight="1"
         android:gravity="top"
         android:textColorHint="#b5b5b5"
@@ -146,54 +158,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerChonHinhBinhLuan"
         android:layout_width="match_parent"
-        android:layout_height="141dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextComment"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="44dp"
-        android:background="#f5f5f5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextComment"
-        app:layout_constraintVertical_bias="1.0">
-
-        <ImageButton
-
-            android:id="@+id/btnChonHinh"
-            style="@android:style/Widget.Material.ImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/silver"
-            android:cropToPadding="true"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/photocamera" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/silver"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/hashtag" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/silver"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/rating" />
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
