@@ -103,8 +103,7 @@
             style="@android:style/Widget.Material.ImageButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/photocamera"
             android:cropToPadding="true"
             android:scaleType="fitCenter" />
@@ -136,7 +135,7 @@
             android:id="@+id/editTextScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginEnd= "5dp"
             android:hint="Điểm (0-10)"
             android:inputType="numberDecimal"
             android:textColorHint="#cac9ce"
