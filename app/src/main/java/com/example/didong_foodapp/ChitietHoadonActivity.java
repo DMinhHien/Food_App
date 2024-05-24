@@ -1,6 +1,7 @@
 package com.example.didong_foodapp;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,8 +24,7 @@ public class ChitietHoadonActivity extends AppCompatActivity  {
     RecyclerView recyclerviewvatpham;
     ImageButton close;
     LichsuModel lichsuModel;
-
-    ImageButton btnclose;
+    Toolbar toolbar;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +35,11 @@ public class ChitietHoadonActivity extends AppCompatActivity  {
         txtphone = findViewById(R.id.phone);
         txttongtien = findViewById(R.id.total);
         recyclerviewvatpham = findViewById(R.id.recyclerViewMonAn);
-        btnclose = findViewById(R.id.close_receipt);
-        btnclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar=findViewById(R.id.toolbarReceipt);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
     }
 
@@ -56,16 +55,16 @@ public class ChitietHoadonActivity extends AppCompatActivity  {
         txtaddress.setText(lichsuModel.getPerson().getAddress());
         txttongtien.setText(lichsuModel.getTongtien());
 
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id = v.getId();
+    }
 
-                if(id== R.id.close_receipt)
-                {
-                    finish();
-                }
-            }
-        });
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

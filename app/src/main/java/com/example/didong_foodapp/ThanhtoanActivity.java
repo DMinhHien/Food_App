@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.didong_foodapp.ui.Adapters.CartAdapter;
 import com.example.didong_foodapp.ui.Models.CartModel;
@@ -37,9 +39,10 @@ import java.util.List;
 
 public class ThanhtoanActivity extends AppCompatActivity implements View.OnClickListener  {
     private Context context;
+    Toolbar toolbar;
     TextView txtName, txtsdt, txtaddress;
     Button btnConfirm;
-    ImageButton btnclose;
+
     String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
     String tongtien,nameR;
 
@@ -59,9 +62,15 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
         txtName = findViewById(R.id.name);
         txtsdt = findViewById(R.id.phone);
         txtaddress= findViewById(R.id.address);
+
         btnConfirm= (Button) findViewById(R.id.btnXacnhan);
-        btnclose = findViewById(R.id.close);
-        btnclose.setOnClickListener(this);
+        toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,9 +90,8 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
                     CartFragment.list.clear();
                     CartFragment.adapter.notifyDataSetChanged();
                     CartFragment.totalCost.setText("0 đ");
-                    btnclose.callOnClick();
+                    finish();
                 }
-
             }
         });
 
@@ -111,14 +119,23 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
 
 
     }
-
     @Override
     public void onClick(View v) {
         int id = v.getId();
 
-        if(id== R.id.close)
-        {
+        if (id == R.id.close) {
             finish();
         }
     }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
+
