@@ -111,7 +111,8 @@ public class ChonHinhBinhLuanActivity extends AppCompatActivity implements View.
     {
         String [] projection = {MediaStore.Images.Media.DATA};
         Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-        Cursor cursor = this.getContentResolver().query(uri,projection,null,null,null);
+        String sortOrder = MediaStore.Images.Media.DATE_TAKEN + " DESC";
+        Cursor cursor = this.getContentResolver().query(uri,projection,null,null,sortOrder);
         cursor.moveToFirst();
 
         while(!cursor.isAfterLast())
