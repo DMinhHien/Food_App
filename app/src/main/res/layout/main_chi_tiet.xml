@@ -224,7 +224,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_gravity="center"
                     android:background="@drawable/gradient_button"
-                    android:text="Giỏ hàng"
+                    android:text="Đặt hàng"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     android:fontFamily="sans-serif-condensed"
