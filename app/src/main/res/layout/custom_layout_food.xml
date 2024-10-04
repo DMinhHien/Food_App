@@ -89,7 +89,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
-                    android:onClick="AddToCart"
                     android:text="0"
                     android:textAlignment="center"
                     android:textSize="20sp"

@@ -80,7 +80,6 @@
                 android:id="@+id/imageChiTiet"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:background="@drawable/burger2"
                 android:scaleType="fitXY" />
         </androidx.cardview.widget.CardView>
 
