@@ -44,6 +44,7 @@ public class LichsudathangFragment extends Fragment {
         recyclerViewDathang=view.findViewById(R.id.recyclerHistory);
         return view;
     }
+    o
 
     @Override
     public void onStart() {
