@@ -70,7 +70,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String email,password;
-                bar.setVisibility(View.VISIBLE);
                 email=InputMail.getText().toString();
                 password=InputPassword.getText().toString();
                 if (TextUtils.isEmpty(email)){
@@ -85,8 +84,8 @@ public class LoginActivity extends AppCompatActivity {
                         .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                bar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
+                                    bar.setVisibility(View.VISIBLE);
                                     Toast.makeText(LoginActivity.this, "Login successful.",
                                             Toast.LENGTH_SHORT).show();
                                     Intent intent=new Intent(getApplicationContext(), MainActivity.class);

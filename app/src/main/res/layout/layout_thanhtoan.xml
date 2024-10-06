@@ -16,15 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/close"
-            android:layout_width="55dp"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/delete"
-            android:background="@color/trans"
-            android:layout_gravity="end"/>
-
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout

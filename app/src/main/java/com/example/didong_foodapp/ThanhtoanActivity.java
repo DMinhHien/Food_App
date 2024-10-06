@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.didong_foodapp.ui.Adapters.CartAdapter;
 import com.example.didong_foodapp.ui.Models.CartModel;
@@ -36,9 +39,10 @@ import java.util.List;
 
 public class ThanhtoanActivity extends AppCompatActivity implements View.OnClickListener  {
     private Context context;
+    Toolbar toolbar;
     TextView txtName, txtsdt, txtaddress;
     Button btnConfirm;
-    ImageButton btnclose;
+
     String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
     String tongtien,nameR;
 
@@ -58,26 +62,36 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
         txtName = findViewById(R.id.name);
         txtsdt = findViewById(R.id.phone);
         txtaddress= findViewById(R.id.address);
+
         btnConfirm= (Button) findViewById(R.id.btnXacnhan);
-        btnclose = findViewById(R.id.close);
-        btnclose.setOnClickListener(this);
+        toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LichsuModel data = new LichsuModel(new UserInformation(txtName.getText().toString(),txtsdt.getText().toString(),txtaddress.getText().toString()),listvatpham,tongtien);
-                Calendar calendar=Calendar.getInstance();
-                SimpleDateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy");
-                String currentTime=dateFormat.format(calendar.getTime());
-                data.setDate(currentTime);
-                data.setNameR(nameR);
-                String key =databaseRef2.child(uid).push().getKey();
-                databaseRef2.child(uid).child(key).setValue(data);
-                Toast.makeText(ThanhtoanActivity.this, "Thêm hóa đơn thành công!", Toast.LENGTH_SHORT).show();
-                CartFragment.list.clear();
-                CartFragment.adapter.notifyDataSetChanged();
-                CartFragment.totalCost.setText("0 đ");
-                //Xoa list cart
-                btnclose.callOnClick();
+                if(txtaddress.getText().toString().isEmpty()||txtName.getText().toString().isEmpty()||txtsdt.getText().toString().isEmpty()){
+                    Toast.makeText(ThanhtoanActivity.this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    LichsuModel data = new LichsuModel(new UserInformation(txtName.getText().toString(),txtsdt.getText().toString(),txtaddress.getText().toString()),listvatpham,tongtien);
+                    Calendar calendar=Calendar.getInstance();
+                    SimpleDateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy");
+                    String currentTime=dateFormat.format(calendar.getTime());
+                    data.setDate(currentTime);
+                    data.setNameR(nameR);
+                    String key =databaseRef2.child(uid).push().getKey();
+                    databaseRef2.child(uid).child(key).setValue(data);
+                    Toast.makeText(ThanhtoanActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+                    CartFragment.list.clear();
+                    CartFragment.adapter.notifyDataSetChanged();
+                    CartFragment.totalCost.setText("0 đ");
+                    finish();
+                }
             }
         });
 
@@ -105,14 +119,23 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
 
 
     }
-
     @Override
     public void onClick(View v) {
         int id = v.getId();
 
-        if(id== R.id.close)
-        {
+        if (id == R.id.close) {
             finish();
         }
     }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
+
