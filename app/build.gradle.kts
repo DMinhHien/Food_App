@@ -35,22 +35,35 @@ android {
     }
 }
 
-dependencies {
+    dependencies {
 
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.constraintlayout)
-    implementation(libs.lifecycle.livedata.ktx)
-    implementation(libs.lifecycle.viewmodel.ktx)
-    implementation(libs.navigation.fragment)
-    implementation(libs.navigation.ui)
-    implementation(libs.activity)
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.database)
-    implementation(libs.firebase.storage)
-    implementation(libs.play.services.location)
-    implementation(libs.play.services.maps)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-}
+        implementation(libs.appcompat)
+        implementation(libs.material)
+        implementation(libs.constraintlayout)
+        implementation(libs.lifecycle.livedata.ktx)
+        implementation(libs.lifecycle.viewmodel.ktx)
+        implementation(libs.navigation.fragment)
+        implementation(libs.navigation.ui)
+        implementation(libs.activity)
+        implementation(libs.firebase.auth)
+        implementation(libs.firebase.database)
+        implementation(libs.firebase.storage)
+        implementation(libs.play.services.location)
+        implementation(libs.play.services.maps)
+        implementation(libs.rules)
+        implementation(libs.fragment.testing)
+
+        // Unit testing dependencies
+        testImplementation(libs.junit)
+        testImplementation(libs.core)
+        testImplementation (libs.mockito.core)
+        testImplementation("org.robolectric:robolectric:4.10.3")
+        testImplementation("androidx.arch.core:core-testing:2.2.0")
+
+
+        // Instrumentation testing dependencies
+        androidTestImplementation(libs.ext.junit)
+        androidTestImplementation(libs.espresso.core)
+        androidTestImplementation (libs.mockito.core)
+        androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
+    }

@@ -32,8 +32,8 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
     TextInputEditText InputMail,InputPassword;
     Button Reg;
-    FirebaseAuth mAuth;
-    ProgressBar bar;
+    public FirebaseAuth mAuth;
+    public ProgressBar bar;
     String uid;
     Map<String, String> updateInfo = new HashMap<>();
     @Override
@@ -74,33 +74,16 @@ public class LoginActivity extends AppCompatActivity {
                 password=InputPassword.getText().toString();
                 if (TextUtils.isEmpty(email)){
                     Toast.makeText(LoginActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
+                    Log.w("LoginActivity", "Please enter email");
                     return;
                 }
                 if (TextUtils.isEmpty(password)){
                     Toast.makeText(LoginActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    Log.w("LoginActivity", "Please enter password");
                     return;
                 }
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    bar.setVisibility(View.VISIBLE);
-                                    Toast.makeText(LoginActivity.this, "Login successful.",
-                                            Toast.LENGTH_SHORT).show();
-                                    Intent intent=new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                                                   Toast.LENGTH_SHORT).show();
 
-                                }
-                            }
-                        });
-
-
+                handleLogin(email, password);
             }
         }
         );
@@ -114,5 +97,26 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-
+    public void handleLogin(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            bar.setVisibility(View.VISIBLE);
+                            Toast.makeText(LoginActivity.this, "Login successful.",
+                                    Toast.LENGTH_SHORT).show();
+                            Log.d("LoginActivity", "Login Successful");
+                            Intent intent=new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            Log.e("LoginActivity", "Authentication failed");
+                        }
+                    }
+                });
+    }
 }

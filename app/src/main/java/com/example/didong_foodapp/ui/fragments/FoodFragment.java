@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.didong_foodapp.LoginActivity;
 import com.example.didong_foodapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,7 +35,8 @@ public class FoodFragment extends Fragment {
     public static TextInputEditText name, phone, address;
     Button btUpdate;
     DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference databaseRef1 = FirebaseDatabase.getInstance().getReference("InformationUser");
+    DatabaseReference databaseRef1 = FirebaseDatabase.getInstance()
+            .getReference("InformationUser");
 
     @Nullable
     @Override
