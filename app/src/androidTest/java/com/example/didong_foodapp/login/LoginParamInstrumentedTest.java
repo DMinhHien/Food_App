@@ -85,34 +85,28 @@ public class LoginParamInstrumentedTest {
 
         // Click login button
         onView(withId(R.id.button_sign)).perform(click());
-        if (isSuccessful) {
-            try {
-                Thread.sleep(1500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            FirebaseAuth auth = FirebaseAuth.getInstance();
-            assert(auth.getCurrentUser() != null);
-        } else {
-            onView(withId(com.google.android.material.R.id.snackbar_text))
-                    .check(matches(withText(expectedMessage)));
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            FirebaseAuth auth = FirebaseAuth.getInstance();
-            assert(auth.getCurrentUser() == null);
-            Log.d("TESTLOGIN", "Authentication failed: No user authenticated");
-            // Check if Snackbar or Toast is displayed with the expected message
-        }
 
+        try {
+            Thread.sleep(600);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         if (!expectedMessage.isEmpty()) {
-
+            if (isSuccessful) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                assert(auth.getCurrentUser() != null);
+            } else {
+                onView(withId(com.google.android.material.R.id.snackbar_text))
+                        .check(matches(withText(expectedMessage)));
+                assert(auth.getCurrentUser() == null);
+                Log.d("TESTLOGIN", "Authentication failed: No user authenticated");
+            }
         }
-
-
-
     }
 
     @After
