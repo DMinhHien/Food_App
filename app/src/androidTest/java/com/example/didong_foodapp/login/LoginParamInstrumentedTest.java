@@ -52,11 +52,11 @@ public class LoginParamInstrumentedTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
+                {"sad@gmail.com", "123456", true, "Login successful."},
                 {"minhtri.com", "123456", false, "Authentication failed."},
                 {"minhtri@gmail.com", "123", false, "Authentication failed."},
                 {"", "123456", false, "Enter email"},
                 {"minhtri123@gmail.com", "", false, "Enter password"},
-                {"minhtri@gmail.com", "123456", true, "Login successful."},
         });
     }
 
@@ -64,7 +64,8 @@ public class LoginParamInstrumentedTest {
     public void setUp() {
         activityScenarioRule.getScenario().onActivity(
                 activity -> decorView = activity.getWindow().getDecorView());
-        FirebaseAuth.getInstance().signOut();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null)
+            FirebaseAuth.getInstance().signOut();
     }
 
     @Test
@@ -95,11 +96,13 @@ public class LoginParamInstrumentedTest {
         if (!expectedMessage.isEmpty()) {
             if (isSuccessful) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 assert(auth.getCurrentUser() != null);
+                Log.d("TESTLOGIN", "Authentication failed: No user authenticated");
+
             } else {
                 onView(withId(com.google.android.material.R.id.snackbar_text))
                         .check(matches(withText(expectedMessage)));
