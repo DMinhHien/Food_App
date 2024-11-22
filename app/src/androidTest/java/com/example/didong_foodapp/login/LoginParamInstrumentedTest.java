@@ -6,7 +6,6 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
@@ -17,7 +16,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import com.example.didong_foodapp.LoginActivity;
 import com.example.didong_foodapp.R;
-import com.example.didong_foodapp.util.ToastMatcher;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.junit.After;
@@ -40,67 +38,95 @@ public class LoginParamInstrumentedTest {
     private final String email;
     private final String password;
     private final boolean isSuccessful;
-    private final String expectedLogMessage;
+    private final String expectedMessage;
 
-    @Rule
-    public ActivityScenarioRule<LoginActivity> activityRule
-            = new ActivityScenarioRule<>(LoginActivity.class);
     private View decorView;
 
-    @Before
-    public void setUp() {
-        activityRule.getScenario().onActivity(
-                activity -> decorView = activity.getWindow().getDecorView());
-    }
-
-    public LoginParamInstrumentedTest(String email, String password, boolean isSuccessful, String expectedLogMessage) {
+    public LoginParamInstrumentedTest(String email, String password, boolean isSuccessful, String expectedMessage) {
         this.email = email;
         this.password = password;
         this.isSuccessful = isSuccessful;
-        this.expectedLogMessage = expectedLogMessage;
+        this.expectedMessage = expectedMessage;
     }
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {"minhtri.com", "123456", false, "Authentication failed"},
-                {"minhtri@gmail.com", "123", false, "Authentication failed"},
-                {"", "123456", false, "Please enter email"},
-                {"minhtri123@gmail.com", "", false, "Please enter password"},
-                {"minhtri@gmail.com", "123456", true, "Login Successful"},
+                {"minhtri.com", "123456", false, "Authentication failed."},
+                {"minhtri@gmail.com", "123", false, "Authentication failed."},
+                {"", "123456", false, "Enter email"},
+                {"minhtri123@gmail.com", "", false, "Enter password"},
+                {"minhtri@gmail.com", "123456", true, "Login successful."},
         });
     }
+
+    @Before
+    public void setUp() {
+        activityScenarioRule.getScenario().onActivity(
+                activity -> decorView = activity.getWindow().getDecorView());
+        FirebaseAuth.getInstance().signOut();
+    }
+
     @Test
     public void testLogin() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // Input email and password
         onView(withId(R.id.Email)).perform(clearText(), typeText(email), closeSoftKeyboard());
         onView(withId(R.id.Pass)).perform(clearText(), typeText(password), closeSoftKeyboard());
-        onView(withId(R.id.button_sign)).perform(click());
-
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        // Click login button
+        onView(withId(R.id.button_sign)).perform(click());
         if (isSuccessful) {
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            FirebaseAuth auth = FirebaseAuth.getInstance();
             assert(auth.getCurrentUser() != null);
-            Log.d("TEST LOGIN", "Login Successful: User is authenticated");
         } else {
+            onView(withId(com.google.android.material.R.id.snackbar_text))
+                    .check(matches(withText(expectedMessage)));
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            FirebaseAuth auth = FirebaseAuth.getInstance();
             assert(auth.getCurrentUser() == null);
-            Log.d("TEST LOGIN", "Authentication failed: No user authenticated");
+            Log.d("TESTLOGIN", "Authentication failed: No user authenticated");
+            // Check if Snackbar or Toast is displayed with the expected message
         }
 
-        if (!expectedLogMessage.isEmpty()) {
-            Log.d("TEST LOGIN", expectedLogMessage);
-            onView(withText(expectedLogMessage)).inRoot(new ToastMatcher());
-//                    .check(matches(isDisplayed()));
+        if (!expectedMessage.isEmpty()) {
+
         }
+
+
+
     }
 
     @After
     public void tearDown() {
-        FirebaseAuth.getInstance().signOut();
+        if(isSuccessful)
+            FirebaseAuth.getInstance().signOut();
     }
-}
 
+    public View getDecorView() {
+        return decorView;
+    }
+
+    public void setDecorView(View decorView) {
+        this.decorView = decorView;
+    }
+
+}
