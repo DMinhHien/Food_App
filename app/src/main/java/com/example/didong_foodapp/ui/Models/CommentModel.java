@@ -8,8 +8,12 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -137,7 +141,8 @@ public class CommentModel implements Parcelable {
     }
     public void ThemBinhLuan(String maR,CommentModel comModel,final List<String> listImage){
         DatabaseReference nodeComment= FirebaseDatabase.getInstance().getReference().child("commentR");
-        String key =nodeComment.child(maR).push().getKey();
+        String key = nodeComment.child(maR).push().getKey();
+
         nodeComment.child(maR).child(key).setValue(comModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -164,4 +169,34 @@ public class CommentModel implements Parcelable {
             }
         }
     }
+    public void SuaBinhLuan(String maR,String maBl,CommentModel comModel,final List<String> listImage){
+        DatabaseReference nodeComment= FirebaseDatabase.getInstance().getReference().child("commentR");
+        FirebaseDatabase.getInstance().getReference().child("imageComment").child(maBl).removeValue();
+        nodeComment.child(maR).child(maBl).setValue(comModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    if(listImage.size()>0) {
+                        for (String valueImage : listImage) {
+                            Uri uri = Uri.fromFile(new File(valueImage));
+                            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(uri.getLastPathSegment());
+                            storageRef.putFile(uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        });
+        if(listImage.size()>0) {
+            for (String valueImage : listImage) {
+                Uri uri = Uri.fromFile(new File(valueImage));
+                FirebaseDatabase.getInstance().getReference().child("imageComment").child(maBl).push().setValue(uri.getLastPathSegment());
+            }
+        }
+    }
+
 }

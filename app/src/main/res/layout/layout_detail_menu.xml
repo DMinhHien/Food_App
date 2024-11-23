@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:padding="10dp">
 
@@ -12,17 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Menu"
-        android:textSize="20dp"
+        android:textSize="30dp"
+        style="Style/TEXT"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtMenu">
+        app:layout_constraintTop_toBottomOf="@+id/txtMenu"
+        >
 
     </androidx.recyclerview.widget.RecyclerView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
