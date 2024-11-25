@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuModel {
+    String mamenu;
+    String name;
+    List<FoodModel> foodModelList;
     public String getMamenu() {
         return mamenu;
     }
@@ -28,9 +31,6 @@ public class MenuModel {
     public void setName(String name) {
         this.name = name;
     }
-
-    String mamenu;
-    String name;
 
     public List<FoodModel> getFoodList() {
         return foodModelList;
@@ -85,6 +85,6 @@ public class MenuModel {
 
     }
 
-    List<FoodModel> foodModelList;
+
 
 }

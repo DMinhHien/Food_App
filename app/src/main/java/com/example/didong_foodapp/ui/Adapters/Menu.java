@@ -17,11 +17,13 @@ import java.util.List;
 
 public class Menu extends RecyclerView.Adapter<Menu.HolderMenu>{
     Context context;
+    String nameR;
     List<MenuModel> menuModelList;
 
-    public Menu(Context context, List<MenuModel> menuModelList) {
+    public Menu(Context context, List<MenuModel> menuModelList, String nameR) {
         this.context = context;
         this.menuModelList = menuModelList;
+        this.nameR = nameR;
     }
 
     @NonNull
@@ -37,7 +39,7 @@ public class Menu extends RecyclerView.Adapter<Menu.HolderMenu>{
         MenuModel menuModel = menuModelList.get(position);
         holder.txtMenu.setText(menuModel.getName());
         holder.recyclerViewFood.setLayoutManager(new LinearLayoutManager(context));
-        Food adapterFood = new Food(context, menuModel.getFoodList());
+        Food adapterFood = new Food(context, menuModel.getFoodList(), nameR);
         holder.recyclerViewFood.setAdapter(adapterFood);
         adapterFood.notifyDataSetChanged();
     }

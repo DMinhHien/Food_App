@@ -32,7 +32,6 @@ public class RestaurantModel implements Parcelable {
     }
 
 
-
     protected RestaurantModel(Parcel in) {
         order = in.readInt();
         closeTime = in.readString();
@@ -71,6 +70,16 @@ public class RestaurantModel implements Parcelable {
 
     List<ChiNhanhModel> chiNhanhModelList;
     List<CommentModel> comModel;
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    String signature;
     public List<CommentModel> getComModel() {
         return comModel;
     }

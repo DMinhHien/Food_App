@@ -1,9 +1,12 @@
 package com.example.didong_foodapp.ui.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +34,17 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
     List<RestaurantModel> resModelList;
     int resources;
     Context context;
+    SharedPreferences sharedPreferences;
 
     public RecyclerLocation(Context context, List<RestaurantModel> resModelList, int resources){
         this.resModelList= resModelList;
         this.resources=resources;
         this.context=context;
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    public void setFiler(List<RestaurantModel> filterList){
+        this.resModelList= filterList;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -49,7 +58,6 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
         public ViewHolder(View itemView){
             super(itemView);
             txtNameRLocation=(TextView) itemView.findViewById(R.id.txtNameRLocation);
-            btnOrder=itemView.findViewById(R.id.orderButton);
             imageLocationR=(ImageView) itemView.findViewById((R.id.imageLocation));
             txtTitle1=itemView.findViewById(R.id.titleTxt1);
             txtTitle2=itemView.findViewById(R.id.titleTxt2);
@@ -57,8 +65,8 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
             txtContent2=itemView.findViewById(R.id.contentTxt2);
             txtScore1=itemView.findViewById(R.id.scoreTxt1);
             txtScore2=itemView.findViewById(R.id.scoreTxt2);
-            commentContainer=itemView.findViewById(R.id.commentContainer);
-            commentContainer2=itemView.findViewById(R.id.commentContainer2);
+//            commentContainer=itemView.findViewById(R.id.commentContainer);
+//            commentContainer2=itemView.findViewById(R.id.commentContainer2);
             txtTotalComment=itemView.findViewById(R.id.black_comment);
             txtTotalImage=itemView.findViewById(R.id.camera_black);
             txtAverage=itemView.findViewById(R.id.averageScore);
@@ -79,9 +87,6 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
     public void onBindViewHolder(@NonNull RecyclerLocation.ViewHolder holder, int position) {
         RestaurantModel resModel=resModelList.get(position);
         holder.txtNameRLocation.setText(resModel.getNameR());
-        if (resModel.isOrder()==1){
-            holder.btnOrder.setVisibility(View.VISIBLE);
-        }
         if(!resModel.getImageR().isEmpty()){
             StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(resModel.getImageR().get(0));
             long megabyte=1024*1024;
@@ -94,35 +99,44 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
             });
         }
         if (resModel.getComModel().size()>0){
-            CommentModel comModel =resModel.getComModel().get(0);
-            holder.txtTitle1.setText( comModel.getTitle());
-            holder.txtContent1.setText( comModel.getContent());
-            holder.txtScore1.setText(comModel.getScore()+"");
-            if(resModel.getComModel().size()>1){
-                CommentModel comModel2 =resModel.getComModel().get(1);
-                holder.txtTitle2.setText(comModel2.getTitle());
-                holder.txtContent2.setText( comModel2.getContent());
-                holder.txtScore2.setText(comModel2.getScore()+"");
-            }
-            else
-                holder.commentContainer2.setVisibility(View.GONE);
+//            CommentModel comModel =resModel.getComModel().get(0);
+//            holder.txtTitle1.setText( comModel.getTitle());
+//            holder.txtContent1.setText( comModel.getContent());
+//            holder.txtScore1.setText(comModel.getScore()+"");
+//            if(resModel.getComModel().size()>1){
+//                CommentModel comModel2 =resModel.getComModel().get(1);
+//                holder.txtTitle2.setText(comModel2.getTitle());
+//                holder.txtContent2.setText( comModel2.getContent());
+//                holder.txtScore2.setText(comModel2.getScore()+"");
+//            }
+//            else
+//                holder.commentContainer2.setVisibility(View.GONE);
             holder.txtTotalComment.setText(resModel.getComModel().size()+"");
             int totalComment=0;
-            int sumScore=0;
+            double sumScore=0;
             for (CommentModel commentModel1:resModel.getComModel()){
                 totalComment+=commentModel1.getImageList().size();
                 sumScore+=commentModel1.getScore();
             }
             double average=sumScore/resModel.getComModel().size();
             holder.txtAverage.setText(String.format("%.1f",average));
+            if(average<2.5)
+                holder.txtAverage.setBackgroundResource(R.drawable.background_cycle_red);
+            else if (average>=2.5 &&average<5 )
+                holder.txtAverage.setBackgroundResource(R.drawable.background_cycle_yellow);
+            else if (average>=5 &&average<7.5 )
+                holder.txtAverage.setBackgroundResource(R.drawable.background_cycle_green);
+            else if (average>=7.5 )
+                holder.txtAverage.setBackgroundResource(R.drawable.background_cycle_blue);
+
             if (totalComment>0)
                 holder.txtTotalImage.setText(totalComment+"");
 
         }
-        else{
-            holder.commentContainer.setVisibility(View.GONE);
-            holder.commentContainer2.setVisibility(View.GONE);
-        }
+//        else{
+//            holder.commentContainer.setVisibility(View.GONE);
+//            holder.commentContainer2.setVisibility(View.GONE);
+//        }
         //Load address and distance
         if (resModel.getChiNhanhModelList().size()>0){
             ChiNhanhModel chiNhanhGan= resModel.getChiNhanhModelList().get(0);
@@ -141,6 +155,17 @@ public class RecyclerLocation extends RecyclerView.Adapter<RecyclerLocation.View
                 context.startActivity(startActivity);
             }
         });
+        sharedPreferences= context.getSharedPreferences("restaurantFromComment", Context.MODE_PRIVATE);
+       String previousResComment=sharedPreferences.getString("previousMaR","0");
+       String check=sharedPreferences.getString("newComment","0");
+       if (previousResComment.equals(resModel.getMaR())&&(check.equals("true"))){
+           Intent startActivity=new Intent(context, ChiTietResActivity.class);
+           startActivity.putExtra("quanan",resModel);
+           context.startActivity(startActivity);
+           SharedPreferences.Editor editor =  sharedPreferences.edit();
+           editor.putString("newComment", "none");
+           editor.apply();
+        }
     }
 
     @Override

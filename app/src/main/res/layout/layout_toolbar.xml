@@ -4,7 +4,7 @@
     android:id="@+id/toolbar_layout"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/orange"
+    android:background="#9d0208"
     app:layout_constraintTop_toTopOf="parent">
 
     <TextView
@@ -12,8 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:fontFamily="@font/aclonica"
         android:text="Gogi House"
         android:textColor="@color/white"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 </androidx.appcompat.widget.Toolbar>

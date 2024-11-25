@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -25,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.didong_foodapp.ui.Adapters.AdapterChonHinhBinhLuan;
 import com.example.didong_foodapp.ui.Models.ChonHinhBinhLuanModel;
+import com.example.didong_foodapp.ui.Models.CommentModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,8 @@ public class ChonHinhBinhLuanActivity extends AppCompatActivity implements View.
     RecyclerView recyclerChonHinhBinhLuan;
     AdapterChonHinhBinhLuan adapterChonHinhBinhLuan;
     TextView txtDone;
+    CommentModel editingComment;
+    Toolbar toolbar;
     private static final int REQUEST_PERMISSION_CODE = 1;
     private Context context;
 
@@ -47,8 +52,15 @@ public class ChonHinhBinhLuanActivity extends AppCompatActivity implements View.
         setContentView(R.layout.layout_chonhinh_binhluan);
         listDuongDan = new ArrayList<>();
         listPickedImage= new ArrayList<>();
-        listHinhDuocChon = new ArrayList<>();
+        editingComment=getIntent().getParcelableExtra("currentComment");
+        if (editingComment!=null){
+            listHinhDuocChon= editingComment.getImageList();
+        }
+        else {
+            listHinhDuocChon = new ArrayList<>();
+        }
         recyclerChonHinhBinhLuan = (RecyclerView) findViewById(R.id.recyclerChonHinhBinhLuan);
+        toolbar=findViewById(R.id.pickedToolbar);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         adapterChonHinhBinhLuan = new AdapterChonHinhBinhLuan(this, R.layout.custom_layout_chonhinhbinhluan, listDuongDan);
         recyclerChonHinhBinhLuan.setLayoutManager(layoutManager);
@@ -65,7 +77,20 @@ public class ChonHinhBinhLuanActivity extends AppCompatActivity implements View.
         }
 
         txtDone.setOnClickListener(this);
-
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -86,7 +111,8 @@ public class ChonHinhBinhLuanActivity extends AppCompatActivity implements View.
     {
         String [] projection = {MediaStore.Images.Media.DATA};
         Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-        Cursor cursor = this.getContentResolver().query(uri,projection,null,null,null);
+        String sortOrder = MediaStore.Images.Media.DATE_TAKEN + " DESC";
+        Cursor cursor = this.getContentResolver().query(uri,projection,null,null,sortOrder);
         cursor.moveToFirst();
 
         while(!cursor.isAfterLast())
