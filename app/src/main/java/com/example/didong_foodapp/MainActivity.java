@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
@@ -174,7 +175,21 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
     }
     public void logout(View view) {
-        startActivity(new Intent(MainActivity.this,WelcomeActivity.class));
-        FirebaseAuth.getInstance().signOut();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Đăng xuất");
+        builder.setMessage("Bạn có chắc chắn muốn đăng xuất không?");
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
+            FirebaseAuth.getInstance().signOut();
+            finish();
+        });
+        builder.setNegativeButton("No", (dialog, which) -> {
+
+            dialog.dismiss();
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
