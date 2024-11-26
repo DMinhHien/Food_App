@@ -65,6 +65,7 @@ android {
         androidTestImplementation(libs.ext.junit)
         androidTestImplementation(libs.junit)
         androidTestImplementation(libs.espresso.core)
+        androidTestImplementation("androidx.test.espresso:espresso-contrib:3.3.0")
         androidTestImplementation (libs.mockito.core)
         debugImplementation("androidx.test:core:1.6.0")
         androidTestImplementation("androidx.arch.core:core-testing:2.2.0")

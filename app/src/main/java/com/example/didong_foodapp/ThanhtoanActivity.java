@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ import com.example.didong_foodapp.ui.Models.LichsuModel;
 import com.example.didong_foodapp.ui.Models.UserInformation;
 import com.example.didong_foodapp.ui.fragments.CartFragment;
 import com.example.didong_foodapp.ui.fragments.FoodFragment;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,7 +52,7 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
     DatabaseReference databaseRef1 = FirebaseDatabase.getInstance().getReference("InformationUser");
 
     DatabaseReference databaseRef2 = FirebaseDatabase.getInstance().getReference("Chitiethoadon");
-
+    View view;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
         txtName = findViewById(R.id.name);
         txtsdt = findViewById(R.id.phone);
         txtaddress= findViewById(R.id.address);
-
+        view= findViewById(R.id.layout_thanhtoan);
         btnConfirm= (Button) findViewById(R.id.btnXacnhan);
         toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -76,6 +78,7 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
             public void onClick(View v) {
                 if(txtaddress.getText().toString().isEmpty()||txtName.getText().toString().isEmpty()||txtsdt.getText().toString().isEmpty()){
                     Toast.makeText(ThanhtoanActivity.this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view, "Vui lòng nhập đầy đủ thông tin!", Snackbar.LENGTH_SHORT).show();
                 }
                 else{
                     LichsuModel data = new LichsuModel(new UserInformation(txtName.getText().toString(),txtsdt.getText().toString(),txtaddress.getText().toString()),listvatpham,tongtien);
@@ -87,10 +90,13 @@ public class ThanhtoanActivity extends AppCompatActivity implements View.OnClick
                     String key =databaseRef2.child(uid).push().getKey();
                     databaseRef2.child(uid).child(key).setValue(data);
                     Toast.makeText(ThanhtoanActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view, "Đặt hàng thành công!", Snackbar.LENGTH_SHORT).show();
                     CartFragment.list.clear();
                     CartFragment.adapter.notifyDataSetChanged();
                     CartFragment.totalCost.setText("0 đ");
+                    new Handler().postDelayed(() -> {
                     finish();
+                    }, 4000);
                 }
             }
         });
