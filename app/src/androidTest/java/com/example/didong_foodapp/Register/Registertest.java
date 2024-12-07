@@ -53,12 +53,21 @@ public class Registertest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {"tuan","tuantbc@gmail.com", "123456", true, "Account created"},
-                {"tuan","tuan.com", "123456", false, "Email is invalid"},
-                {"tuan","tuanqe2@gmail.com", "123", false, "Password must contain 6 characters or more"},
-                {"","tuna2gmail.com", "123456", false, "Enter username"},
-                {"tuan","", "123456", false, "Enter email"},
-                {"tuan","tuanb123@gmail.com", "", false, "Enter password"},
+                {"tuantrelt","tuantrett@gmail.com", "123456", false, "Authenciation failed"},
+                {"tuantrelt","tuantre2@gmail.com", "abc456", true, "Account created"},
+                {"tuan12@","tuantre2@gmail.com", "abc456", true, "Authenciation failed"},
+                {"tuan12@","tuantre2@gmail.com", "12345", false, "Password must contain 6 characters or more"},
+                {"123@add","123@tun", "@123abcdes", false, "Email is invalid"},
+                {"tuan12@","123tuan@gma.com", "123456", false, "Email is invalid"},
+                {"","tuantreltt3@gmail.com", "123456", true, "Enter Username"},
+                {"tuantrelt","tuantreltt@gmail.co", "@", false, "Email is invalid"},
+                {"tuan12@","", "@123abcdes", false, "Enter email"},
+                {"123@add","tuantreltt@gmail.co", "", false, "Enter password"},
+                {"tuan12@","", "", false, "Enter email"},
+                {"tuanllllllllllllllllllllll","tuanqe12@gmail.com", "@", false, "Password must contain 6 characters or more"},
+                {"tuantrelt","tuantre1311@gmail.com", "12345", false, "Password must contain 6 characters or more"},
+                {"tuan12@","tuna2gmail.com", "123456", true, "Account created"},
+                {"","", "", false, "Enter Username"},
         });
     }
 
