@@ -64,7 +64,7 @@ public class CommentInstrumentedTest {
     public void setUp() {
         FirebaseAuth.getInstance().signOut();
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -72,7 +72,7 @@ public class CommentInstrumentedTest {
         FirebaseAuth.getInstance()
                 .signInWithEmailAndPassword("duongminhhien14@gmail.com", "123456");
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

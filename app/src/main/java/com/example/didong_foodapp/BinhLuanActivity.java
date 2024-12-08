@@ -156,6 +156,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
                     if  (Objects.equals(isEdit, "true")){
                         Toast.makeText(BinhLuanActivity.this, "Đã sửa bình luận",
                                 Toast.LENGTH_SHORT).show();
+                        Snackbar.make(view, "Đã sửa bình luận", Snackbar.LENGTH_SHORT).show();
                     }
                     else {
                         Snackbar.make(view, "Đã đăng bình luận", Snackbar.LENGTH_SHORT).show();
