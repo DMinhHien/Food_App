@@ -160,8 +160,8 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
                     }
                     else {
                         Snackbar.make(view, "Đã đăng bình luận", Snackbar.LENGTH_SHORT).show();
-//                        Toast.makeText(BinhLuanActivity.this, "Đã đăng bình luận",
-//                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BinhLuanActivity.this, "Đã đăng bình luận",
+                                Toast.LENGTH_SHORT).show();
                     }
                     new Handler().postDelayed(() -> {
                     Intent startActivity = new Intent(BinhLuanActivity.this, MainActivity.class);

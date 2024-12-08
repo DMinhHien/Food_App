@@ -62,7 +62,8 @@ public class CommentInstrumentedTest {
 
     @Before
     public void setUp() {
-        FirebaseAuth.getInstance().signOut();
+//        if (FirebaseAuth.getInstance().getCurrentUser() != null)
+//            FirebaseAuth.getInstance().signOut();
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -83,10 +84,10 @@ public class CommentInstrumentedTest {
     public void testAddCommentFunctionality() {
         FragmentScenario<LocationFragment> scenario
                 = FragmentScenario.launchInContainer(
-                        LocationFragment.class, null, R.style.Theme_DiDong_FoodApp);
+                LocationFragment.class, null, R.style.Theme_DiDong_FoodApp);
 
         try {
-            Thread.sleep(4000);
+            Thread.sleep(6000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -106,11 +107,10 @@ public class CommentInstrumentedTest {
         onView(withId(R.id.txtDangBinhLuan)).perform(click());
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
 
         if (expectedResult==1) {
             onView(withId(com.google.android.material.R.id.snackbar_text))
@@ -131,6 +131,12 @@ public class CommentInstrumentedTest {
         else if (expectedResult==5){
             onView(withId(com.google.android.material.R.id.snackbar_text))
                     .check(matches(withText("Điểm phải từ 0-10")));
+        }
+
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
