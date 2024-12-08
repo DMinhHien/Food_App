@@ -19,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.didong_foodapp.ui.Models.UserInformation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,8 +33,8 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
     TextInputEditText InputMail,InputPassword;
     Button Reg;
-    FirebaseAuth mAuth;
-    ProgressBar bar;
+    public FirebaseAuth mAuth;
+    public ProgressBar bar;
     String uid;
     Map<String, String> updateInfo = new HashMap<>();
     @Override
@@ -73,11 +74,27 @@ public class LoginActivity extends AppCompatActivity {
                 email=InputMail.getText().toString();
                 password=InputPassword.getText().toString();
                 if (TextUtils.isEmpty(email)){
-                    Toast.makeText(LoginActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            LoginActivity.this,
+                            "Enter email",
+                            Toast.LENGTH_LONG).show();
+                    Log.w("LoginActivity", "Please enter email");
+                    Snackbar.make(
+                            findViewById(android.R.id.content),
+                            "Enter email",
+                            Snackbar.LENGTH_LONG).show();
                     return;
                 }
                 if (TextUtils.isEmpty(password)){
-                    Toast.makeText(LoginActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            LoginActivity.this,
+                            "Enter password",
+                            Toast.LENGTH_LONG).show();
+                    Log.w("LoginActivity", "Please enter password");
+                    Snackbar.make(
+                            findViewById(android.R.id.content),
+                            "Enter password",
+                            Snackbar.LENGTH_LONG).show();
                     return;
                 }
                 mAuth.signInWithEmailAndPassword(email, password)
@@ -87,20 +104,27 @@ public class LoginActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     bar.setVisibility(View.VISIBLE);
                                     Toast.makeText(LoginActivity.this, "Login successful.",
-                                            Toast.LENGTH_SHORT).show();
+                                            Toast.LENGTH_LONG).show();
+                                    Log.e("LoginActivity", "Login successful.");
+                                    Snackbar.make(
+                                            findViewById(android.R.id.content),
+                                            "Login successful.",
+                                            Snackbar.LENGTH_LONG).show();
                                     Intent intent=new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);
                                     finish();
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                                                   Toast.LENGTH_SHORT).show();
-
+                                            Toast.LENGTH_LONG).show();
+                                    Log.e("LoginActivity", "Authentication failed");
+                                    Snackbar.make(
+                                            findViewById(android.R.id.content),
+                                            "Authentication failed.",
+                                            Snackbar.LENGTH_LONG).show();
                                 }
                             }
                         });
-
-
             }
         }
         );
@@ -114,5 +138,7 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+    public void handleLogin(String email, String password) {
 
+    }
 }

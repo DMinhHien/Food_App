@@ -19,6 +19,7 @@ import com.example.didong_foodapp.ui.Controller.LoginController;
 import com.example.didong_foodapp.ui.Models.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,11 +54,25 @@ public class RegistrationActivity extends AppCompatActivity {
                 email=InputMail.getText().toString();
                 password=InputPassword.getText().toString();
                 if (TextUtils.isEmpty(email)){
-                    Toast.makeText(RegistrationActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            RegistrationActivity.this,
+                            "Enter email",
+                            Toast.LENGTH_SHORT).show();
+                    Snackbar.make(
+                            findViewById(android.R.id.content),
+                            "Enter email",
+                            Snackbar.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(password)){
-                    Toast.makeText(RegistrationActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            RegistrationActivity.this,
+                            "Enter password",
+                            Toast.LENGTH_SHORT).show();
+                    Snackbar.make(
+                            findViewById(android.R.id.content),
+                            "Enter password",
+                            Snackbar.LENGTH_SHORT).show();
                     return;
                 }
                 mAuth.createUserWithEmailAndPassword(email, password)
@@ -66,8 +81,14 @@ public class RegistrationActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     bar.setVisibility(View.VISIBLE);
-                                    Toast.makeText(RegistrationActivity.this, "Account created",
+                                    Toast.makeText(
+                                            RegistrationActivity.this,
+                                            "Account created",
                                             Toast.LENGTH_SHORT).show();
+                                    Snackbar.make(
+                                            findViewById(android.R.id.content),
+                                            "Account created",
+                                            Snackbar.LENGTH_SHORT).show();
                                     UserModel uModel=new UserModel();
                                     uModel.setEmail(email);
                                     uModel.setUsername(InputUsername.getText().toString());
@@ -78,15 +99,19 @@ public class RegistrationActivity extends AppCompatActivity {
                                     
                                 } else {
                                     // If sign in fails, display a message to the user.
-                                    Toast.makeText(RegistrationActivity.this, "Password must contain 6 characters or more",
+                                    Toast.makeText(
+                                            RegistrationActivity.this,
+                                            "Password must contain 6 characters or more",
                                             Toast.LENGTH_SHORT).show();
-
+                                    Snackbar.make(
+                                            findViewById(android.R.id.content),
+                                            "Password must contain 6 characters or more",
+                                            Snackbar.LENGTH_SHORT).show();
                                 }
                             }
                         });
 
-            }
-                               }
+            }}
         );
 
     }

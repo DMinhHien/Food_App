@@ -3,6 +3,7 @@ package com.example.didong_foodapp;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.example.didong_foodapp.ui.Adapters.AdapterHienThiHinhBinhLuanDC;
 import com.example.didong_foodapp.ui.Controller.CommentController;
 import com.example.didong_foodapp.ui.Models.CommentModel;
 import com.example.didong_foodapp.ui.Models.RestaurantModel;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -48,6 +50,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
     CommentModel editingComment;
     DatabaseReference lDatabase;
     String isEdit;
+    View view;
     final int REQUEST_CHONHINHBINHLUAN = 11;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +60,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
         resModel=getIntent().getParcelableExtra("quananBinhLuan");
         lDatabase= FirebaseDatabase.getInstance().getReference().child("commentR").child(resModel.getMaR());
         setContentView(R.layout.layout_binhluan);
+        view = findViewById(R.id.layout_binhluan);;
         maquanan=getIntent().getStringExtra("maquan");
         String tenquan =getIntent().getStringExtra("tenquan");
         String diachi = getIntent().getStringExtra("diachi");
@@ -124,6 +128,7 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
                 if ((score>10.0)) {
                     Toast.makeText(BinhLuanActivity.this, "Điểm phải từ 0-10",
                             Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view, "Điểm phải từ 0-10", Snackbar.LENGTH_SHORT).show();
                 }
                 else {
                     CommentModel comModel;
@@ -148,31 +153,38 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
 //                editor.putString("newMaComment", maBL);
                     editor.putString("previousMaR", resModel.getMaR());
                     editor.commit();
-                    Intent startActivity = new Intent(BinhLuanActivity.this, MainActivity.class);
-                    BinhLuanActivity.this.startActivity(startActivity);
                     if  (Objects.equals(isEdit, "true")){
                         Toast.makeText(BinhLuanActivity.this, "Đã sửa bình luận",
                                 Toast.LENGTH_SHORT).show();
+                        Snackbar.make(view, "Đã sửa bình luận", Snackbar.LENGTH_SHORT).show();
                     }
                     else {
+                        Snackbar.make(view, "Đã đăng bình luận", Snackbar.LENGTH_SHORT).show();
                         Toast.makeText(BinhLuanActivity.this, "Đã đăng bình luận",
                                 Toast.LENGTH_SHORT).show();
                     }
+                    new Handler().postDelayed(() -> {
+                    Intent startActivity = new Intent(BinhLuanActivity.this, MainActivity.class);
+                    BinhLuanActivity.this.startActivity(startActivity);
                     finish();
+                    }, 4000);
                 }
             }
             else if(edComment.getText().toString().isEmpty() && edScore.getText().toString().isEmpty()){
                 Toast.makeText(BinhLuanActivity.this, "Hãy nhập đầy đủ",
                         Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, "Hãy nhập đầy đủ", Snackbar.LENGTH_SHORT).show();
             }
             else if(edComment.getText().toString().isEmpty()){
                 Toast.makeText(BinhLuanActivity.this, "Hãy nhập nội dung",
                         Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, "Hãy nhập nội dung", Snackbar.LENGTH_SHORT).show();
 
             }
             else if(edScore.getText().toString().isEmpty()){
                 Toast.makeText(BinhLuanActivity.this, "Hãy nhập điểm",
                         Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, "Hãy nhập điểm", Snackbar.LENGTH_SHORT).show();
             }
 
         }
