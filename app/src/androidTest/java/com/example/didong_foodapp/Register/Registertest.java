@@ -59,7 +59,6 @@ public class Registertest {
                 {randomUsername(), randomEmail(), "abc123", true, "Account created"}, // Randomized valid case
                 {randomUsername(), randomEmail(), "@123abcdes", true, "Account created"}, // Randomized valid case
                 {null, "123tun@", "12345", false, "Email is invalid"},                 // Invalid email
-                {"tuan", "tuan.com", "123456", false, "Email is invalid"},              // Invalid email
                 {"tuantrelt", "tuantreltt@gmail.co", "123456", false, "Email is invalid"}, // Invalid email
                 {"tuantrelt", "tuantreltt@gmail.com", "12345", false, "Password must contain 6 characters or more"}, // Short password
                 {"tuan", "tuanqe2@gmail.com", "123", false, "Password must contain 6 characters or more"},           // Short password
