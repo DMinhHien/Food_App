@@ -26,6 +26,7 @@ import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Random;
 
 @RunWith(Parameterized.class)
 public class Registertest {
@@ -53,12 +54,21 @@ public class Registertest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {"tuan","tuantbc@gmail.com", "123456", true, "Account created"},
-                {"tuan","tuan.com", "123456", false, "Email is invalid"},
-                {"tuan","tuanqe2@gmail.com", "123", false, "Password must contain 6 characters or more"},
-                {"","tuna2gmail.com", "123456", false, "Enter username"},
-                {"tuan","", "123456", false, "Enter email"},
-                {"tuan","tuanb123@gmail.com", "", false, "Enter password"},
+                {"tuan","tuantbc@gmail.com", "123456", true, "Authentication failed"}, // Invalid case due to existing account
+                {randomUsername(), randomEmail(), "123456", true, "Account created"}, // Randomized valid case
+                {randomUsername(), randomEmail(), "abc123", true, "Account created"}, // Randomized valid case
+                {randomUsername(), randomEmail(), "@123abcdes", true, "Account created"}, // Randomized valid case
+                {null, "123tun@", "12345", false, "Email is invalid"},                 // Invalid email
+                {"tuan", "tuan.com", "123456", false, "Email is invalid"},              // Invalid email
+                {"tuantrelt", "tuantreltt@gmail.co", "123456", false, "Email is invalid"}, // Invalid email
+                {"tuantrelt", "tuantreltt@gmail.com", "12345", false, "Password must contain 6 characters or more"}, // Short password
+                {"tuan", "tuanqe2@gmail.com", "123", false, "Password must contain 6 characters or more"},           // Short password
+                {"tuan", "tuna2gmail.com", "123456", false, "Email is invalid"},        // Invalid email
+                {"", "tuantreltt@gmail.com", "123456", false, "Enter username"},        // Empty username
+                {"tuantrelt", "", "123456", false, "Enter email"},                      // Empty email
+                {"tuantrelt", "tuantb123@gmail.com", "", false, "Enter password"},      // Empty password
+                {null, null, null, false, "Enter email"},                         // All fields invalid
+                {"tuantrelt", "123tun@", "abc123", false, "Email is invalid"}           // Invalid email
         });
     }
 
@@ -129,6 +139,31 @@ public class Registertest {
         this.decorView = decorView;
     }
 
+    // Utility method to generate random usernames
+    private static String randomUsername() {
+        Random random = new Random();
+        int length = 5 + random.nextInt(5); // Username length between 5 and 10
+        StringBuilder username = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            char c = (char) ('a' + random.nextInt(26)); // Random lowercase letter
+            username.append(c);
+        }
+        return username.toString();
+    }
+
+    // Utility method to generate random emails
+    private static String randomEmail() {
+        Random random = new Random();
+        String domain = "@example.com";
+        int length = 5 + random.nextInt(5); // Local part length between 5 and 10
+        StringBuilder email = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            char c = (char) ('a' + random.nextInt(26)); // Random lowercase letter
+            email.append(c);
+        }
+        email.append(domain);
+        return email.toString();
+    }
 }
 
 
